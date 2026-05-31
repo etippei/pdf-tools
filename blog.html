@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tips & Tutorials - PDFHub.AI Blog</title>
+    <meta name="description" content="Learn how to work with PDF files efficiently. Tips, tutorials, and guides about PDF editing.">
+    <meta name="keywords" content="pdf tips, pdf tutorial, how to edit pdf, pdf guide">
+    <link rel="canonical" href="https://yourdomain.com/blog.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    
+    <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
+    
+    <style>
+        .blog-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
+        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="index.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-6xl">
+        <div class="text-center mb-12"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">PDF Tips & Tutorials</h1><p class="text-xl text-gray-600">Learn how to work with PDF files like a pro.</p></div>
+        
+        <div class="max-w-xl mx-auto mb-12"><div class="relative"><i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i><input type="text" id="searchInput" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"></div></div>
+        
+        <div class="flex flex-wrap justify-center gap-2 mb-8"><button data-category="all" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-purple-600 text-white">All</button><button data-category="Tutorial" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Tutorials</button><button data-category="Guide" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Guides</button><button data-category="Tip" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Tips</button></div>
+        
+        <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+        
+        <div id="loadingSpinner" class="text-center py-12"><i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i><p class="text-gray-500 mt-3">Loading articles...</p></div>
+        <div id="postsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 hidden"></div>
+        <div id="noResults" class="text-center py-12 hidden"><i class="fas fa-newspaper text-5xl text-gray-300 mb-4"></i><p class="text-gray-500">No articles found.</p></div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
+            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
+            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        function initDarkMode() {
+            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        }
+        darkModeToggle?.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        });
+        initDarkMode();
+        
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
+        
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        
+        const GITHUB_REPO_OWNER = "etippei";
+        const GITHUB_REPO_NAME = "pdf-tools";
+        const GITHUB_LABEL = "blog-post";
+        let allPosts = [], currentCategory = "all", currentSearch = "";
+        
+        async function fetchBlogPosts() { 
+            try { 
+                const url = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues?labels=${GITHUB_LABEL}&state=open&per_page=50`; 
+                const res = await fetch(url); 
+                const issues = await res.json(); 
+                if(issues.message || !Array.isArray(issues)) return []; 
+                return issues.map(issue => { 
+                    const meta = parseMetadata(issue.body); 
+                    const content = stripMetadata(issue.body); 
+                    return { 
+                        id: issue.number, 
+                        title: issue.title, 
+                        date: new Date(issue.created_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}), 
+                        category: meta.category || "Tip", 
+                        excerpt: meta.excerpt || content.slice(0,200)+(content.length>200?"...":""), 
+                        image: meta.image || null, 
+                        url: `https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues/${issue.number}`, 
+                        comments: issue.comments 
+                    }; 
+                }); 
+            } catch(e) { return []; } 
+        }
+        
+        function parseMetadata(body) { 
+            const meta = {}; 
+            if (!body) return meta;
+            const lines = body.split('\n'); 
+            let inMeta=false, metaEnd=false; 
+            for(const line of lines){ 
+                if(line.trim()==='---'){ 
+                    if(!inMeta){ inMeta=true; continue; }else{ metaEnd=true; break; } 
+                } 
+                if(inMeta && !metaEnd){ 
+                    const match=line.match(/^(\w+):\s*(.*)$/); 
+                    if(match) meta[match[1].toLowerCase()]=match[2].trim(); 
+                } 
+            } 
+            return meta; 
+        }
+        
+        function stripMetadata(body) { 
+            if (!body) return '';
+            const lines=body.split('\n'); 
+            let start=0, end=false; 
+            for(let i=0;i<lines.length;i++){ 
+                if(lines[i].trim()==='---'){ 
+                    if(start===0) start=i+1; 
+                    else { end=true; start=i+1; break; } 
+                } 
+            } 
+            return end ? lines.slice(start).join('\n') : body; 
+        }
+        
+        function renderPosts(posts) { 
+            const filtered = posts.filter(p => (currentCategory==="all" || p.category===currentCategory) && (p.title.toLowerCase().includes(currentSearch.toLowerCase()) || p.excerpt.toLowerCase().includes(currentSearch.toLowerCase()))); 
+            const grid=document.getElementById('postsGrid'), spinner=document.getElementById('loadingSpinner'), no=document.getElementById('noResults'); 
+            if(filtered.length===0){ grid.classList.add('hidden'); no.classList.remove('hidden'); spinner.classList.add('hidden'); return; } 
+            grid.innerHTML=filtered.map(p=>`<div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg"><div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center"><i class="fas fa-file-pdf text-5xl text-purple-400"></i></div><div class="p-5"><div class="flex items-center gap-2 mb-3"><span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span><span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span></div><h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3><p class="text-gray-500 mb-4">${escapeHtml(p.excerpt)}</p><a href="${p.url}" target="_blank" class="text-purple-600 font-medium hover:text-purple-700">Read More <i class="fas fa-arrow-right text-sm"></i></a></div></div>`).join(''); 
+            grid.classList.remove('hidden'); 
+            spinner.classList.add('hidden'); 
+            no.classList.add('hidden'); 
+        }
+        
+        function escapeHtml(str) { 
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); 
+        }
+        
+        async function init() { allPosts = await fetchBlogPosts(); renderPosts(allPosts); }
+        
+        document.getElementById('searchInput')?.addEventListener('input', (e) => { currentSearch = e.target.value; renderPosts(allPosts); });
+        document.querySelectorAll('.category-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.category-btn').forEach(b => { b.classList.remove('bg-purple-600','text-white'); b.classList.add('bg-gray-200','text-gray-700'); }); btn.classList.remove('bg-gray-200','text-gray-700'); btn.classList.add('bg-purple-600','text-white'); currentCategory = btn.getAttribute('data-category'); renderPosts(allPosts); }); });
+        init();
+    </script>
+</body>
+</html>

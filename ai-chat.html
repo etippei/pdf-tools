@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat with PDF - PDFHub.AI</title>
+    <meta name="description" content="Chat with your PDF documents using AI. Ask questions and get instant answers from your PDF files.">
+    <meta name="keywords" content="ai chat pdf, chat with pdf, pdf ai assistant, ask pdf questions">
+    <link rel="canonical" href="https://yourdomain.com/ai-chat.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    
+    <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
+    
+    <style>
+        .chat-message-user { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 18px 18px 4px 18px; }
+        .chat-message-ai { background: #f3f4f6; color: #1f2937; border-radius: 18px 18px 18px 4px; }
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background: linear-gradient(145deg, #f9fafb 0%, #ffffff 100%); }
+        .drop-zone.dragover { border-color: #8b5cf6; background: linear-gradient(145deg, #f3e8ff 0%, #faf5ff 100%); transform: scale(1.02); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
+        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="index.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm">
+        <i class="fas fa-chart-line text-purple-600 mr-1"></i>
+        <span id="usageText"></span>
+        <a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>
+    </div>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <div class="text-center mb-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">AI Chat with PDF</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Upload a PDF and ask questions about its content. Get instant AI-powered answers.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
+            <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
+                <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
+                <p class="text-gray-600">Drag & drop a PDF file here or click to select</p>
+                <p class="text-sm text-gray-400 mt-2">PDF files only, max 10MB for free users</p>
+                <input type="file" id="fileInput" accept=".pdf" class="hidden">
+            </div>
+        </div>
+
+        <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3"><i class="fas fa-file-pdf text-3xl text-red-500"></i><div><p id="fileName" class="font-medium text-gray-800"></p><p id="fileSize" class="text-sm text-gray-500"></p></div></div>
+                <button id="removeFileBtn" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i> Remove</button>
+            </div>
+            <div class="mt-4 pt-4 border-t"><div class="flex items-center gap-2 text-sm text-green-600"><i class="fas fa-check-circle"></i><span>PDF loaded! You can now ask questions below.</span></div></div>
+        </div>
+
+        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p id="loadingText">Processing PDF...</p></div></div>
+
+        <div id="chatSection" class="hidden bg-white rounded-2xl shadow-md overflow-hidden">
+            <div class="bg-gray-50 px-6 py-3 border-b flex justify-between items-center"><h3 class="font-semibold text-gray-800"><i class="fas fa-comments mr-2 text-purple-600"></i>Chat with your PDF</h3><button id="clearChatBtn" class="text-sm text-gray-500 hover:text-red-500"><i class="fas fa-trash-alt mr-1"></i>Clear chat</button></div>
+            <div id="chatMessages" class="h-96 overflow-y-auto p-6 space-y-4"><div class="chat-message-ai p-4 max-w-[80%]"><p class="text-sm font-semibold text-gray-600 mb-1">🤖 AI Assistant</p><p class="text-gray-700">Upload a PDF to start chatting.</p></div></div>
+            <div class="border-t p-4 bg-white"><div class="flex gap-3"><input type="text" id="questionInput" placeholder="Ask a question about your PDF..." class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"><button id="sendBtn" class="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"><i class="fas fa-paper-plane"></i> Send</button></div><p class="text-xs text-gray-400 mt-2">Powered by GLM-4 Flash (Free AI)</p></div>
+        </div>
+
+        <div id="noFilePrompt" class="text-center py-12 text-gray-400"><i class="fas fa-cloud-upload-alt text-5xl mb-3"></i><p>Upload a PDF to start chatting with AI</p></div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
+            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
+            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        function initDarkMode() {
+            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        }
+        darkModeToggle?.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        });
+        initDarkMode();
+        
+        const currentPage = window.location.pathname.split('/').pop() || 'ai-chat.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
+        
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        
+        let canUseAI = true;
+        let currentLimit = 5;
+        
+        function checkAIUsage() {
+            const isLoggedIn = localStorage.getItem('authToken') !== null;
+            currentLimit = isLoggedIn ? 5 : 3;
+            if (!isPro) {
+                const today = new Date().toDateString();
+                let usage = parseInt(localStorage.getItem(`ai_usage_${today}`) || '0');
+                const upgradePrompt = document.getElementById('upgradePrompt');
+                if (usage >= currentLimit) {
+                    canUseAI = false;
+                    if (upgradePrompt) {
+                        upgradePrompt.classList.remove('hidden');
+                        if (!isLoggedIn) {
+                            upgradePrompt.innerHTML = '<i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i><span class="text-yellow-700">Daily limit reached (3/3). </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or <a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a>';
+                        } else {
+                            upgradePrompt.innerHTML = '<i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i><span class="text-yellow-700">Daily limit reached (5/5). </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a>';
+                        }
+                    }
+                    document.getElementById('sendBtn')?.setAttribute('disabled', 'disabled');
+                    return false;
+                } else if (upgradePrompt) {
+                    upgradePrompt.classList.remove('hidden');
+                    const remaining = currentLimit - usage;
+                    if (!isLoggedIn) {
+                        upgradePrompt.innerHTML = `<i class="fas fa-crown text-yellow-600 mr-2"></i><span class="text-yellow-700">Free AI: ${usage}/${currentLimit} today. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or <a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a></span>`;
+                    } else {
+                        upgradePrompt.innerHTML = `<i class="fas fa-crown text-yellow-600 mr-2"></i><span class="text-yellow-700">Free AI: ${usage}/${currentLimit} today. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a>`;
+                    }
+                }
+                return true;
+            }
+            return true;
+        }
+        
+        function updateAIUsageDisplay() {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const isLoggedIn = localStorage.getItem('authToken') !== null;
+            const limit = isLoggedIn ? 5 : 3;
+            if (!isPro) {
+                const today = new Date().toDateString();
+                let usage = parseInt(localStorage.getItem(`ai_usage_${today}`) || '0');
+                let remaining = limit - usage;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's AI usage: ${usage}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's AI usage: ${usage}/${limit}. ${remaining} free uses remaining.`;
+                    }
+                } else {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or Upgrade to Pro!`;
+                    } else {
+                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    }
+                    text.style.color = '#dc2626';
+                }
+            } else {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited AI questions ✨`;
+                text.style.color = '#16a34a';
+            }
+        }
+        
+        function recordAIUsage() { 
+            if (!isPro) { 
+                const today = new Date().toDateString(); 
+                let u = parseInt(localStorage.getItem(`ai_usage_${today}`) || '0'); 
+                localStorage.setItem(`ai_usage_${today}`, u + 1); 
+                updateAIUsageDisplay(); 
+                checkAIUsage(); 
+            } 
+        }
+        
+        checkAIUsage();
+        updateAIUsageDisplay();
+        
+        let selectedFile = null, extractedText = null, chatHistory = [];
+        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), fileSize = document.getElementById('fileSize'), removeFileBtn = document.getElementById('removeFileBtn'), loadingOverlay = document.getElementById('loadingOverlay'), loadingText = document.getElementById('loadingText'), chatSection = document.getElementById('chatSection'), noFilePrompt = document.getElementById('noFilePrompt'), chatMessages = document.getElementById('chatMessages'), questionInput = document.getElementById('questionInput'), sendBtn = document.getElementById('sendBtn'), clearChatBtn = document.getElementById('clearChatBtn');
+        
+        function handleFile(file) { if (file && file.type === 'application/pdf') { selectedFile = file; fileName.textContent = file.name; fileSize.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`; fileInfo.classList.remove('hidden'); chatSection.classList.add('hidden'); noFilePrompt.classList.add('hidden'); extractPDFText(); } else { alert('Please select a valid PDF file'); } }
+        
+        async function extractPDFText() { loadingOverlay.classList.remove('hidden'); loadingText.textContent = 'Extracting text from PDF...'; try { const fd = new FormData(); fd.append('file', selectedFile); const res = await fetch(`${API_BASE}/api/ocr`, { method: 'POST', body: fd }); const data = await res.json(); if (!res.ok) throw new Error(data.error || 'OCR failed'); if (data.success && data.text) { extractedText = data.text; chatSection.classList.remove('hidden'); noFilePrompt.classList.add('hidden'); chatHistory = []; chatMessages.innerHTML = `<div class="chat-message-ai p-4 max-w-[80%]"><p class="text-sm font-semibold text-gray-600 mb-1">🤖 AI Assistant</p><p class="text-gray-700">PDF loaded! Ask me anything about "${selectedFile.name}".</p></div>`; } else throw new Error('No text extracted'); } catch(e) { alert('Error extracting text: ' + e.message); removeFile(); } finally { loadingOverlay.classList.add('hidden'); } }
+        
+        function removeFile() { selectedFile = null; extractedText = null; chatHistory = []; fileInfo.classList.add('hidden'); chatSection.classList.add('hidden'); noFilePrompt.classList.remove('hidden'); }
+        function clearChat() { if (!extractedText) return; chatHistory = []; chatMessages.innerHTML = `<div class="chat-message-ai p-4 max-w-[80%]"><p class="text-sm font-semibold text-gray-600 mb-1">🤖 AI Assistant</p><p class="text-gray-700">Chat cleared! Ask me anything about your document.</p></div>`; }
+        function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+        
+        async function sendQuestion() { if (!canUseAI) { alert('Daily AI limit reached. Upgrade to Pro for unlimited questions.'); return; } const question = questionInput.value.trim(); if (!question) return; if (!extractedText) { alert('Please upload a PDF first.'); return; } chatMessages.innerHTML += `<div class="flex justify-end"><div class="chat-message-user p-4 max-w-[80%]"><p class="text-sm font-semibold text-purple-200 mb-1">👤 You</p><p class="text-white">${escapeHtml(question)}</p></div></div>`; const loadingDiv = document.createElement('div'); loadingDiv.className = 'chat-message-ai p-4 max-w-[80%]'; loadingDiv.innerHTML = '<p class="text-sm font-semibold text-gray-600 mb-1">🤖 AI Assistant</p><p class="text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>Thinking...</p>'; chatMessages.appendChild(loadingDiv); chatMessages.scrollTop = chatMessages.scrollHeight; questionInput.value = ''; sendBtn.disabled = true; try { const res = await fetch(`${API_BASE}/api/chat`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: extractedText, question: question, history: chatHistory }) }); const data = await res.json(); chatMessages.removeChild(loadingDiv); if (!res.ok) throw new Error(data.error || 'AI request failed'); if (data.success && data.answer) { chatMessages.innerHTML += `<div class="chat-message-ai p-4 max-w-[80%]"><p class="text-sm font-semibold text-gray-600 mb-1">🤖 AI Assistant</p><p class="text-gray-700">${escapeHtml(data.answer)}</p></div>`; chatHistory.push({ role: 'user', content: question }, { role: 'assistant', content: data.answer }); if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20); recordAIUsage(); } else throw new Error('No valid response'); } catch(e) { chatMessages.innerHTML += `<div class="chat-message-ai p-4 max-w-[80%] bg-red-50"><p class="text-sm font-semibold text-red-600 mb-1">⚠️ Error</p><p class="text-red-700">${escapeHtml(e.message)}</p></div>`; } finally { sendBtn.disabled = false; chatMessages.scrollTop = chatMessages.scrollHeight; } }
+        
+        dropZone?.addEventListener('click', () => fileInput.click());
+        dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
+        fileInput?.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); fileInput.value = ''; });
+        removeFileBtn?.addEventListener('click', removeFile);
+        sendBtn?.addEventListener('click', sendQuestion);
+        questionInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendQuestion(); });
+        clearChatBtn?.addEventListener('click', clearChat);
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summary - PDFHub.AI</title>
+    <meta name="description" content="Generate AI-powered summaries from your PDF documents. Get key insights instantly.">
+    <meta name="keywords" content="ai summary, pdf summary, document summarizer, ai pdf summarizer">
+    <link rel="canonical" href="https://yourdomain.com/ai-summary.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    
+    <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
+    
+    <style>
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background: linear-gradient(145deg, #f9fafb 0%, #ffffff 100%); }
+        .drop-zone.dragover { border-color: #10b981; background: linear-gradient(145deg, #ecfdf5 0%, #f0fdf4 100%); transform: scale(1.02); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
+        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="index.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm">
+        <i class="fas fa-chart-line text-purple-600 mr-1"></i>
+        <span id="usageText"></span>
+        <a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>
+    </div>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <div class="text-center mb-6"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">AI Summary</h1><p class="text-xl text-gray-600 max-w-2xl mx-auto">Generate intelligent summaries from your PDF documents. Powered by AI.</p></div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
+            <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer"><i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i><p class="text-gray-600">Drag & drop a PDF file here or click to select</p><input type="file" id="fileInput" accept=".pdf" class="hidden"></div>
+        </div>
+
+        <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
+            <div class="flex items-center justify-between"><div class="flex items-center gap-3"><i class="fas fa-file-pdf text-3xl text-red-500"></i><div><p id="fileName" class="font-medium text-gray-800"></p><p id="fileSize" class="text-sm text-gray-500"></p></div></div><button id="removeFileBtn" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i> Remove</button></div>
+        </div>
+
+        <div id="summaryOptions" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
+            <h3 class="font-semibold text-gray-800 mb-4">Summary Options</h3>
+            <div class="flex gap-4 flex-wrap"><button data-length="short" class="summary-length-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 text-gray-700 hover:bg-purple-100 transition">Short (3-5 sentences)</button><button data-length="medium" class="summary-length-btn px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 text-white shadow-sm">Medium (8-10 sentences)</button><button data-length="long" class="summary-length-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 text-gray-700 hover:bg-purple-100 transition">Long (15-20 sentences)</button></div>
+        </div>
+
+        <div id="progressContainer" class="hidden mb-6"><div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div><p id="progressText" class="text-sm text-gray-500 text-center mt-2">Processing...</p></div>
+
+        <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+        <div class="flex justify-center"><button id="summarizeBtn" disabled class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-magic"></i> Generate Summary</button></div>
+
+        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p id="loadingText" class="text-gray-700">Generating AI summary...</p></div></div>
+
+        <div id="resultSection" class="hidden mt-8"><div class="bg-white rounded-2xl shadow-md overflow-hidden"><div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center"><h3 class="font-semibold text-gray-800"><i class="fas fa-file-alt mr-2 text-green-600"></i>AI Summary</h3><button id="copyBtn" class="text-sm text-purple-600 hover:text-purple-700"><i class="fas fa-copy mr-1"></i> Copy</button></div><div class="p-6 max-h-96 overflow-y-auto"><div id="summaryText" class="text-gray-700 whitespace-pre-wrap leading-relaxed"></div></div><div class="bg-gray-50 px-6 py-3 text-right text-xs text-gray-400">Powered by GLM-4 Flash (Free AI)</div></div></div>
+
+        <div id="errorSection" class="hidden mt-8"><div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><p id="errorMsg" class="text-red-700"></p></div></div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
+            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
+            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        function initDarkMode() {
+            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        }
+        darkModeToggle?.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        });
+        initDarkMode();
+        
+        const currentPage = window.location.pathname.split('/').pop() || 'ai-summary.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
+        
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        
+        let canUseAI = true;
+        let currentLimit = 5;
+        
+        function checkAIUsage() {
+            const isLoggedIn = localStorage.getItem('authToken') !== null;
+            currentLimit = isLoggedIn ? 5 : 3;
+            if (!isPro) {
+                const today = new Date().toDateString();
+                let usage = parseInt(localStorage.getItem(`summary_usage_${today}`) || '0');
+                const upgradePrompt = document.getElementById('upgradePrompt');
+                if (usage >= currentLimit) {
+                    canUseAI = false;
+                    if (upgradePrompt) {
+                        upgradePrompt.classList.remove('hidden');
+                        if (!isLoggedIn) {
+                            upgradePrompt.innerHTML = '<i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i><span class="text-yellow-700">Daily limit reached (3/3). </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or <a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a>';
+                        } else {
+                            upgradePrompt.innerHTML = '<i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i><span class="text-yellow-700">Daily limit reached (5/5). </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a>';
+                        }
+                    }
+                    document.getElementById('summarizeBtn')?.setAttribute('disabled', 'disabled');
+                    return false;
+                } else if (upgradePrompt) {
+                    upgradePrompt.classList.remove('hidden');
+                    const remaining = currentLimit - usage;
+                    if (!isLoggedIn) {
+                        upgradePrompt.innerHTML = `<i class="fas fa-crown text-yellow-600 mr-2"></i><span class="text-yellow-700">Free AI: ${usage}/${currentLimit} today. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or <a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a></span>`;
+                    } else {
+                        upgradePrompt.innerHTML = `<i class="fas fa-crown text-yellow-600 mr-2"></i><span class="text-yellow-700">Free AI: ${usage}/${currentLimit} today. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline">Upgrade to Pro →</a>`;
+                    }
+                }
+                return true;
+            }
+            return true;
+        }
+        
+        function updateAIUsageDisplay() {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const isLoggedIn = localStorage.getItem('authToken') !== null;
+            const limit = isLoggedIn ? 5 : 3;
+            if (!isPro) {
+                const today = new Date().toDateString();
+                let usage = parseInt(localStorage.getItem(`summary_usage_${today}`) || '0');
+                let remaining = limit - usage;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's AI summary: ${usage}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's AI summary: ${usage}/${limit}. ${remaining} free uses remaining.`;
+                    }
+                } else {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or Upgrade to Pro!`;
+                    } else {
+                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    }
+                    text.style.color = '#dc2626';
+                }
+            } else {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited AI summaries ✨`;
+                text.style.color = '#16a34a';
+            }
+        }
+        
+        function recordUsage() { 
+            if (!isPro) { 
+                const today = new Date().toDateString(); 
+                let u = parseInt(localStorage.getItem(`summary_usage_${today}`) || '0'); 
+                localStorage.setItem(`summary_usage_${today}`, u + 1); 
+                updateAIUsageDisplay(); 
+                checkAIUsage(); 
+            } 
+        }
+        
+        checkAIUsage();
+        updateAIUsageDisplay();
+        
+        let selectedFile = null, extractedText = null, currentLength = 'medium';
+        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), fileSize = document.getElementById('fileSize'), removeFileBtn = document.getElementById('removeFileBtn'), summaryOptions = document.getElementById('summaryOptions'), summarizeBtn = document.getElementById('summarizeBtn'), loadingOverlay = document.getElementById('loadingOverlay'), loadingText = document.getElementById('loadingText'), resultSection = document.getElementById('resultSection'), summaryText = document.getElementById('summaryText'), copyBtn = document.getElementById('copyBtn'), errorSection = document.getElementById('errorSection'), errorMsg = document.getElementById('errorMsg'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText');
+        
+        document.querySelectorAll('.summary-length-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.summary-length-btn').forEach(b => { b.classList.remove('bg-purple-600', 'text-white'); b.classList.add('bg-gray-200', 'text-gray-700'); }); btn.classList.remove('bg-gray-200', 'text-gray-700'); btn.classList.add('bg-purple-600', 'text-white'); currentLength = btn.getAttribute('data-length'); }); });
+        
+        function handleFile(file) { if (file && file.type === 'application/pdf') { selectedFile = file; fileName.textContent = file.name; fileSize.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`; fileInfo.classList.remove('hidden'); summaryOptions.classList.remove('hidden'); if(canUseAI) summarizeBtn.disabled = false; extractPDFText(); } else alert('Select valid PDF'); }
+        
+        async function extractPDFText() { loadingOverlay.classList.remove('hidden'); loadingText.textContent = 'Extracting text from PDF...'; try { const fd = new FormData(); fd.append('file', selectedFile); const res = await fetch(`${API_BASE}/api/ocr`, { method: 'POST', body: fd }); const data = await res.json(); if (!res.ok) throw new Error(data.error || 'OCR failed'); if (data.success && data.text) { extractedText = data.text; loadingText.textContent = 'Text extracted!'; await new Promise(r => setTimeout(r, 500)); } else throw new Error('No text extracted'); } catch(e) { alert('Error extracting text: ' + e.message); removeFile(); } finally { loadingOverlay.classList.add('hidden'); } }
+        
+        function removeFile() { selectedFile = null; extractedText = null; fileInfo.classList.add('hidden'); summaryOptions.classList.add('hidden'); summarizeBtn.disabled = true; resultSection.classList.add('hidden'); errorSection.classList.add('hidden'); }
+        
+        async function generateSummary() { if (!canUseAI) { alert('Daily AI limit reached. Upgrade to Pro for unlimited summaries.'); return; } if (!extractedText) { alert('Please upload a PDF first.'); return; } summarizeBtn.disabled = true; loadingOverlay.classList.remove('hidden'); progressContainer.classList.remove('hidden'); progressBar.style.width = '0%'; progressText.textContent = 'Generating summary...'; resultSection.classList.add('hidden'); errorSection.classList.add('hidden'); try { const res = await fetch(`${API_BASE}/api/summary`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: extractedText, length: currentLength }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error || 'Summary failed'); if (data.success && data.summary) { summaryText.textContent = data.summary; resultSection.classList.remove('hidden'); recordUsage(); } else throw new Error('No summary generated'); } catch(e) { errorMsg.textContent = e.message; errorSection.classList.remove('hidden'); } finally { loadingOverlay.classList.add('hidden'); setTimeout(() => progressContainer.classList.add('hidden'), 1000); summarizeBtn.disabled = false; } }
+        
+        copyBtn?.addEventListener('click', () => { const text = summaryText.textContent; navigator.clipboard.writeText(text).then(() => { const orig = copyBtn.innerHTML; copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!'; setTimeout(() => copyBtn.innerHTML = orig, 2000); }); });
+        
+        dropZone?.addEventListener('click', () => fileInput.click());
+        dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
+        fileInput?.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); fileInput.value = ''; });
+        removeFileBtn?.addEventListener('click', removeFile);
+        summarizeBtn?.addEventListener('click', generateSummary);
+    </script>
+</body>
+</html>

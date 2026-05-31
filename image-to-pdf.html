@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Image to PDF Online - JPG PNG to PDF | PDFHub.AI</title>
+    <meta name="description" content="Convert multiple images (JPG, PNG, GIF) to a single PDF file online for free. No upload, 100% private.">
+    <meta name="keywords" content="image to pdf, jpg to pdf, png to pdf, convert images to pdf, multiple images to pdf">
+    <link rel="canonical" href="https://yourdomain.com/image-to-pdf.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <link rel="stylesheet" href="dark-mode.css">
+    
+    <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
+    
+    <style>
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background: linear-gradient(145deg, #f9fafb 0%, #ffffff 100%); }
+        .drop-zone.dragover { border-color: #ef4444; background: linear-gradient(145deg, #fef2f2 0%, #fee2e2 100%); transform: scale(1.02); }
+        .image-preview { transition: all 0.2s ease; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
+        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="index.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm">
+        <i class="fas fa-chart-line text-purple-600 mr-1"></i>
+        <span id="usageText"></span>
+        <a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>
+    </div>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <div class="text-center mb-6"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Image to PDF</h1><p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert JPG, PNG, GIF images into a single PDF document. Drag to reorder.</p></div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
+            <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer"><i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i><p class="text-gray-600">Drag & drop images here or click to select</p><p class="text-sm text-gray-400 mt-2">Supports JPG, PNG, GIF. Multiple files allowed.</p><input type="file" id="fileInput" multiple accept="image/jpeg,image/png,image/gif" class="hidden"></div>
+        </div>
+
+        <div id="previewSection" class="hidden mb-6">
+            <div class="bg-white rounded-2xl shadow-md p-6"><div class="flex justify-between items-center mb-4"><h3 class="font-semibold"><i class="fas fa-images mr-2"></i>Images (<span id="imageCount">0</span>)</h3><button id="clearImagesBtn" class="text-sm text-red-500 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i>Clear all</button></div><div id="imageGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-h-96 overflow-y-auto p-2"></div></div>
+        </div>
+
+        <div id="pdfOptions" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
+            <h3 class="font-semibold text-gray-800 mb-4">PDF Settings</h3><div><label class="block text-sm text-gray-600 mb-2">Page Size</label><select id="pageSizeSelect" class="border rounded-lg px-3 py-2 w-full max-w-xs"><option value="fit">Fit to image size (recommended)</option><option value="a4">A4 (210 x 297 mm)</option><option value="letter">Letter (8.5 x 11 in)</option></select></div>
+        </div>
+
+        <div id="progressContainer" class="hidden mb-6"><div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div><p id="progressText" class="text-sm text-gray-500 text-center mt-2">Converting...</p></div>
+
+        <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center"><button id="convertBtn" disabled class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-file-pdf"></i> Convert to PDF</button><button id="resetBtn" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"><i class="fas fa-redo-alt"></i> Reset</button></div>
+
+        <div id="resultSection" class="hidden mt-8"><div class="bg-white rounded-2xl shadow-md p-6"><div class="flex justify-between items-center flex-wrap gap-4"><div><h3 class="font-semibold text-gray-800">Conversion Complete!</h3><p class="text-sm text-gray-500"><span id="convertedCount"></span> image(s) converted.</p></div><button id="downloadBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition"><i class="fas fa-download"></i> Download PDF</button></div></div></div>
+
+        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p>Converting images to PDF...</p></div></div>
+
+        <div class="mt-8 text-center text-sm text-gray-500"><i class="fas fa-shield-alt mr-1 text-green-600"></i> All processing happens locally.</div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
+            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
+            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        function initDarkMode() {
+            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        }
+        darkModeToggle?.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
+            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+        });
+        initDarkMode();
+        
+        const currentPage = window.location.pathname.split('/').pop() || 'image-to-pdf.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
+        
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        
+        let canUseTool = true;
+        let currentLimit = 5;
+        
+        function updateUsageDisplay() {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const isLoggedIn = localStorage.getItem('authToken') !== null;
+            const limit = isLoggedIn ? 5 : 3;
+            if (!isPro) {
+                const today = new Date().toDateString();
+                let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                let remaining = limit - usage;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a>`; }
+                    else { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining.`; }
+                } else {
+                    if (!isLoggedIn) { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a> or Upgrade to Pro!`; }
+                    else { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`; }
+                    text.style.color = '#dc2626';
+                }
+            } else {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited access · No ads ✨`;
+                text.style.color = '#16a34a';
+            }
+        }
+        
+        function recordUsage() { if (!isPro) { const today = new Date().toDateString(); let u = parseInt(localStorage.getItem(`usage_${today}`) || '0'); localStorage.setItem(`usage_${today}`, u + 1); updateUsageDisplay(); } }
+        
+        updateUsageDisplay();
+        
+        let images = [];
+        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), previewSection = document.getElementById('previewSection'), imageGrid = document.getElementById('imageGrid'), imageCountSpan = document.getElementById('imageCount'), clearImagesBtn = document.getElementById('clearImagesBtn'), pdfOptions = document.getElementById('pdfOptions'), convertBtn = document.getElementById('convertBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), convertedCountSpan = document.getElementById('convertedCount'), pageSizeSelect = document.getElementById('pageSizeSelect'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText');
+        
+        function handleFiles(files) { const imgFiles=Array.from(files).filter(f=>f.type.startsWith('image/')); for(const f of imgFiles){ const reader=new FileReader(); reader.onload=(e)=>{ images.push({file:f,url:e.target.result,name:f.name}); updatePreview(); }; reader.readAsDataURL(f); } }
+        
+        function updatePreview() { if(images.length===0){ previewSection.classList.add('hidden'); pdfOptions.classList.add('hidden'); convertBtn.disabled=true; resultSection.classList.add('hidden'); return; } previewSection.classList.remove('hidden'); pdfOptions.classList.remove('hidden'); if(canUseTool) convertBtn.disabled=false; imageCountSpan.textContent=images.length; imageGrid.innerHTML=''; images.forEach((img,idx)=>{ const div=document.createElement('div'); div.className='image-preview relative group cursor-move'; div.setAttribute('data-index',idx); div.draggable=true; div.innerHTML=`<img src="${img.url}" class="w-full h-32 object-cover rounded-lg border"><div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100"><button class="remove-img bg-red-500 text-white rounded-full w-6 h-6 text-xs" data-index="${idx}"><i class="fas fa-times"></i></button></div><div class="text-xs text-gray-500 mt-1 truncate">${img.name.substring(0,20)}</div>`; imageGrid.appendChild(div); }); document.querySelectorAll('.remove-img').forEach(btn=>btn.addEventListener('click',(e)=>{const idx=parseInt(btn.dataset.index); removeImage(idx);})); let dragIndex=null; const items=document.querySelectorAll('.image-preview'); items.forEach(item=>{ item.addEventListener('dragstart',(e)=>{dragIndex=parseInt(item.dataset.index); e.dataTransfer.effectAllowed='move';}); item.addEventListener('dragover',(e)=>{e.preventDefault(); e.dataTransfer.dropEffect='move';}); item.addEventListener('drop',(e)=>{e.preventDefault(); const target=e.target.closest('.image-preview'); if(!target) return; const targetIndex=parseInt(target.dataset.index); if(dragIndex!==null && dragIndex!==targetIndex){ const moved=images[dragIndex]; images.splice(dragIndex,1); images.splice(targetIndex,0,moved); updatePreview(); } dragIndex=null;}); }); }
+        
+        function removeImage(index){ images.splice(index,1); updatePreview(); resultSection.classList.add('hidden'); }
+        function clearAllImages(){ images=[]; updatePreview(); resultSection.classList.add('hidden'); }
+        
+        async function convertToPDF(){ if(!canUseTool){ alert('Daily limit reached. Upgrade to Pro for unlimited access.'); return; } if(images.length===0) return; convertBtn.disabled=true; loadingOverlay.classList.remove('hidden'); progressContainer.classList.remove('hidden'); progressBar.style.width='0%'; progressText.textContent='Loading images...'; try { const {PDFDocument}=PDFLib; const pdfDoc=await PDFDocument.create(); const pageSize=pageSizeSelect.value; for(let i=0;i<images.length;i++){ const percent=((i/images.length)*100); progressBar.style.width=`${percent}%`; progressText.textContent=`Processing image ${i+1} of ${images.length}...`; const img=images[i]; const imgBytes=await img.file.arrayBuffer(); let image; if(img.file.type==='image/jpeg') image=await pdfDoc.embedJpg(imgBytes); else if(img.file.type==='image/png') image=await pdfDoc.embedPng(imgBytes); else continue; const imgDims=image.scale(1); let pageWidth=imgDims.width, pageHeight=imgDims.height; if(pageSize==='a4'){ pageWidth=595; pageHeight=842; }else if(pageSize==='letter'){ pageWidth=612; pageHeight=792; } const page=pdfDoc.addPage([pageWidth,pageHeight]); const scale=Math.min(pageWidth/imgDims.width,pageHeight/imgDims.height); const scaledWidth=imgDims.width*scale, scaledHeight=imgDims.height*scale; const x=(pageWidth-scaledWidth)/2, y=(pageHeight-scaledHeight)/2; page.drawImage(image,{x,y,width:scaledWidth,height:scaledHeight}); } progressBar.style.width='100%'; progressText.textContent='Finalizing PDF...'; const bytes=await pdfDoc.save(); const blob=new Blob([bytes],{type:'application/pdf'}); const url=URL.createObjectURL(blob); convertedCountSpan.textContent=images.length; resultSection.classList.remove('hidden'); downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`converted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; recordUsage(); } catch(e){alert('Error converting images');} finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } }
+        
+        dropZone?.addEventListener('click', () => fileInput.click());
+        dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); if(canUseTool) dropZone.classList.add('dragover'); });
+        dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if(canUseTool && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
+        fileInput?.addEventListener('change', (e) => { if(e.target.files.length) handleFiles(e.target.files); fileInput.value=''; });
+        clearImagesBtn?.addEventListener('click', clearAllImages);
+        convertBtn?.addEventListener('click', convertToPDF);
+        resetBtn?.addEventListener('click', () => { clearAllImages(); resultSection.classList.add('hidden'); });
+    </script>
+</body>
+</html>

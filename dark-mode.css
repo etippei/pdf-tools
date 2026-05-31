@@ -1,0 +1,359 @@
+/* ========================================
+   PDFHub.AI - Dark Mode Unified Styles
+   ======================================== */
+
+/* 全局背景 */
+.dark-mode,
+.dark-mode body {
+    background-color: #1a1a2e !important;
+}
+
+/* ========== 卡片/容器背景 ========== */
+.dark-mode .bg-white,
+.dark-mode .bg-white.rounded-2xl,
+.dark-mode .bg-white.rounded-xl,
+.dark-mode .bg-white.shadow-md,
+.dark-mode .bg-white.shadow-lg,
+.dark-mode .tool-card,
+.dark-mode .rounded-2xl.shadow-md,
+.dark-mode .rounded-2xl.shadow-lg {
+    background-color: #16213e !important;
+}
+
+/* ========== 灰色背景 ========== */
+.dark-mode .bg-gray-50,
+.dark-mode .bg-gray-100,
+.dark-mode .bg-gray-200,
+.dark-mode .bg-gray-300,
+.dark-mode .bg-gray-50.rounded-xl,
+.dark-mode .bg-gray-50.rounded-lg {
+    background-color: #0f0f1a !important;
+}
+
+/* ========== 紫色/彩色背景 ========== */
+.dark-mode .bg-purple-50,
+.dark-mode .bg-purple-100,
+.dark-mode .bg-blue-100,
+.dark-mode .bg-green-100,
+.dark-mode .bg-orange-100,
+.dark-mode .bg-red-100,
+.dark-mode .bg-indigo-100,
+.dark-mode .bg-teal-100,
+.dark-mode .bg-yellow-100 {
+    background-color: #2d2d4e !important;
+}
+
+/* ========== 页脚背景 ========== */
+.dark-mode .bg-gray-800,
+.dark-mode footer.bg-gray-800 {
+    background-color: #0a0a14 !important;
+}
+
+/* ========== 文字颜色 ========== */
+.dark-mode .text-gray-600,
+.dark-mode .text-gray-500,
+.dark-mode .text-gray-700,
+.dark-mode .text-gray-400,
+.dark-mode .text-gray-300 {
+    color: #d1d5db !important;
+}
+
+.dark-mode .text-gray-800,
+.dark-mode .text-gray-900,
+.dark-mode .text-gray-800.font-semibold {
+    color: #f9fafb !important;
+}
+
+.dark-mode .text-purple-600,
+.dark-mode .text-blue-600,
+.dark-mode .text-green-600,
+.dark-mode .text-orange-600,
+.dark-mode .text-red-600,
+.dark-mode .text-indigo-600,
+.dark-mode .text-teal-600 {
+    color: #a78bfa !important;
+}
+
+/* ========== 边框颜色 ========== */
+.dark-mode .border-gray-100,
+.dark-mode .border-gray-200,
+.dark-mode .border-gray-300,
+.dark-mode .border-t,
+.dark-mode .border-b,
+.dark-mode .border {
+    border-color: #3d3d5e !important;
+}
+
+/* ========== 上传区域 ========== */
+.dark-mode .drop-zone {
+    background: #1a1a2e !important;
+    border-color: #3d3d5e !important;
+}
+
+.dark-mode .drop-zone.dragover {
+    background: #2d2d4e !important;
+    border-color: #8b5cf6 !important;
+}
+
+.dark-mode .drop-zone p,
+.dark-mode .drop-zone i {
+    color: #ccc !important;
+}
+
+/* ========== 按钮 ========== */
+.dark-mode .bg-purple-600 {
+    background: linear-gradient(135deg, #5a4a8a 0%, #6b46a0 100%) !important;
+}
+
+.dark-mode .bg-gray-200 {
+    background-color: #2d2d4e !important;
+    color: #ccc !important;
+}
+
+.dark-mode .bg-gray-200:hover {
+    background-color: #3d3d5e !important;
+}
+
+.dark-mode .bg-green-600 {
+    background-color: #2d6a4f !important;
+}
+
+.dark-mode .bg-red-500,
+.dark-mode .bg-red-600 {
+    background-color: #9b2c2c !important;
+}
+
+/* ========== 深色模式切换按钮 ========== */
+#darkModeToggle {
+    transition: all 0.2s ease;
+}
+#darkModeToggle:hover {
+    transform: scale(1.05);
+}
+.dark-mode #darkModeToggle {
+    color: #fbbf24 !important;
+    background-color: #2d2d4e !important;
+}
+.dark-mode #darkModeToggle:hover {
+    background-color: #3d3d5e !important;
+    color: #fcd34d !important;
+}
+
+/* ========== 输入框 ========== */
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+    background-color: #0f0f1a !important;
+    border-color: #3d3d5e !important;
+    color: #eee !important;
+}
+
+.dark-mode input:focus,
+.dark-mode select:focus,
+.dark-mode textarea:focus {
+    border-color: #8b5cf6 !important;
+    outline: none !important;
+}
+
+.dark-mode select option {
+    background-color: #1a1a2e !important;
+}
+
+/* ========== 聊天区域 ========== */
+.dark-mode .chat-message-ai {
+    background-color: #2d2d4e !important;
+    color: #eee !important;
+}
+
+.dark-mode .chat-message-user {
+    background: linear-gradient(135deg, #5a4a8a 0%, #6b46a0 100%) !important;
+}
+
+/* ========== 博客卡片 ========== */
+.dark-mode .blog-card {
+    background-color: #16213e !important;
+}
+
+.dark-mode .blog-card .bg-gradient-to-r.from-purple-100.to-blue-100 {
+    background: linear-gradient(135deg, #2d2d4e 0%, #1a1a2e 100%) !important;
+}
+
+.dark-mode .category-btn.bg-gray-200 {
+    background-color: #2d2d4e !important;
+    color: #ccc !important;
+}
+
+.dark-mode .category-btn.bg-purple-600 {
+    background-color: #6b46a0 !important;
+}
+
+/* ========== 定价卡片 ========== */
+.dark-mode .bg-gradient-to-r.from-purple-100.to-indigo-100 {
+    background: linear-gradient(135deg, #2d2d4e 0%, #1a1a2e 100%) !important;
+}
+
+.dark-mode .text-purple-900 {
+    color: #a78bfa !important;
+}
+
+.dark-mode .text-purple-800 {
+    color: #c4b5fd !important;
+}
+
+/* ========== 下拉菜单 ========== */
+.dark-mode #userDropdown {
+    background-color: #16213e !important;
+}
+
+.dark-mode #userDropdown a {
+    color: #ccc !important;
+}
+
+.dark-mode #userDropdown a:hover {
+    background-color: #2d2d4e !important;
+    color: #fff !important;
+}
+
+/* ========== 使用次数横幅 ========== */
+.dark-mode #usageBanner {
+    background-color: #1a1a2e !important;
+    border-color: #4a4a6e !important;
+}
+
+.dark-mode #usageBanner,
+.dark-mode #usageBanner span,
+.dark-mode #usageBanner .text-gray-600,
+.dark-mode #usageBanner .text-gray-700,
+.dark-mode #usageBanner .text-gray-500 {
+    color: #e5e7eb !important;
+}
+
+.dark-mode #usageBanner .text-purple-600,
+.dark-mode #usageBanner a {
+    color: #a78bfa !important;
+}
+
+.dark-mode #usageBanner .text-purple-600:hover,
+.dark-mode #usageBanner a:hover {
+    color: #c4b5fd !important;
+}
+
+.dark-mode #usageBanner .text-yellow-700 {
+    color: #fbbf24 !important;
+}
+
+.dark-mode #usageBanner .text-green-600 {
+    color: #6fbf6f !important;
+}
+
+.dark-mode #usageBanner i {
+    color: #a78bfa !important;
+}
+
+/* ========== 其他提示横幅 ========== */
+.dark-mode .bg-yellow-50 {
+    background-color: #3a3a1a !important;
+}
+
+.dark-mode .text-yellow-700 {
+    color: #fbbf24 !important;
+}
+
+.dark-mode .bg-red-50 {
+    background-color: #3a1a1a !important;
+}
+
+.dark-mode .bg-green-50 {
+    background-color: #1a3a2e !important;
+}
+
+/* ========== 渐变背景 ========== */
+.dark-mode .bg-gradient-to-r.from-purple-50.to-blue-50 {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+}
+
+.dark-mode .bg-gradient-to-r.from-purple-500.to-pink-500,
+.dark-mode .bg-gradient-to-r.from-teal-500.to-green-500 {
+    background: linear-gradient(135deg, #5a4a8a 0%, #6b46a0 100%) !important;
+}
+
+/* ========== 隐私横幅 ========== */
+.dark-mode .privacy-badge {
+    background: linear-gradient(135deg, #4a3a7a 0%, #5a4a8a 100%) !important;
+}
+
+/* ========== 进度条 ========== */
+.dark-mode .bg-gray-200.rounded-full {
+    background-color: #2d2d4e !important;
+}
+
+/* ========== 滚动条 ========== */
+.dark-mode ::-webkit-scrollbar-track {
+    background: #1a1a2e !important;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+    background: #4a4a6e !important;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #667eea !important;
+}
+
+/* ========== 页脚链接 ========== */
+.dark-mode footer a {
+    color: #ccc !important;
+}
+
+.dark-mode footer a:hover {
+    color: #a78bfa !important;
+}
+
+/* ========== 加载遮罩 ========== */
+.dark-mode #loadingOverlay .bg-white {
+    background-color: #16213e !important;
+}
+
+/* ========== 结果区域 ========== */
+.dark-mode #resultSection .bg-white {
+    background-color: #16213e !important;
+}
+
+/* ========== 卡片内图标容器 ========== */
+.dark-mode .w-14.h-14.bg-purple-100,
+.dark-mode .w-14.h-14.bg-blue-100,
+.dark-mode .w-14.h-14.bg-green-100,
+.dark-mode .w-14.h-14.bg-orange-100,
+.dark-mode .w-14.h-14.bg-red-100,
+.dark-mode .w-14.h-14.bg-indigo-100,
+.dark-mode .w-14.h-14.bg-teal-100 {
+    background-color: #2d2d4e !important;
+}
+
+.dark-mode .w-14.h-14.bg-purple-100 i,
+.dark-mode .w-14.h-14.bg-blue-100 i,
+.dark-mode .w-14.h-14.bg-green-100 i,
+.dark-mode .w-14.h-14.bg-orange-100 i,
+.dark-mode .w-14.h-14.bg-red-100 i,
+.dark-mode .w-14.h-14.bg-indigo-100 i,
+.dark-mode .w-14.h-14.bg-teal-100 i {
+    color: #a78bfa !important;
+}
+
+/* ========== 选项卡按钮 ========== */
+.dark-mode .tab-btn.text-gray-700 {
+    color: #ccc !important;
+}
+
+.dark-mode .tab-btn.text-gray-700:hover {
+    color: #a78bfa !important;
+    background-color: #2d2d4e !important;
+}
+
+.dark-mode .tab-btn.bg-purple-600 {
+    background-color: #6b46a0 !important;
+}
+
+.dark-mode .bg-gray-100.rounded-full {
+    background-color: #1a1a2e !important;
+}
