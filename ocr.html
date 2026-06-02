@@ -5,46 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OCR - Extract Text from PDF | PDFHub.AI</title>
-    <meta name="description" content="Extract text from scanned PDFs using OCR. Convert images in PDF to editable text. Free and private.">
-    <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free">
-    <link rel="canonical" href="https://yourdomain.com/ocr.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js">
     <link rel="stylesheet" href="dark-mode.css">
     <script src="darkmode.js"></script>
     
-    <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
-    
     <style>
-        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background: linear-gradient(145deg, #f9fafb 0%, #ffffff 100%); }
-        .drop-zone.dragover { border-color: #8b5cf6; background: linear-gradient(145deg, #f3e8ff 0%, #faf5ff 100%); transform: scale(1.02); }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
-        
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background: #f9fafb; }
+        .drop-zone.dragover { border-color: #8b5cf6; background: #f3e8ff; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; }
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
-        
-        .processing-message {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -66,44 +37,25 @@
         </div>
     </header>
 
-    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm">
-        <i class="fas fa-chart-line text-purple-600 mr-1"></i>
-        <span id="usageText"></span>
-        <a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>
-    </div>
-
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
         <div class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">OCR - Extract Text from PDF</h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert scanned PDFs and images into editable text using AI-powered OCR.</p>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert scanned PDFs and images into editable text.</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
             <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
                 <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
                 <p class="text-gray-600">Drag & drop a PDF file here or click to select</p>
-                <p class="text-sm text-gray-400 mt-2">For scanned PDFs or images. Extracts all text from the document.</p>
                 <input type="file" id="fileInput" accept=".pdf" class="hidden">
             </div>
         </div>
 
         <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3"><i class="fas fa-file-pdf text-3xl text-red-500"></i><div><p id="fileName" class="font-medium text-gray-800"></p><p id="fileSize" class="text-sm text-gray-500"></p><p id="pageCount" class="text-xs text-blue-600 mt-1"></p></div></div>
+                <div class="flex items-center gap-3"><i class="fas fa-file-pdf text-3xl text-red-500"></i><div><p id="fileName" class="font-medium text-gray-800"></p><p id="fileSize" class="text-sm text-gray-500"></p></div></div>
                 <button id="removeFileBtn" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i> Remove</button>
             </div>
-        </div>
-
-        <div id="progressContainer" class="hidden mb-6">
-            <div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div>
-            <p id="progressText" class="text-sm text-gray-500 text-center mt-2">Processing OCR...</p>
-        </div>
-
-        <div id="processingMessage" class="hidden text-center py-4"></div>
-
-        <div class="my-6">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <div class="flex justify-center"><button id="ocrBtn" disabled class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-text-height"></i> Extract Text</button></div>
@@ -111,15 +63,14 @@
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl p-8 text-center">
                 <i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i>
-                <p id="loadingText" class="text-gray-700">Processing OCR...</p>
-                <p class="text-sm text-gray-500 mt-2">This may take a few seconds for large files</p>
+                <p>Processing...</p>
             </div>
         </div>
 
         <div id="resultSection" class="hidden mt-8">
             <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                 <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
-                    <h3 class="font-semibold text-gray-800"><i class="fas fa-file-alt mr-2"></i>Extracted Text</h3>
+                    <h3 class="font-semibold text-gray-800">Extracted Text</h3>
                     <button id="copyBtn" class="text-sm text-purple-600 hover:text-purple-700"><i class="fas fa-copy mr-1"></i> Copy</button>
                 </div>
                 <div class="p-6 max-h-96 overflow-y-auto">
@@ -139,10 +90,7 @@
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
-            <p class="mt-2">
-                <a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
-                <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a>
-            </p>
+            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
         </div>
     </footer>
 
@@ -178,202 +126,38 @@
         }
         initUserMenu();
         
-        let canUseOCR = true;
-        let currentLimit = 5;
-        let pollInterval = null;
-        
-        function checkOCRUsage() {
-            const isLoggedIn = localStorage.getItem('authToken') !== null;
-            currentLimit = isLoggedIn ? 5 : 3;
-            if (!isPro) {
-                const today = new Date().toDateString();
-                let usage = parseInt(localStorage.getItem(`ocr_usage_${today}`) || '0');
-                if (usage >= currentLimit) {
-                    canUseOCR = false;
-                    document.getElementById('ocrBtn')?.setAttribute('disabled', 'disabled');
-                    return false;
-                }
-                return true;
-            }
-            return true;
-        }
-        
-        function updateOCRUsageDisplay() {
-            const banner = document.getElementById('usageBanner');
-            const text = document.getElementById('usageText');
-            if (!banner) return;
-            const isLoggedIn = localStorage.getItem('authToken') !== null;
-            const limit = isLoggedIn ? 5 : 3;
-            if (!isPro) {
-                const today = new Date().toDateString();
-                let usage = parseInt(localStorage.getItem(`ocr_usage_${today}`) || '0');
-                let remaining = limit - usage;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    if (!isLoggedIn) {
-                        text.innerHTML = `📊 Today's OCR: ${usage}/${limit} pages. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
-                    } else {
-                        text.innerHTML = `📊 Today's OCR: ${usage}/${limit} pages. ${remaining} free uses remaining.`;
-                    }
-                } else {
-                    if (!isLoggedIn) {
-                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a> or Upgrade to Pro!`;
-                    } else {
-                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
-                    }
-                    text.style.color = '#dc2626';
-                }
-            } else {
-                banner.classList.remove('hidden');
-                text.innerHTML = `✨ Pro Member · Unlimited OCR pages ✨`;
-                text.style.color = '#16a34a';
-            }
-        }
-        
-        function recordOCRUsage() { 
-            if (!isPro) { 
-                const today = new Date().toDateString(); 
-                let u = parseInt(localStorage.getItem(`ocr_usage_${today}`) || '0'); 
-                localStorage.setItem(`ocr_usage_${today}`, u + 1); 
-                updateOCRUsageDisplay(); 
-                checkOCRUsage(); 
-            } 
-        }
-        
-        checkOCRUsage();
-        updateOCRUsageDisplay();
-        
         let selectedFile = null;
-        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), fileSizeSpan = document.getElementById('fileSize'), pageCountSpan = document.getElementById('pageCount'), removeFileBtn = document.getElementById('removeFileBtn'), ocrBtn = document.getElementById('ocrBtn'), loadingOverlay = document.getElementById('loadingOverlay'), loadingText = document.getElementById('loadingText'), resultSection = document.getElementById('resultSection'), extractedText = document.getElementById('extractedText'), copyBtn = document.getElementById('copyBtn'), errorSection = document.getElementById('errorSection'), errorMsg = document.getElementById('errorMsg'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText'), processingMessage = document.getElementById('processingMessage');
-        
-        async function getPdfPageCount(file) {
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const { PDFDocument } = window.PDFLib;
-                const pdf = await PDFDocument.load(arrayBuffer);
-                return pdf.getPageCount();
-            } catch (e) {
-                console.error('Failed to get page count:', e);
-                return 0;
-            }
-        }
+        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), fileSizeSpan = document.getElementById('fileSize'), removeFileBtn = document.getElementById('removeFileBtn'), ocrBtn = document.getElementById('ocrBtn'), loadingOverlay = document.getElementById('loadingOverlay'), resultSection = document.getElementById('resultSection'), extractedText = document.getElementById('extractedText'), copyBtn = document.getElementById('copyBtn'), errorSection = document.getElementById('errorSection'), errorMsg = document.getElementById('errorMsg');
         
         function handleFile(file) { 
             if (file && file.type === 'application/pdf') { 
-                const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
-                if (file.size > maxSize) {
-                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}. Please upgrade or compress your file.`);
-                    return;
-                }
                 selectedFile = file; 
                 fileName.textContent = file.name; 
                 fileSizeSpan.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`; 
-                
-                getPdfPageCount(file).then(pages => {
-                    if (pages > 0) {
-                        pageCountSpan.textContent = `${pages} pages`;
-                    } else {
-                        pageCountSpan.textContent = 'Unable to read page count';
-                    }
-                });
-                
                 fileInfo.classList.remove('hidden'); 
                 resultSection.classList.add('hidden'); 
                 errorSection.classList.add('hidden'); 
-                if (canUseOCR) ocrBtn.disabled = false; 
+                ocrBtn.disabled = false; 
             } else { 
                 alert('Please select a valid PDF file'); 
             } 
         }
         
         function removeFile() { 
-            if (pollInterval) {
-                clearInterval(pollInterval);
-                pollInterval = null;
-            }
             selectedFile = null; 
             fileInfo.classList.add('hidden'); 
             ocrBtn.disabled = true; 
             resultSection.classList.add('hidden'); 
             errorSection.classList.add('hidden'); 
-            processingMessage.classList.add('hidden');
-            processingMessage.innerHTML = '';
-        }
-        
-        function showProcessingMessage(message) {
-            processingMessage.classList.remove('hidden');
-            processingMessage.innerHTML = `<div class="processing-message"><i class="fas fa-spinner fa-spin"></i> ${message}</div>`;
-        }
-        
-        function hideProcessingMessage() {
-            processingMessage.classList.add('hidden');
-            processingMessage.innerHTML = '';
-        }
-        
-        function pollAsyncResult(taskId) {
-            let attempts = 0;
-            const maxAttempts = 60;
-            
-            if (pollInterval) {
-                clearInterval(pollInterval);
-            }
-            
-            pollInterval = setInterval(async () => {
-                attempts++;
-                
-                try {
-                    const response = await fetch(`${API_BASE}/api/ocr/result?taskId=${taskId}`);
-                    const data = await response.json();
-                    
-                    if (data.completed === true) {
-                        clearInterval(pollInterval);
-                        pollInterval = null;
-                        loadingOverlay.classList.add('hidden');
-                        hideProcessingMessage();
-                        extractedText.textContent = data.text;
-                        resultSection.classList.remove('hidden');
-                        recordOCRUsage();
-                    } else if (data.status === 'failed') {
-                        clearInterval(pollInterval);
-                        pollInterval = null;
-                        loadingOverlay.classList.add('hidden');
-                        hideProcessingMessage();
-                        errorMsg.textContent = data.error || 'OCR processing failed';
-                        errorSection.classList.remove('hidden');
-                    } else {
-                        showProcessingMessage(data.message || 'Processing...');
-                        progressText.textContent = data.message || 'Processing...';
-                    }
-                    
-                    if (attempts >= maxAttempts) {
-                        clearInterval(pollInterval);
-                        pollInterval = null;
-                        loadingOverlay.classList.add('hidden');
-                        hideProcessingMessage();
-                        errorMsg.textContent = 'Processing timeout. Please try again.';
-                        errorSection.classList.remove('hidden');
-                    }
-                } catch (err) {
-                    console.error('Polling failed:', err);
-                }
-            }, 2000);
         }
         
         async function performOCR() { 
-            if (!canUseOCR) { 
-                alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); 
-                return; 
-            } 
             if (!selectedFile) return; 
             
             ocrBtn.disabled = true; 
             loadingOverlay.classList.remove('hidden'); 
-            progressContainer.classList.remove('hidden'); 
-            progressBar.style.width = '0%'; 
-            progressText.textContent = 'Uploading file...'; 
             resultSection.classList.add('hidden'); 
-            errorSection.classList.add('hidden'); 
-            hideProcessingMessage();
+            errorSection.classList.add('hidden');
             
             try { 
                 const fd = new FormData(); 
@@ -390,46 +174,19 @@
                     throw new Error(data.error || `Server error (${res.status})`);
                 }
                 
-                // 处理 upgrade_required 模式
-                if (data.mode === 'upgrade_required') {
-                    loadingOverlay.classList.add('hidden');
-                    progressContainer.classList.add('hidden');
+                // 显示返回的文本（可能是升级提示）
+                loadingOverlay.classList.add('hidden');
+                if (data.text) {
                     extractedText.textContent = data.text;
                     resultSection.classList.remove('hidden');
-                    return;
-                }
-                
-                if (data.mode === 'sync') {
-                    loadingOverlay.classList.add('hidden');
-                    progressContainer.classList.add('hidden');
-                    extractedText.textContent = data.text;
-                    resultSection.classList.remove('hidden');
-                    recordOCRUsage();
-                    
-                } else if (data.mode === 'async') {
-                    loadingText.textContent = data.message || 'Large file detected. Processing in background...';
-                    showProcessingMessage(data.message || 'Large file detected. Processing in background...');
-                    progressText.textContent = 'Submitted, processing...';
-                    progressBar.style.width = '50%';
-                    
-                    pollAsyncResult(data.taskId);
-                    
+                } else if (data.error) {
+                    throw new Error(data.error);
                 } else {
-                    // 其他情况，直接显示返回的文本
-                    loadingOverlay.classList.add('hidden');
-                    progressContainer.classList.add('hidden');
-                    if (data.text) {
-                        extractedText.textContent = data.text;
-                        resultSection.classList.remove('hidden');
-                    } else {
-                        throw new Error('Unknown response format');
-                    }
+                    throw new Error('No response data');
                 }
                 
             } catch(e) { 
                 loadingOverlay.classList.add('hidden');
-                progressContainer.classList.add('hidden');
-                hideProcessingMessage();
                 errorMsg.textContent = e.message; 
                 errorSection.classList.remove('hidden'); 
             } finally {
