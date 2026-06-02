@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>if(localStorage.getItem('darkMode')==='enabled'){document.documentElement.classList.add('dark-mode');}</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="dark-mode.css">
+    <script src="darkmode.js"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -22,8 +24,20 @@
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
-        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
-        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
+        
+        .dark-mode table td,
+        .dark-mode table th,
+        .dark-mode tbody tr td {
+            color: #e5e7eb !important;
+        }
+        
+        .dark-mode .text-green-600 {
+            color: #7ee07e !important;
+        }
+        
+        .dark-mode .border-b {
+            border-bottom-color: #4a4a6e !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -45,47 +59,121 @@
         </div>
     </header>
 
+    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm">
+        <i class="fas fa-chart-line text-purple-600 mr-1"></i>
+        <span id="usageText"></span>
+        <a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>
+    </div>
+
     <div class="container mx-auto px-4 lg:px-8 py-12 max-w-4xl">
-        <div class="text-center mb-12"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">How to Use PDFHub.AI</h1><p class="text-xl text-gray-600">Step-by-step guides for all our tools</p></div>
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">How to Use PDFHub.AI</h1>
+            <p class="text-xl text-gray-600">Step-by-step guides for all our tools</p>
+        </div>
 
         <div class="space-y-8">
-            <div class="bg-white rounded-2xl shadow-md p-6"><h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-rocket text-purple-600"></i> Quick Start</h2><div class="grid md:grid-cols-3 gap-6"><div class="text-center"><div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-purple-600 font-bold text-xl">1</span></div><p class="font-semibold text-gray-800">Upload a file</p><p class="text-sm text-gray-500">Drag & drop or click to select</p></div><div class="text-center"><div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-purple-600 font-bold text-xl">2</span></div><p class="font-semibold text-gray-800">Click process button</p><p class="text-sm text-gray-500">Merge, split, compress, etc.</p></div><div class="text-center"><div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-purple-600 font-bold text-xl">3</span></div><p class="font-semibold text-gray-800">Download result</p><p class="text-sm text-gray-500">Save your processed file</p></div></div></div>
+            <div class="bg-white rounded-2xl shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-rocket text-purple-600"></i> Quick Start</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-purple-600 font-bold text-xl">1</span></div>
+                        <p class="font-semibold text-gray-800">Upload a file</p>
+                        <p class="text-sm text-gray-500">Drag & drop or click to select</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-purple-600 font-bold text-xl">2</span></div>
+                        <p class="font-semibold text-gray-800">Click process button</p>
+                        <p class="text-sm text-gray-500">Merge, split, compress, etc.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-purple-600 font-bold text-xl">3</span></div>
+                        <p class="font-semibold text-gray-800">Download result</p>
+                        <p class="text-sm text-gray-500">Save your processed file</p>
+                    </div>
+                </div>
+            </div>
 
-            <div class="bg-white rounded-2xl shadow-md p-6"><h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-robot text-purple-600"></i> AI Features</h2><div class="space-y-4"><div><h3 class="font-semibold text-gray-800">🤖 AI Chat with PDF</h3><p class="text-gray-600 text-sm">Upload a PDF, then ask questions naturally. The AI reads your document and provides answers based on its content. Perfect for research papers, contracts, and reports.</p></div><div><h3 class="font-semibold text-gray-800">📝 AI Summary</h3><p class="text-gray-600 text-sm">Get a concise summary of any PDF document. Choose from short (3-5 sentences), medium (8-10 sentences), or long (15-20 sentences) summaries.</p></div><div><h3 class="font-semibold text-gray-800">📖 OCR Text Extractor</h3><p class="text-gray-600 text-sm">Extract text from scanned PDFs and images. Perfect for digitizing paper documents or extracting text from photos.</p></div></div></div>
+            <div class="bg-white rounded-2xl shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-robot text-purple-600"></i> AI Features</h2>
+                <div class="space-y-4">
+                    <div><h3 class="font-semibold text-gray-800">🤖 AI Chat with PDF</h3><p class="text-gray-600 text-sm">Upload a PDF, then ask questions naturally. The AI reads your document and provides answers based on its content. Perfect for research papers, contracts, and reports.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">📝 AI Summary</h3><p class="text-gray-600 text-sm">Get a concise summary of any PDF document. Choose from short (3-5 sentences), medium (8-10 sentences), or long (15-20 sentences) summaries.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">📖 OCR Text Extractor</h3><p class="text-gray-600 text-sm">Extract text from scanned PDFs and images. Perfect for digitizing paper documents or extracting text from photos.</p></div>
+                </div>
+            </div>
 
-            <div class="bg-white rounded-2xl shadow-md p-6"><h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-file-pdf text-red-500"></i> PDF Tools</h2><div class="grid md:grid-cols-2 gap-4"><div><h3 class="font-semibold text-gray-800">📄 Merge PDF</h3><p class="text-gray-600 text-sm">Combine multiple PDF files into one. Upload 2+ files, drag to reorder, then click Merge.</p></div><div><h3 class="font-semibold text-gray-800">✂️ Split PDF</h3><p class="text-gray-600 text-sm">Extract specific pages. Choose a page range or enter individual page numbers.</p></div><div><h3 class="font-semibold text-gray-800">🗜️ Compress PDF</h3><p class="text-gray-600 text-sm">Reduce file size for email attachments. Choose low/medium/high compression.</p></div><div><h3 class="font-semibold text-gray-800">🖼️ PDF to Image</h3><p class="text-gray-600 text-sm">Convert each PDF page to JPG or PNG. Download all as a ZIP file.</p></div><div><h3 class="font-semibold text-gray-800">📸 Image to PDF</h3><p class="text-gray-600 text-sm">Convert JPG, PNG, GIF images into a single PDF. Drag to reorder images.</p></div><div><h3 class="font-semibold text-gray-800">🔄 Rotate PDF</h3><p class="text-gray-600 text-sm">Rotate PDF pages permanently. Choose 90°, 180°, or 270°.</p></div></div></div>
+            <div class="bg-white rounded-2xl shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-file-pdf text-red-500"></i> PDF Tools</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><h3 class="font-semibold text-gray-800">📄 Merge PDF</h3><p class="text-gray-600 text-sm">Combine multiple PDF files into one. Upload 2+ files, drag to reorder, then click Merge.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">✂️ Split PDF</h3><p class="text-gray-600 text-sm">Extract specific pages. Choose a page range or enter individual page numbers.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">🗜️ Compress PDF</h3><p class="text-gray-600 text-sm">Reduce file size for email attachments. Choose low/medium/high compression.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">🖼️ PDF to Image</h3><p class="text-gray-600 text-sm">Convert each PDF page to JPG or PNG. Download all as a ZIP file.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">📸 Image to PDF</h3><p class="text-gray-600 text-sm">Convert JPG, PNG, GIF images into a single PDF. Drag to reorder images.</p></div>
+                    <div><h3 class="font-semibold text-gray-800">🔄 Rotate PDF</h3><p class="text-gray-600 text-sm">Rotate PDF pages permanently. Choose 90°, 180°, or 270°.</p></div>
+                </div>
+            </div>
 
-            <div class="bg-white rounded-2xl shadow-md p-6"><h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-crown text-yellow-500"></i> Free vs Pro</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b"><th class="text-left py-2 px-3">Feature</th><th class="text-center py-2 px-3">Free</th><th class="text-center py-2 px-3">Pro</th></tr></thead><tbody><tr class="border-b"><td class="py-2 px-3">PDF tasks</td><td class="text-center py-2 px-3">3/day (guest) / 5/day (registered)</td><td class="text-center py-2 px-3 text-green-600">Unlimited</td></tr><tr class="border-b"><td class="py-2 px-3">AI questions</td><td class="text-center py-2 px-3">3/day (guest) / 5/day (registered)</td><td class="text-center py-2 px-3 text-green-600">Unlimited</td></tr><tr class="border-b"><td class="py-2 px-3">OCR pages</td><td class="text-center py-2 px-3">3/day (guest) / 5/day (registered)</td><td class="text-center py-2 px-3 text-green-600">Unlimited</td></tr><tr class="border-b"><td class="py-2 px-3">File size</td><td class="text-center py-2 px-3">10MB</td><td class="text-center py-2 px-3 text-green-600">100MB</td></tr><tr class="border-b"><td class="py-2 px-3">Watermark</td><td class="text-center py-2 px-3">No</td><td class="text-center py-2 px-3 text-green-600">No</td></tr><tr class="border-b"><td class="py-2 px-3">Ads</td><td class="text-center py-2 px-3">Yes</td><td class="text-center py-2 px-3 text-green-600">Ad-free</td></tr></tbody></table></div><div class="mt-4 text-center"><a href="pricing.html" class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition">Upgrade to Pro →</a></div></div>
+            <div class="bg-white rounded-2xl shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-crown text-yellow-500"></i> Free vs Pro</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-2 px-3">Feature</th>
+                                <th class="text-center py-2 px-3">Free</th>
+                                <th class="text-center py-2 px-3">Pro</th>
+                             </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="py-2 px-3">PDF tasks</td><td class="text-center py-2 px-3">3/day (guest) / 5/day (registered)</td><td class="text-center py-2 px-3 text-green-600">Unlimited</td></tr>
+                            <tr class="border-b"><td class="py-2 px-3">AI questions</td><td class="text-center py-2 px-3">3/day (guest) / 5/day (registered)</td><td class="text-center py-2 px-3 text-green-600">Unlimited</td></tr>
+                            <tr class="border-b"><td class="py-2 px-3">OCR pages</td><td class="text-center py-2 px-3">3/day (guest) / 5/day (registered)</td><td class="text-center py-2 px-3 text-green-600">Unlimited</td></tr>
+                            <tr class="border-b"><td class="py-2 px-3">File size</td><td class="text-center py-2 px-3">10MB</td><td class="text-center py-2 px-3 text-green-600">20MB</td></tr>
+                            <tr class="border-b"><td class="py-2 px-3">Watermark</td><td class="text-center py-2 px-3">No</td><td class="text-center py-2 px-3 text-green-600">No</td></tr>
+                            <tr class="border-b"><td class="py-2 px-3">Ads</td><td class="text-center py-2 px-3">Yes</td><td class="text-center py-2 px-3 text-green-600">Ad-free</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 text-center"><a href="pricing.html" class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition">Upgrade to Pro →</a></div>
+            </div>
 
-            <div class="bg-white rounded-2xl shadow-md p-6"><h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-shield-alt text-green-600"></i> Privacy & Security</h2><ul class="list-disc list-inside text-gray-600 space-y-2"><li><strong>100% local processing</strong> - Your files never leave your browser</li><li><strong>No upload</strong> - All operations happen on your device</li><li><strong>No storage</strong> - We don't save any of your files</li><li><strong>Auto-delete</strong> - Files are removed after processing</li></ul></div>
+            <div class="bg-white rounded-2xl shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fas fa-shield-alt text-green-600"></i> Privacy & Security</h2>
+                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                    <li><strong>100% local processing</strong> - Your files never leave your browser</li>
+                    <li><strong>No upload</strong> - All operations happen on your device</li>
+                    <li><strong>No storage</strong> - We don't save any of your files</li>
+                    <li><strong>Auto-delete</strong> - Files are removed after processing</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
-            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
-            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+            <p class="mt-2">
+                <a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a>
+            </p>
         </div>
     </footer>
 
     <script>
         const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
         
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        function initDarkMode() {
-            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
-        }
-        darkModeToggle?.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
-        });
-        initDarkMode();
-        
         const currentPage = window.location.pathname.split('/').pop() || 'help.html';
-        document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href');
+            if (href === currentPage) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
         
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
@@ -112,6 +200,39 @@
             }
         }
         initUserMenu();
+        
+        function updateUsageDisplay() {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const isLoggedIn = localStorage.getItem('authToken') !== null;
+            const limit = isLoggedIn ? 5 : 3;
+            if (!isPro) {
+                const today = new Date().toDateString();
+                let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                let remaining = limit - usage;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining.`;
+                    }
+                } else {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a> or Upgrade to Pro!`;
+                    } else {
+                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    }
+                    text.style.color = '#dc2626';
+                }
+            } else {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited access · No ads ✨`;
+                text.style.color = '#16a34a';
+            }
+        }
+        updateUsageDisplay();
     </script>
 </body>
 </html>

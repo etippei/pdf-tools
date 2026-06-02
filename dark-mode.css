@@ -310,8 +310,20 @@
 }
 
 /* ========== 加载遮罩 ========== */
-.dark-mode #loadingOverlay .bg-white {
-    background-color: #16213e !important;
+.dark-mode #loadingOverlay .bg-white,
+.dark-mode #loadingOverlay div.bg-white {
+    background-color: #1e293b !important;
+}
+
+.dark-mode #loadingOverlay p,
+.dark-mode #loadingOverlay .text-gray-700,
+.dark-mode #loadingOverlay .text-gray-500,
+.dark-mode #loadingOverlay .text-sm {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode #loadingOverlay .text-purple-600 {
+    color: #a78bfa !important;
 }
 
 /* ========== 结果区域 ========== */
@@ -356,4 +368,16 @@
 
 .dark-mode .bg-gray-100.rounded-full {
     background-color: #1a1a2e !important;
+}
+
+/* ========== 表格文字深色模式 ========== */
+.dark-mode table td,
+.dark-mode table th,
+.dark-mode tbody tr td,
+.dark-mode .border-b td {
+    color: #e5e7eb !important;
+}
+
+.dark-mode .border-b {
+    border-bottom-color: #4a4a6e !important;
 }

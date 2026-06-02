@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>if(localStorage.getItem('darkMode')==='enabled'){document.documentElement.classList.add('dark-mode');}</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <link rel="stylesheet" href="dark-mode.css">
+    <script src="darkmode.js"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -26,8 +28,6 @@
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
-        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
-        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -59,7 +59,12 @@
         <div class="text-center mb-6"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Rotate PDF Pages</h1><p class="text-xl text-gray-600 max-w-2xl mx-auto">Rotate all pages or specific pages. Choose 90°, 180°, or 270°.</p></div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
-            <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer"><i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i><p class="text-gray-600">Drag & drop a PDF file here or click to select</p><p class="text-sm text-gray-400 mt-2">PDF files only, max 10MB for free users</p><input type="file" id="fileInput" accept=".pdf" class="hidden"></div>
+            <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
+                <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
+                <p class="text-gray-600">Drag & drop a PDF file here or click to select</p>
+                <p class="text-sm text-gray-400 mt-2">PDF files only, max 10MB for free users, 20MB for Pro users</p>
+                <input type="file" id="fileInput" accept=".pdf" class="hidden">
+            </div>
         </div>
 
         <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -79,7 +84,7 @@
 
         <div id="resultSection" class="hidden mt-8"><div class="bg-white rounded-2xl shadow-md p-6"><div class="flex justify-between items-center flex-wrap gap-4"><div><h3 class="font-semibold text-gray-800">Rotation Complete!</h3><p class="text-sm text-gray-500">Your PDF has been rotated successfully.</p></div><button id="downloadBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition"><i class="fas fa-download"></i> Download Rotated PDF</button></div></div></div>
 
-        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p>Rotating PDF...</p></div></div>
+        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p>Rotating PDF...</p><p class="text-sm text-gray-500 mt-2">This may take a few seconds</p></div></div>
 
         <div class="mt-12 prose max-w-none"><h2 class="text-2xl font-bold text-gray-800 mb-4">How to Rotate PDF Pages</h2><p class="text-gray-600 mb-4">Sometimes PDF pages are scanned or created in the wrong orientation. Rotating PDF pages allows you to fix page orientation.</p><h3 class="text-xl font-semibold text-gray-800 mb-3">Step-by-Step Guide</h3><ol class="list-decimal list-inside text-gray-600 space-y-2 mb-6"><li>Upload your PDF file</li><li>Choose to rotate all pages or specific pages</li><li>Select rotation angle (90°, 180°, or 270°)</li><li>Click "Rotate PDF" button</li><li>Download your rotated file</li></ol><div class="bg-gray-100 rounded-xl p-6 mb-6"><h3 class="font-semibold text-gray-800 mb-3">FAQ</h3><div class="space-y-3"><div><p class="font-medium text-gray-700">Can I rotate specific pages only?</p><p class="text-gray-600 text-sm">Yes! You can choose to rotate all pages or specify which pages.</p></div><div><p class="font-medium text-gray-700">Is my data secure?</p><p class="text-gray-600 text-sm">Absolutely. All processing happens locally in your browser.</p></div></div></div></div>
     </div>
@@ -87,25 +92,15 @@
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
-            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
-            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+            <p class="mt-2">
+                <a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a>
+            </p>
         </div>
     </footer>
 
     <script>
         const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
-        
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        function initDarkMode() {
-            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
-        }
-        darkModeToggle?.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
-        });
-        initDarkMode();
         
         const currentPage = window.location.pathname.split('/').pop() || 'rotate.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
@@ -173,7 +168,25 @@
         
         rangeRadios.forEach(radio => { radio.addEventListener('change', () => { if (document.querySelector('input[name="range"]:checked').value === 'specific') { pageRangeInput.classList.remove('hidden'); } else { pageRangeInput.classList.add('hidden'); } }); });
         
-        function handleFile(file) { if (file && file.type === 'application/pdf') { selectedFile = file; fileName.textContent = file.name; fileSizeSpan.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`; loadPdfInfo(file); fileInfo.classList.remove('hidden'); rotateOptions.classList.remove('hidden'); resultSection.classList.add('hidden'); if(canUseTool) rotateBtn.disabled = false; } else { alert('Please select a valid PDF file'); } }
+        function handleFile(file) { 
+            if (file && file.type === 'application/pdf') {
+                const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}. Please upgrade or compress your file.`);
+                    return;
+                }
+                selectedFile = file;
+                fileName.textContent = file.name;
+                fileSizeSpan.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`;
+                loadPdfInfo(file);
+                fileInfo.classList.remove('hidden');
+                rotateOptions.classList.remove('hidden');
+                resultSection.classList.add('hidden');
+                if(canUseTool) rotateBtn.disabled = false;
+            } else {
+                alert('Please select a valid PDF file');
+            }
+        }
         
         async function loadPdfInfo(file) { try { const { PDFDocument } = PDFLib; const ab = await file.arrayBuffer(); const pdf = await PDFDocument.load(ab); totalPages = pdf.getPageCount(); pageCountSpan.textContent = `${totalPages} page${totalPages > 1 ? 's' : ''}`; pageNumbersInput.placeholder = `e.g., 1,3,5-${totalPages}`; } catch(e) { pageCountSpan.textContent = 'Unable to read PDF'; } }
         

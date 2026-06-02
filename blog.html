@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>if(localStorage.getItem('darkMode')==='enabled'){document.documentElement.classList.add('dark-mode');}</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="dark-mode.css">
+    <script src="darkmode.js"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -25,8 +27,6 @@
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
-        .dark-mode #darkModeToggle { color: #fbbf24 !important; background-color: #2d2d4e !important; }
-        .dark-mode #darkModeToggle:hover { background-color: #3d3d5e !important; color: #fcd34d !important; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -65,25 +65,15 @@
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
-            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
-            <p class="mt-3 text-xs text-gray-500">Powered by <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">PDF.js</a> | AI by <a href="https://open.bigmodel.cn/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">Zhipu AI</a> | OCR by <a href="https://docstrange.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition">DocStrange</a></p>
+            <p class="mt-2">
+                <a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a>
+            </p>
         </div>
     </footer>
 
     <script>
         const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
-        
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        function initDarkMode() {
-            if (localStorage.getItem('darkMode') === 'enabled') { document.body.classList.add('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { document.body.classList.remove('dark-mode'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
-        }
-        darkModeToggle?.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) { localStorage.setItem('darkMode', 'enabled'); darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { localStorage.setItem('darkMode', 'disabled'); darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
-        });
-        initDarkMode();
         
         const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
@@ -176,7 +166,7 @@
             const filtered = posts.filter(p => (currentCategory==="all" || p.category===currentCategory) && (p.title.toLowerCase().includes(currentSearch.toLowerCase()) || p.excerpt.toLowerCase().includes(currentSearch.toLowerCase()))); 
             const grid=document.getElementById('postsGrid'), spinner=document.getElementById('loadingSpinner'), no=document.getElementById('noResults'); 
             if(filtered.length===0){ grid.classList.add('hidden'); no.classList.remove('hidden'); spinner.classList.add('hidden'); return; } 
-            grid.innerHTML=filtered.map(p=>`<div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg"><div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center"><i class="fas fa-file-pdf text-5xl text-purple-400"></i></div><div class="p-5"><div class="flex items-center gap-2 mb-3"><span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span><span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span></div><h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3><p class="text-gray-500 mb-4">${escapeHtml(p.excerpt)}</p><a href="${p.url}" target="_blank" class="text-purple-600 font-medium hover:text-purple-700">Read More <i class="fas fa-arrow-right text-sm"></i></a></div></div>`).join(''); 
+            grid.innerHTML=filtered.map(p=>`<div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg"><div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center"><i class="fas fa-file-pdf text-5xl text-purple-400"></i></div><div class="p-5"><div class="flex items-center gap-2 mb-3"><span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span><span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span></div><h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3><p class="text-gray-500 mb-4">${escapeHtml(p.excerpt)}</p><a href="${p.url}" target="_blank" rel="noopener noreferrer" class="text-purple-600 font-medium hover:text-purple-700">Read More <i class="fas fa-arrow-right text-sm"></i></a></div></div>`).join(''); 
             grid.classList.remove('hidden'); 
             spinner.classList.add('hidden'); 
             no.classList.add('hidden'); 
