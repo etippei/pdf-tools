@@ -76,6 +76,9 @@
         <div class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">OCR - Extract Text from PDF</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert scanned PDFs and images into editable text using AI-powered OCR.</p>
+            <span class="block text-sm mt-3 text-green-600 font-medium">
+                <i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device
+            </span>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -390,11 +393,9 @@
                     throw new Error(data.error || `Server error (${res.status})`);
                 }
                 
-                // 关闭加载提示
                 loadingOverlay.classList.add('hidden');
                 progressContainer.classList.add('hidden');
                 
-                // 显示返回的文本
                 if (data.text) {
                     extractedText.textContent = data.text;
                     resultSection.classList.remove('hidden');
@@ -402,12 +403,10 @@
                     throw new Error('No response data');
                 }
                 
-                // 只有成功处理时才记录使用次数
                 if (data.mode === 'sync' || data.mode === 'async') {
                     recordOCRUsage();
                 }
                 
-                // 重新检查使用次数显示
                 checkOCRUsage();
                 updateOCRUsageDisplay();
                 
