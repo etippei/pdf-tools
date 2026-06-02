@@ -82,7 +82,7 @@
             <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
                 <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
                 <p class="text-gray-600">Drag & drop a PDF file here or click to select</p>
-                <p class="text-sm text-gray-400 mt-2">For scanned PDFs or images. Extracts all text from the document. Max 20MB for Pro users.</p>
+                <p class="text-sm text-gray-400 mt-2">For scanned PDFs or images. Extracts all text from the document.</p>
                 <input type="file" id="fileInput" accept=".pdf" class="hidden">
             </div>
         </div>
@@ -390,6 +390,15 @@
                     throw new Error(data.error || `Server error (${res.status})`);
                 }
                 
+                // 处理 upgrade_required 模式
+                if (data.mode === 'upgrade_required') {
+                    loadingOverlay.classList.add('hidden');
+                    progressContainer.classList.add('hidden');
+                    extractedText.textContent = data.text;
+                    resultSection.classList.remove('hidden');
+                    return;
+                }
+                
                 if (data.mode === 'sync') {
                     loadingOverlay.classList.add('hidden');
                     progressContainer.classList.add('hidden');
@@ -406,7 +415,15 @@
                     pollAsyncResult(data.taskId);
                     
                 } else {
-                    throw new Error('Unknown processing mode');
+                    // 其他情况，直接显示返回的文本
+                    loadingOverlay.classList.add('hidden');
+                    progressContainer.classList.add('hidden');
+                    if (data.text) {
+                        extractedText.textContent = data.text;
+                        resultSection.classList.remove('hidden');
+                    } else {
+                        throw new Error('Unknown response format');
+                    }
                 }
                 
             } catch(e) { 
