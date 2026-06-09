@@ -36,6 +36,137 @@
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
+        
+        /* 文章弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+            color: #1f2937;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.7;
+            color: #374151;
+        }
+        .modal-body h1 { font-size: 1.8rem; margin-top: 0; margin-bottom: 16px; }
+        .modal-body h2 { font-size: 1.4rem; margin-top: 24px; margin-bottom: 12px; }
+        .modal-body h3 { font-size: 1.2rem; margin-top: 20px; margin-bottom: 10px; }
+        .modal-body p { margin-bottom: 16px; }
+        .modal-body ul, .modal-body ol { margin-bottom: 16px; padding-left: 24px; }
+        .modal-body li { margin-bottom: 6px; }
+        .modal-body img { max-width: 100%; height: auto; border-radius: 8px; margin: 16px 0; }
+        .modal-body pre {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+        }
+        .modal-body blockquote {
+            border-left: 4px solid #8b5cf6;
+            margin: 16px 0;
+            padding-left: 16px;
+            color: #6b7280;
+        }
+        .modal-body .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 8px;
+        }
+        .modal-body .warning-box {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 8px;
+        }
+        
+        .dark-mode .modal-container {
+            background: #1e293b;
+        }
+        .dark-mode .modal-header {
+            background: #1e293b;
+            border-bottom-color: #334155;
+        }
+        .dark-mode .modal-header h2 {
+            color: #f1f5f9;
+        }
+        .dark-mode .modal-body {
+            color: #cbd5e1;
+        }
+        .dark-mode .modal-body pre {
+            background: #0f172a;
+        }
+        .dark-mode .modal-close:hover {
+            background: #334155;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -69,6 +200,19 @@
         <div id="loadingSpinner" class="text-center py-12"><i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i><p class="text-gray-500 mt-3">Loading articles...</p></div>
         <div id="postsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 hidden"></div>
         <div id="noResults" class="text-center py-12 hidden"><i class="fas fa-newspaper text-5xl text-gray-300 mb-4"></i><p class="text-gray-500">No articles found.</p></div>
+    </div>
+
+    <!-- 文章弹窗 -->
+    <div id="articleModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">Loading...</h2>
+                <button class="modal-close" id="modalCloseBtn">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <div class="text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-purple-600"></i><p class="mt-3">Loading article...</p></div>
+            </div>
+        </div>
     </div>
 
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
@@ -115,6 +259,112 @@
         const GITHUB_LABEL = "blog-post";
         let allPosts = [], currentCategory = "all", currentSearch = "";
         
+        // 弹窗元素
+        const modal = document.getElementById('articleModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        
+        // 关闭弹窗
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+        
+        // 打开弹窗并加载文章
+        async function openArticle(issueNumber, title) {
+            modalTitle.textContent = title;
+            modalBody.innerHTML = '<div class="text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-purple-600"></i><p class="mt-3">Loading article...</p></div>';
+            modal.classList.add('active');
+            
+            try {
+                // 从 GitHub API 获取 Issue 内容
+                const url = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues/${issueNumber}`;
+                const response = await fetch(url);
+                const issue = await response.json();
+                
+                if (issue.body) {
+                    // 将 Markdown 转换为 HTML
+                    let htmlContent = await markdownToHtml(issue.body);
+                    modalBody.innerHTML = htmlContent;
+                } else {
+                    modalBody.innerHTML = '<p class="text-red-500">Failed to load article content.</p>';
+                }
+            } catch (error) {
+                console.error('Failed to load article:', error);
+                modalBody.innerHTML = '<p class="text-red-500">Error loading article. Please try again later.</p>';
+            }
+        }
+        
+        // 简单的 Markdown 转 HTML 函数
+        function markdownToHtml(markdown) {
+            let html = markdown;
+            
+            // 提取 frontmatter（--- 之间的内容）并移除
+            html = html.replace(/^---[\s\S]*?---\n/, '');
+            
+            // 转义 HTML 特殊字符（除了我们要转换的 Markdown 语法）
+            // 先保护代码块
+            const codeBlocks = [];
+            html = html.replace(/```([\s\S]*?)```/g, (match, code) => {
+                const index = codeBlocks.length;
+                codeBlocks.push(`<pre><code>${escapeHtml(code.trim())}</code></pre>`);
+                return `{{CODE_BLOCK_${index}}}`;
+            });
+            
+            // 行内代码
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // 标题
+            html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            
+            // 粗体和斜体
+            html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // 引用块
+            html = html.replace(/^> (.*)$/gm, '<blockquote>$1</blockquote>');
+            
+            // 列表
+            html = html.replace(/^- (.*)$/gm, '<li>$1</li>');
+            html = html.replace(/^(\d+)\. (.*)$/gm, '<li value="$1">$2</li>');
+            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+            
+            // 链接
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-purple-600 hover:underline">$1</a>');
+            
+            // 段落（连续的非空行）
+            html = html.replace(/\n\n/g, '</p><p>');
+            html = '<p>' + html + '</p>';
+            
+            // 修复嵌套的段落
+            html = html.replace(/<p><ul>/g, '<ul>');
+            html = html.replace(/<\/ul><\/p>/g, '</ul>');
+            html = html.replace(/<p><\/p>/g, '');
+            
+            // 恢复代码块
+            codeBlocks.forEach((block, index) => {
+                html = html.replace(`{{CODE_BLOCK_${index}}}`, block);
+            });
+            
+            // 处理提示框（自定义语法）
+            html = html.replace(/>\s*💡\s*(.*?)(?=\n\n|$)/gs, '<div class="tip-box"><strong>💡 Tip:</strong> $1</div>');
+            html = html.replace(/>\s*⚠️\s*(.*?)(?=\n\n|$)/gs, '<div class="warning-box"><strong>⚠️ Warning:</strong> $1</div>');
+            
+            return html;
+        }
+        
+        function escapeHtml(text) {
+            return text.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
         async function fetchBlogPosts() { 
             try { 
                 const url = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues?labels=${GITHUB_LABEL}&state=open&per_page=50`; 
@@ -131,8 +381,7 @@
                         category: meta.category || "Tip", 
                         excerpt: meta.excerpt || content.slice(0,200)+(content.length>200?"...":""), 
                         image: meta.image || null, 
-                        url: `https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues/${issue.number}`, 
-                        comments: issue.comments 
+                        number: issue.number
                     }; 
                 }); 
             } catch(e) { return []; } 
@@ -172,16 +421,26 @@
             const filtered = posts.filter(p => (currentCategory==="all" || p.category===currentCategory) && (p.title.toLowerCase().includes(currentSearch.toLowerCase()) || p.excerpt.toLowerCase().includes(currentSearch.toLowerCase()))); 
             const grid=document.getElementById('postsGrid'), spinner=document.getElementById('loadingSpinner'), no=document.getElementById('noResults'); 
             if(filtered.length===0){ grid.classList.add('hidden'); no.classList.remove('hidden'); spinner.classList.add('hidden'); return; } 
-            grid.innerHTML=filtered.map(p=>`<div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg"><div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center"><i class="fas fa-file-pdf text-5xl text-purple-400"></i></div><div class="p-5"><div class="flex items-center gap-2 mb-3"><span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span><span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span></div><h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3><p class="text-gray-500 mb-4">${escapeHtml(p.excerpt)}</p><a href="${p.url}" target="_blank" rel="noopener noreferrer" class="text-purple-600 font-medium hover:text-purple-700">Read More <i class="fas fa-arrow-right text-sm"></i></a></div></div>`).join(''); 
+            grid.innerHTML=filtered.map(p=>`<div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg"><div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center"><i class="fas fa-file-pdf text-5xl text-purple-400"></i></div><div class="p-5"><div class="flex items-center gap-2 mb-3"><span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span><span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span></div><h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3><p class="text-gray-500 mb-4">${escapeHtml(p.excerpt)}</p><button onclick="openArticle(${p.number}, '${escapeHtml(p.title).replace(/'/g, "\\'")}')" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></button></div></div>`).join(''); 
             grid.classList.remove('hidden'); 
             spinner.classList.add('hidden'); 
             no.classList.add('hidden'); 
         }
         
-        function escapeHtml(str) { 
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); 
-        }
+        // 将 openArticle 挂载到 window 对象，供 onclick 调用
+        window.openArticle = openArticle;
+        
+        // 绑定关闭弹窗事件
+        modalCloseBtn?.addEventListener('click', closeModal);
+        modal?.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        // ESC 键关闭弹窗
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
         
         async function init() { allPosts = await fetchBlogPosts(); renderPosts(allPosts); }
         
