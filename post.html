@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详情 - PDFHub.AI Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .markdown-body {
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; font-family: monospace; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        
+        html.dark-mode .markdown-body pre,
+        html.dark-mode .markdown-body code { background: #2d3748; color: #e2e8f0; }
+        html.dark-mode .markdown-body blockquote { color: #a0aec0; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="index.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700">Tools</a>
+                <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white">Blog</a>
+                <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700">Pricing</a>
+            </div>
+            <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <div id="postContent" class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <div class="text-center py-12">
+                <i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i>
+                <p class="text-gray-500 mt-3">加载文章中...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://api.github.com/repos/etippei/pdf-tools/issues';
+        
+        async function loadPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (!id) {
+                document.getElementById('postContent').innerHTML = '<div class="text-center py-12 text-red-500">文章ID不存在</div>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/${id}`);
+                const issue = await response.json();
+                
+                if (issue.message) {
+                    throw new Error('文章不存在');
+                }
+                
+                const { title, body, created_at, comments } = issue;
+                const meta = parseMetadata(body);
+                const content = stripMetadata(body);
+                const formattedDate = new Date(created_at).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+                
+                // 简单的Markdown渲染（基础版）
+                const htmlContent = renderMarkdown(content);
+                
+                document.getElementById('postContent').innerHTML = `
+                    <article>
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">${escapeHtml(title)}</h1>
+                        <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                            <span><i class="far fa-calendar-alt mr-2"></i>${formattedDate}</span>
+                            <span><i class="fas fa-tag mr-2"></i>${escapeHtml(meta.category || 'Tip')}</span>
+                            <span><i class="far fa-comment mr-2"></i>${comments} 条评论</span>
+                        </div>
+                        <div class="markdown-body prose max-w-none">
+                            ${htmlContent}
+                        </div>
+                        <div class="mt-8 pt-6 border-t text-center">
+                            <a href="blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                                <i class="fas fa-arrow-left"></i> 返回博客列表
+                            </a>
+                        </div>
+                    </article>
+                `;
+            } catch (error) {
+                document.getElementById('postContent').innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-5xl text-red-400 mb-4"></i>
+                        <p class="text-red-500">加载失败：${error.message}</p>
+                        <a href="blog.html" class="inline-block mt-4 text-purple-600 hover:underline">返回博客首页</a>
+                    </div>
+                `;
+            }
+        }
+        
+        function parseMetadata(body) {
+            const meta = {};
+            if (!body) return meta;
+            const lines = body.split('\n');
+            let inMeta = false, metaEnd = false;
+            for (const line of lines) {
+                if (line.trim() === '---') {
+                    if (!inMeta) { inMeta = true; continue; }
+                    else { metaEnd = true; break; }
+                }
+                if (inMeta && !metaEnd) {
+                    const match = line.match(/^(\w+):\s*(.*)$/);
+                    if (match) meta[match[1].toLowerCase()] = match[2].trim();
+                }
+            }
+            return meta;
+        }
+        
+        function stripMetadata(body) {
+            if (!body) return '';
+            const lines = body.split('\n');
+            let start = 0, end = false;
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim() === '---') {
+                    if (start === 0) start = i + 1;
+                    else { end = true; start = i + 1; break; }
+                }
+            }
+            return end ? lines.slice(start).join('\n') : body;
+        }
+        
+        function renderMarkdown(markdown) {
+            if (!markdown) return '';
+            // 简单的Markdown渲染（生产环境建议使用marked.js库）
+            let html = escapeHtml(markdown);
+            
+            // 代码块 ```code```
+            html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
+            
+            // 行内代码 `code`
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // 标题
+            html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            
+            // 粗体和斜体
+            html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // 链接 [text](url)
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">$1</a>');
+            
+            // 图片 ![alt](url)
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full h-auto rounded-lg my-4">');
+            
+            // 段落（简单处理）
+            html = html.replace(/\n\n/g, '</p><p>');
+            html = '<p>' + html + '</p>';
+            
+            // 清理空段落
+            html = html.replace(/<p>\s*<\/p>/g, '');
+            
+            return html;
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Dark mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        
+        loadPost();
+    </script>
+</body>
+</html>

@@ -10,22 +10,37 @@
     <link rel="canonical" href="https://aipdfly.com/blog.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="dark-mode.css">
-    <script src="darkmode.js"></script>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWCSYTJ60S"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZWCSYTJ60S');
-    </script>
-    
-    <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
     
     <style>
+        /* dark mode overrides */
+        html.dark-mode body {
+            background-color: #111827;
+            color: #e5e7eb;
+        }
+        html.dark-mode .bg-gray-50 { background-color: #111827; }
+        html.dark-mode .bg-white { background-color: #1f2937; color: #f3f4f6; }
+        html.dark-mode .text-gray-800 { color: #f9fafb; }
+        html.dark-mode .text-gray-600 { color: #d1d5db; }
+        html.dark-mode .text-gray-500 { color: #9ca3af; }
+        html.dark-mode .text-gray-700 { color: #e5e7eb; }
+        html.dark-mode .bg-gray-100 { background-color: #374151; }
+        html.dark-mode .border-gray-300 { border-color: #4b5563; }
+        html.dark-mode .bg-gray-200 { background-color: #374151; color: #f3f4f6; }
+        html.dark-mode .hover\:bg-gray-200:hover { background-color: #4b5563; }
+        html.dark-mode .hover\:bg-gray-100:hover { background-color: #374151; }
+        html.dark-mode footer.bg-gray-800 { background-color: #0f172a; }
+        html.dark-mode .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
+        html.dark-mode .blog-card { background: #1f2937; }
+        html.dark-mode .bg-purple-100 { background-color: #4c1d95; }
+        html.dark-mode .text-purple-600 { color: #a78bfa; }
+        html.dark-mode .bg-gradient-to-r.from-purple-100.to-blue-100 { background: linear-gradient(135deg, #2e1065, #1e3a8a); }
+        html.dark-mode input { background-color: #1f2937; color: #f3f4f6; border-color: #4b5563; }
+        html.dark-mode input::placeholder { color: #9ca3af; }
+        html.dark-mode #userDropdown { background-color: #1f2937; color: #e5e7eb; border: 1px solid #374151; }
+        html.dark-mode #userDropdown a { color: #e5e7eb; }
+        html.dark-mode #userDropdown a:hover { background-color: #374151; }
+        html.dark-mode .category-btn.bg-gray-200 { background-color: #374151; color: #e5e7eb; }
+        
         .blog-card { transition: transform 0.2s, box-shadow 0.2s; }
         .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
@@ -33,139 +48,16 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        html.dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
         
-        /* 文章弹窗样式 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-container {
-            background: white;
-            width: 90%;
-            max-width: 800px;
-            max-height: 85vh;
-            border-radius: 16px;
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
-        }
-        .modal-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-        }
-        .modal-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-            color: #1f2937;
-        }
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #6b7280;
-            padding: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-        .modal-close:hover {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-        .modal-body {
-            padding: 24px;
-            overflow-y: auto;
-            flex: 1;
-            line-height: 1.7;
-            color: #374151;
-        }
-        .modal-body h1 { font-size: 1.8rem; margin-top: 0; margin-bottom: 16px; }
-        .modal-body h2 { font-size: 1.4rem; margin-top: 24px; margin-bottom: 12px; }
-        .modal-body h3 { font-size: 1.2rem; margin-top: 20px; margin-bottom: 10px; }
-        .modal-body p { margin-bottom: 16px; }
-        .modal-body ul, .modal-body ol { margin-bottom: 16px; padding-left: 24px; }
-        .modal-body li { margin-bottom: 6px; }
-        .modal-body img { max-width: 100%; height: auto; border-radius: 8px; margin: 16px 0; }
-        .modal-body pre {
-            background: #f3f4f6;
-            padding: 12px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 0.85rem;
-        }
-        .modal-body blockquote {
-            border-left: 4px solid #8b5cf6;
-            margin: 16px 0;
-            padding-left: 16px;
-            color: #6b7280;
-        }
-        .modal-body .tip-box {
-            background: #f0fdf4;
-            border-left: 4px solid #10b981;
-            padding: 12px 16px;
-            margin: 16px 0;
-            border-radius: 8px;
-        }
-        .modal-body .warning-box {
-            background: #fefce8;
-            border-left: 4px solid #eab308;
-            padding: 12px 16px;
-            margin: 16px 0;
-            border-radius: 8px;
-        }
-        
-        .dark-mode .modal-container {
-            background: #1e293b;
-        }
-        .dark-mode .modal-header {
-            background: #1e293b;
-            border-bottom-color: #334155;
-        }
-        .dark-mode .modal-header h2 {
-            color: #f1f5f9;
-        }
-        .dark-mode .modal-body {
-            color: #cbd5e1;
-        }
-        .dark-mode .modal-body pre {
-            background: #0f172a;
-        }
-        .dark-mode .modal-close:hover {
-            background: #334155;
         }
     </style>
 </head>
@@ -189,29 +81,38 @@
     </header>
 
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-6xl">
-        <div class="text-center mb-12"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">PDF Tips & Tutorials</h1><p class="text-xl text-gray-600">Learn how to work with PDF files like a pro.</p></div>
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">PDF Tips & Tutorials</h1>
+            <p class="text-xl text-gray-600">Learn how to work with PDF files like a pro.</p>
+        </div>
         
-        <div class="max-w-xl mx-auto mb-12"><div class="relative"><i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i><input type="text" id="searchInput" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"></div></div>
+        <div class="max-w-xl mx-auto mb-12">
+            <div class="relative">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+            </div>
+        </div>
         
-        <div class="flex flex-wrap justify-center gap-2 mb-8"><button data-category="all" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-purple-600 text-white">All</button><button data-category="Tutorial" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Tutorials</button><button data-category="Guide" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Guides</button><button data-category="Tip" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Tips</button></div>
+        <div class="flex flex-wrap justify-center gap-2 mb-8">
+            <button data-category="all" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-purple-600 text-white">All</button>
+            <button data-category="Tutorial" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Tutorials</button>
+            <button data-category="Guide" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Guides</button>
+            <button data-category="Tip" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300">Tips</button>
+        </div>
         
-        <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+        <div class="my-6">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
         
-        <div id="loadingSpinner" class="text-center py-12"><i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i><p class="text-gray-500 mt-3">Loading articles...</p></div>
+        <div id="loadingSpinner" class="text-center py-12">
+            <i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i>
+            <p class="text-gray-500 mt-3">Loading articles...</p>
+        </div>
         <div id="postsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 hidden"></div>
-        <div id="noResults" class="text-center py-12 hidden"><i class="fas fa-newspaper text-5xl text-gray-300 mb-4"></i><p class="text-gray-500">No articles found.</p></div>
-    </div>
-
-    <!-- 文章弹窗 -->
-    <div id="articleModal" class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2 id="modalTitle">Loading...</h2>
-                <button class="modal-close" id="modalCloseBtn">&times;</button>
-            </div>
-            <div id="modalBody" class="modal-body">
-                <div class="text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-purple-600"></i><p class="mt-3">Loading article...</p></div>
-            </div>
+        <div id="noResults" class="text-center py-12 hidden">
+            <i class="fas fa-newspaper text-5xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500">No articles found.</p>
         </div>
     </div>
 
@@ -223,11 +124,12 @@
     </footer>
 
     <script>
-        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        const GITHUB_REPO_OWNER = "etippei";
+        const GITHUB_REPO_NAME = "pdf-tools";
+        const GITHUB_LABEL = "blog-post";
+        let allPosts = [], currentCategory = "all", currentSearch = "";
         
-        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
-        document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
-        
+        // 用户菜单初始化
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
@@ -254,117 +156,32 @@
         }
         initUserMenu();
         
-        const GITHUB_REPO_OWNER = "etippei";
-        const GITHUB_REPO_NAME = "pdf-tools";
-        const GITHUB_LABEL = "blog-post";
-        let allPosts = [], currentCategory = "all", currentSearch = "";
-        
-        // 弹窗元素
-        const modal = document.getElementById('articleModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        const modalCloseBtn = document.getElementById('modalCloseBtn');
-        
-        // 关闭弹窗
-        function closeModal() {
-            modal.classList.remove('active');
+        // 暗色模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
         
-        // 打开弹窗并加载文章
-        async function openArticle(issueNumber, title) {
-            modalTitle.textContent = title;
-            modalBody.innerHTML = '<div class="text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-purple-600"></i><p class="mt-3">Loading article...</p></div>';
-            modal.classList.add('active');
-            
-            try {
-                // 从 GitHub API 获取 Issue 内容
-                const url = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues/${issueNumber}`;
-                const response = await fetch(url);
-                const issue = await response.json();
-                
-                if (issue.body) {
-                    // 将 Markdown 转换为 HTML
-                    let htmlContent = await markdownToHtml(issue.body);
-                    modalBody.innerHTML = htmlContent;
-                } else {
-                    modalBody.innerHTML = '<p class="text-red-500">Failed to load article content.</p>';
-                }
-            } catch (error) {
-                console.error('Failed to load article:', error);
-                modalBody.innerHTML = '<p class="text-red-500">Error loading article. Please try again later.</p>';
-            }
-        }
+        // 高亮当前导航
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => { 
+            const href = btn.getAttribute('href'); 
+            if (href === currentPage) { 
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); 
+                btn.classList.remove('text-gray-700'); 
+            } else { 
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); 
+                btn.classList.add('text-gray-700'); 
+            } 
+        });
         
-        // 简单的 Markdown 转 HTML 函数
-        function markdownToHtml(markdown) {
-            let html = markdown;
-            
-            // 提取 frontmatter（--- 之间的内容）并移除
-            html = html.replace(/^---[\s\S]*?---\n/, '');
-            
-            // 转义 HTML 特殊字符（除了我们要转换的 Markdown 语法）
-            // 先保护代码块
-            const codeBlocks = [];
-            html = html.replace(/```([\s\S]*?)```/g, (match, code) => {
-                const index = codeBlocks.length;
-                codeBlocks.push(`<pre><code>${escapeHtml(code.trim())}</code></pre>`);
-                return `{{CODE_BLOCK_${index}}}`;
-            });
-            
-            // 行内代码
-            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-            
-            // 标题
-            html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-            html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-            html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
-            
-            // 粗体和斜体
-            html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-            
-            // 引用块
-            html = html.replace(/^> (.*)$/gm, '<blockquote>$1</blockquote>');
-            
-            // 列表
-            html = html.replace(/^- (.*)$/gm, '<li>$1</li>');
-            html = html.replace(/^(\d+)\. (.*)$/gm, '<li value="$1">$2</li>');
-            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-            
-            // 链接
-            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-purple-600 hover:underline">$1</a>');
-            
-            // 段落（连续的非空行）
-            html = html.replace(/\n\n/g, '</p><p>');
-            html = '<p>' + html + '</p>';
-            
-            // 修复嵌套的段落
-            html = html.replace(/<p><ul>/g, '<ul>');
-            html = html.replace(/<\/ul><\/p>/g, '</ul>');
-            html = html.replace(/<p><\/p>/g, '');
-            
-            // 恢复代码块
-            codeBlocks.forEach((block, index) => {
-                html = html.replace(`{{CODE_BLOCK_${index}}}`, block);
-            });
-            
-            // 处理提示框（自定义语法）
-            html = html.replace(/>\s*💡\s*(.*?)(?=\n\n|$)/gs, '<div class="tip-box"><strong>💡 Tip:</strong> $1</div>');
-            html = html.replace(/>\s*⚠️\s*(.*?)(?=\n\n|$)/gs, '<div class="warning-box"><strong>⚠️ Warning:</strong> $1</div>');
-            
-            return html;
-        }
-        
-        function escapeHtml(text) {
-            return text.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
+        // 获取博客文章
         async function fetchBlogPosts() { 
             try { 
                 const url = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues?labels=${GITHUB_LABEL}&state=open&per_page=50`; 
@@ -381,10 +198,13 @@
                         category: meta.category || "Tip", 
                         excerpt: meta.excerpt || content.slice(0,200)+(content.length>200?"...":""), 
                         image: meta.image || null, 
-                        number: issue.number
+                        comments: issue.comments 
                     }; 
                 }); 
-            } catch(e) { return []; } 
+            } catch(e) { 
+                console.error('Fetch error:', e);
+                return []; 
+            } 
         }
         
         function parseMetadata(body) { 
@@ -417,35 +237,88 @@
             return end ? lines.slice(start).join('\n') : body; 
         }
         
+        function escapeHtml(str) { 
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) { 
+                if(m==='&') return '&amp;'; 
+                if(m==='<') return '&lt;'; 
+                if(m==='>') return '&gt;'; 
+                return m; 
+            }); 
+        }
+        
         function renderPosts(posts) { 
-            const filtered = posts.filter(p => (currentCategory==="all" || p.category===currentCategory) && (p.title.toLowerCase().includes(currentSearch.toLowerCase()) || p.excerpt.toLowerCase().includes(currentSearch.toLowerCase()))); 
-            const grid=document.getElementById('postsGrid'), spinner=document.getElementById('loadingSpinner'), no=document.getElementById('noResults'); 
-            if(filtered.length===0){ grid.classList.add('hidden'); no.classList.remove('hidden'); spinner.classList.add('hidden'); return; } 
-            grid.innerHTML=filtered.map(p=>`<div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg"><div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center"><i class="fas fa-file-pdf text-5xl text-purple-400"></i></div><div class="p-5"><div class="flex items-center gap-2 mb-3"><span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span><span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span></div><h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3><p class="text-gray-500 mb-4">${escapeHtml(p.excerpt)}</p><button onclick="openArticle(${p.number}, '${escapeHtml(p.title).replace(/'/g, "\\'")}')" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></button></div></div>`).join(''); 
+            const filtered = posts.filter(p => 
+                (currentCategory==="all" || p.category===currentCategory) && 
+                (p.title.toLowerCase().includes(currentSearch.toLowerCase()) || 
+                 p.excerpt.toLowerCase().includes(currentSearch.toLowerCase()))
+            ); 
+            const grid=document.getElementById('postsGrid'), 
+                  spinner=document.getElementById('loadingSpinner'), 
+                  no=document.getElementById('noResults'); 
+                  
+            if(filtered.length===0){ 
+                grid.classList.add('hidden'); 
+                no.classList.remove('hidden'); 
+                spinner.classList.add('hidden'); 
+                return; 
+            } 
+            
+            // 关键修改：文章链接改为 post.html?id=文章ID
+            grid.innerHTML=filtered.map(p=>`
+                <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg flex flex-col">
+                    <div class="w-full h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center">
+                        <i class="fas fa-file-pdf text-5xl text-purple-400"></i>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(p.category)}</span>
+                            <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${p.date}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(p.title)}</h3>
+                        <p class="text-gray-500 mb-4 line-clamp-3">${escapeHtml(p.excerpt)}</p>
+                        <a href="post.html?id=${p.id}" class="text-purple-600 font-medium hover:text-purple-700 inline-flex items-center gap-1 mt-auto">
+                            Read More <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join(''); 
+            
             grid.classList.remove('hidden'); 
             spinner.classList.add('hidden'); 
             no.classList.add('hidden'); 
         }
         
-        // 将 openArticle 挂载到 window 对象，供 onclick 调用
-        window.openArticle = openArticle;
+        async function init() { 
+            const spinner = document.getElementById('loadingSpinner');
+            const grid = document.getElementById('postsGrid');
+            spinner.classList.remove('hidden');
+            grid.classList.add('hidden');
+            
+            allPosts = await fetchBlogPosts(); 
+            renderPosts(allPosts); 
+        }
         
-        // 绑定关闭弹窗事件
-        modalCloseBtn?.addEventListener('click', closeModal);
-        modal?.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
+        // 搜索监听
+        document.getElementById('searchInput')?.addEventListener('input', (e) => { 
+            currentSearch = e.target.value; 
+            renderPosts(allPosts); 
         });
-        // ESC 键关闭弹窗
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
+        
+        // 分类按钮监听
+        document.querySelectorAll('.category-btn').forEach(btn => { 
+            btn.addEventListener('click', () => { 
+                document.querySelectorAll('.category-btn').forEach(b => { 
+                    b.classList.remove('bg-purple-600','text-white'); 
+                    b.classList.add('bg-gray-200','text-gray-700'); 
+                }); 
+                btn.classList.remove('bg-gray-200','text-gray-700'); 
+                btn.classList.add('bg-purple-600','text-white'); 
+                currentCategory = btn.getAttribute('data-category'); 
+                renderPosts(allPosts); 
+            }); 
         });
         
-        async function init() { allPosts = await fetchBlogPosts(); renderPosts(allPosts); }
-        
-        document.getElementById('searchInput')?.addEventListener('input', (e) => { currentSearch = e.target.value; renderPosts(allPosts); });
-        document.querySelectorAll('.category-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.category-btn').forEach(b => { b.classList.remove('bg-purple-600','text-white'); b.classList.add('bg-gray-200','text-gray-700'); }); btn.classList.remove('bg-gray-200','text-gray-700'); btn.classList.add('bg-purple-600','text-white'); currentCategory = btn.getAttribute('data-category'); renderPosts(allPosts); }); });
         init();
     </script>
 </body>
