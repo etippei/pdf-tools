@@ -139,7 +139,7 @@
                     throw new Error('Article not found');
                 }
                 
-                const { title, body, created_at, comments } = issue;
+                const { title, body, created_at } = issue;
                 const meta = parseMetadata(body);
                 const content = stripMetadata(body);
                 const formattedDate = new Date(created_at).toLocaleDateString('en-US', {
@@ -148,13 +148,13 @@
                 
                 const htmlContent = renderMarkdown(content);
                 
+                // 移除了 comments 显示，只保留日期和分类
                 container.innerHTML = `
                     <article>
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">${escapeHtml(title)}</h1>
                         <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
                             <span><i class="far fa-calendar-alt mr-2"></i>${formattedDate}</span>
                             <span><i class="fas fa-tag mr-2"></i>${escapeHtml(meta.category || 'Tip')}</span>
-                            <span><i class="far fa-comment mr-2"></i>${comments} comments</span>
                         </div>
                         <div class="markdown-body prose max-w-none">
                             ${htmlContent}
