@@ -1,32 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>if(localStorage.getItem('darkMode')==='enabled'){document.documentElement.classList.add('dark-mode');}</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章详情 - PDFHub.AI Blog</title>
+    <title>Article - PDFHub.AI Blog</title>
+    <meta name="description" content="Read PDF tips, tutorials, and guides on PDFHub.AI Blog">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Dark mode overrides */
+        html.dark-mode body {
+            background-color: #111827;
+            color: #e5e7eb;
+        }
+        html.dark-mode .bg-gray-50 { background-color: #111827; }
+        html.dark-mode .bg-white { background-color: #1f2937; color: #f3f4f6; }
+        html.dark-mode .text-gray-800 { color: #f9fafb; }
+        html.dark-mode .text-gray-600 { color: #d1d5db; }
+        html.dark-mode .text-gray-500 { color: #9ca3af; }
+        html.dark-mode .border-b { border-color: #374151; }
+        html.dark-mode .markdown-body pre,
+        html.dark-mode .markdown-body code { background: #2d3748; color: #e2e8f0; }
+        html.dark-mode .markdown-body blockquote { border-left-color: #8b5cf6; color: #a0aec0; }
+        
         .markdown-body {
             line-height: 1.6;
             font-size: 16px;
         }
-        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; }
-        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; }
-        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
         .markdown-body p { margin: 1em 0; }
         .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
         .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; font-family: monospace; }
         .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
         .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
         .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        html.dark-mode .markdown-body th { background: #374151; }
         
-        html.dark-mode .markdown-body pre,
-        html.dark-mode .markdown-body code { background: #2d3748; color: #e2e8f0; }
-        html.dark-mode .markdown-body blockquote { color: #a0aec0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        html.dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
     </style>
 </head>
 <body class="bg-gray-50">
+
     <header class="bg-white shadow-sm sticky top-0 z-10">
         <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
@@ -35,7 +64,7 @@
                 <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white">Blog</a>
                 <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700">Pricing</a>
             </div>
-            <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full">
+            <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
@@ -45,29 +74,69 @@
         <div id="postContent" class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
             <div class="text-center py-12">
                 <i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i>
-                <p class="text-gray-500 mt-3">加载文章中...</p>
+                <p class="text-gray-500 mt-3">Loading article...</p>
             </div>
         </div>
     </div>
 
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 PDFHub.AI. All rights reserved.</p>
+            <p class="mt-2"><a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a></p>
+        </div>
+    </footer>
+
     <script>
-        const API_BASE = 'https://api.github.com/repos/etippei/pdf-tools/issues';
+        const GITHUB_REPO_OWNER = "etippei";
+        const GITHUB_REPO_NAME = "pdf-tools";
+        
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        
+        // Highlight active tab
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href');
+            if (href === currentPage) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
         
         async function loadPost() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
+            const container = document.getElementById('postContent');
             
             if (!id) {
-                document.getElementById('postContent').innerHTML = '<div class="text-center py-12 text-red-500">文章ID不存在</div>';
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-5xl text-red-400 mb-4"></i>
+                        <p class="text-red-500">Article ID is missing</p>
+                        <a href="blog.html" class="inline-block mt-4 text-purple-600 hover:underline">← Back to Blog</a>
+                    </div>
+                `;
                 return;
             }
             
             try {
-                const response = await fetch(`${API_BASE}/${id}`);
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues/${id}`);
                 const issue = await response.json();
                 
-                if (issue.message) {
-                    throw new Error('文章不存在');
+                if (issue.message || !issue.title) {
+                    throw new Error('Article not found');
                 }
                 
                 const { title, body, created_at, comments } = issue;
@@ -77,33 +146,32 @@
                     year: 'numeric', month: 'long', day: 'numeric'
                 });
                 
-                // 简单的Markdown渲染（基础版）
                 const htmlContent = renderMarkdown(content);
                 
-                document.getElementById('postContent').innerHTML = `
+                container.innerHTML = `
                     <article>
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">${escapeHtml(title)}</h1>
                         <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
                             <span><i class="far fa-calendar-alt mr-2"></i>${formattedDate}</span>
                             <span><i class="fas fa-tag mr-2"></i>${escapeHtml(meta.category || 'Tip')}</span>
-                            <span><i class="far fa-comment mr-2"></i>${comments} 条评论</span>
+                            <span><i class="far fa-comment mr-2"></i>${comments} comments</span>
                         </div>
                         <div class="markdown-body prose max-w-none">
                             ${htmlContent}
                         </div>
                         <div class="mt-8 pt-6 border-t text-center">
                             <a href="blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
-                                <i class="fas fa-arrow-left"></i> 返回博客列表
+                                <i class="fas fa-arrow-left"></i> Back to Blog
                             </a>
                         </div>
                     </article>
                 `;
             } catch (error) {
-                document.getElementById('postContent').innerHTML = `
+                container.innerHTML = `
                     <div class="text-center py-12">
                         <i class="fas fa-exclamation-triangle text-5xl text-red-400 mb-4"></i>
-                        <p class="text-red-500">加载失败：${error.message}</p>
-                        <a href="blog.html" class="inline-block mt-4 text-purple-600 hover:underline">返回博客首页</a>
+                        <p class="text-red-500">Failed to load article: ${error.message}</p>
+                        <a href="blog.html" class="inline-block mt-4 text-purple-600 hover:underline">← Back to Blog</a>
                     </div>
                 `;
             }
@@ -142,37 +210,42 @@
         
         function renderMarkdown(markdown) {
             if (!markdown) return '';
-            // 简单的Markdown渲染（生产环境建议使用marked.js库）
             let html = escapeHtml(markdown);
             
-            // 代码块 ```code```
+            // Code blocks ```code```
             html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
             
-            // 行内代码 `code`
+            // Inline code `code`
             html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
             
-            // 标题
+            // Headers
             html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
             html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
             html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
             
-            // 粗体和斜体
+            // Bold and italic
             html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
             
-            // 链接 [text](url)
+            // Links [text](url)
             html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">$1</a>');
             
-            // 图片 ![alt](url)
+            // Images ![alt](url)
             html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full h-auto rounded-lg my-4">');
             
-            // 段落（简单处理）
+            // Horizontal rule
+            html = html.replace(/^---$/gm, '<hr class="my-6 border-gray-300">');
+            
+            // Paragraphs
             html = html.replace(/\n\n/g, '</p><p>');
             html = '<p>' + html + '</p>';
             
-            // 清理空段落
+            // Clean up empty paragraphs
             html = html.replace(/<p>\s*<\/p>/g, '');
+            
+            // Fix nested paragraphs inside block elements
+            html = html.replace(/<blockquote><p>(.*?)<\/p><\/blockquote>/gs, '<blockquote>$1</blockquote>');
             
             return html;
         }
@@ -186,18 +259,6 @@
                 return m;
             });
         }
-        
-        // Dark mode
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.documentElement.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-        darkModeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        });
         
         loadPost();
     </script>
