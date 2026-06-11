@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDFHub Admin</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: system-ui; max-width: 600px; margin: 50px auto; padding: 20px; }
+        input, button { padding: 10px; margin: 5px; border-radius: 8px; }
+        input { border: 1px solid #ccc; width: 250px; }
+        button { background: #667eea; color: white; border: none; cursor: pointer; }
+        button.remove { background: #ef4444; }
+        .result { margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 8px; white-space: pre-wrap; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🔧 PDFHub Pro 管理后台</h1>
+    
+    <input type="email" id="email" placeholder="用户邮箱" style="width: 300px;">
+    <br>
+    <button onclick="setPro()">设为 Pro (30天)</button>
+    <button onclick="removePro()" class="remove">移除 Pro</button>
+    <button onclick="checkUser()">查询状态</button>
+    
+    <div id="result" class="result">等待操作...</div>
+
+    <script>
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        const ADMIN_KEY = 'pdfhub-admin-2026';
+        
+        async function setPro() {
+            const email = document.getElementById('email').value;
+            if (!email) { alert('请输入邮箱'); return; }
+            showResult('⏳ 处理中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/set-pro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${ADMIN_KEY}`
+                    },
+                    body: JSON.stringify({ email, expiresDays: 30 })
+                });
+                const data = await res.json();
+                showResult(JSON.stringify(data, null, 2));
+            } catch(e) { showResult('错误: ' + e.message); }
+        }
+        
+        async function removePro() {
+            const email = document.getElementById('email').value;
+            if (!email) { alert('请输入邮箱'); return; }
+            if (!confirm('确定要移除该用户的 Pro 权限吗？')) return;
+            showResult('⏳ 处理中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/set-pro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${ADMIN_KEY}`
+                    },
+                    body: JSON.stringify({ email, action: 'remove' })
+                });
+                const data = await res.json();
+                showResult(JSON.stringify(data, null, 2));
+            } catch(e) { showResult('错误: ' + e.message); }
+        }
+        
+        async function checkUser() {
+            const email = document.getElementById('email').value;
+            if (!email) { alert('请输入邮箱'); return; }
+            showResult('⏳ 查询中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/check-user?email=${encodeURIComponent(email)}`, {
+                    headers: { 'Authorization': `Bearer ${ADMIN_KEY}` }
+                });
+                const data = await res.json();
+                showResult(JSON.stringify(data, null, 2));
+            } catch(e) { showResult('错误: ' + e.message); }
+        }
+        
+        function showResult(text) {
+            document.getElementById('result').innerHTML = `<pre>${text}</pre>`;
+        }
+    </script>
+</body>
+</html>
