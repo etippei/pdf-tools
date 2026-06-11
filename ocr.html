@@ -11,6 +11,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.min.js"></script>
     <link rel="stylesheet" href="dark-mode.css">
     <script src="darkmode.js"></script>
     
@@ -53,6 +55,46 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .btn-download-txt {
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-download-txt:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .btn-download-docx {
+            background-color: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-download-docx:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -130,9 +172,13 @@
 
         <div id="resultSection" class="hidden mt-8">
             <div class="bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
+                <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center flex-wrap gap-3">
                     <h3 class="font-semibold text-gray-800"><i class="fas fa-file-alt mr-2"></i>Extracted Text</h3>
-                    <button id="copyBtn" class="text-sm text-purple-600 hover:text-purple-700"><i class="fas fa-copy mr-1"></i> Copy</button>
+                    <div class="flex gap-2">
+                        <button id="copyBtn" class="text-sm bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition"><i class="fas fa-copy mr-1"></i> Copy</button>
+                        <button id="downloadTxtBtn" class="btn-download-txt"><i class="fas fa-file-alt mr-1"></i> TXT</button>
+                        <button id="downloadDocxBtn" class="btn-download-docx"><i class="fas fa-file-word mr-1"></i> DOCX</button>
+                    </div>
                 </div>
                 <div class="p-6 max-h-96 overflow-y-auto">
                     <pre id="extractedText" class="text-gray-700 whitespace-pre-wrap font-sans text-sm"></pre>
@@ -159,12 +205,11 @@
     </footer>
 
     <script>
-        // ========== 配置区域 ==========
+        // ========== Configuration ==========
         const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
-        // ⚠️ 请在这里填入你的 OCR.space API Key
         const OCR_SPACE_API_KEY = 'K86198983388957';
         
-        // ========== 页面初始化 ==========
+        // ========== Page initialization ==========
         const currentPage = window.location.pathname.split('/').pop() || 'ocr.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { 
             const href = btn.getAttribute('href'); 
@@ -177,7 +222,7 @@
             } 
         });
         
-        // ========== 用户菜单 ==========
+        // ========== User menu ==========
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
@@ -204,7 +249,7 @@
         }
         initUserMenu();
         
-        // ========== 使用限制 ==========
+        // ========== Usage limits ==========
         let canUseOCR = true;
         let currentLimit = 5;
         
@@ -269,7 +314,7 @@
         checkOCRUsage();
         updateOCRUsageDisplay();
         
-        // ========== DOM 元素 ==========
+        // ========== DOM elements ==========
         let selectedFile = null;
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -284,6 +329,8 @@
         const resultSection = document.getElementById('resultSection');
         const extractedText = document.getElementById('extractedText');
         const copyBtn = document.getElementById('copyBtn');
+        const downloadTxtBtn = document.getElementById('downloadTxtBtn');
+        const downloadDocxBtn = document.getElementById('downloadDocxBtn');
         const errorSection = document.getElementById('errorSection');
         const errorMsg = document.getElementById('errorMsg');
         const progressContainer = document.getElementById('progressContainer');
@@ -291,7 +338,7 @@
         const progressText = document.getElementById('progressText');
         const processingMessage = document.getElementById('processingMessage');
         
-        // ========== 辅助函数 ==========
+        // Helper: Get PDF page count
         async function getPdfPageCount(file) {
             try {
                 const arrayBuffer = await file.arrayBuffer();
@@ -304,7 +351,38 @@
             }
         }
         
-        // ========== 压缩 PDF ==========
+        // Helper: Extract text directly from PDF (for digital PDFs)
+        async function extractTextDirectly(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        const typedarray = new Uint8Array(e.target.result);
+                        const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
+                        let fullText = '';
+                        
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const textContent = await page.getTextContent();
+                            const pageText = textContent.items.map(item => item.str).join(' ');
+                            fullText += `\n\n--- Page ${i} ---\n\n${pageText}`;
+                        }
+                        
+                        if (fullText.trim().length > 50) {
+                            resolve(fullText);
+                        } else {
+                            reject(new Error('No text found, may be scanned PDF'));
+                        }
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+        
+        // Compress PDF
         async function compressPDF(file, targetSizeMB = 0.8) {
             try {
                 const arrayBuffer = await file.arrayBuffer();
@@ -312,12 +390,10 @@
                 const pdfDoc = await PDFDocument.load(arrayBuffer);
                 const pageCount = pdfDoc.getPageCount();
                 
-                // 页数少于5页，不需要压缩
                 if (pageCount <= 5) {
                     return file;
                 }
                 
-                // 压缩所有页面
                 const pages = pdfDoc.getPages();
                 for (const page of pages) {
                     const { width, height } = page.getSize();
@@ -328,9 +404,6 @@
                 const compressedBytes = await pdfDoc.save({ useObjectStreams: false });
                 const compressedBlob = new Blob([compressedBytes], { type: 'application/pdf' });
                 
-                console.log(`压缩: ${(file.size / 1024).toFixed(2)}KB → ${(compressedBlob.size / 1024).toFixed(2)}KB`);
-                
-                // 如果还是太大，继续压缩
                 if (compressedBlob.size > targetSizeMB * 1024 * 1024 && pageCount > 10) {
                     const newFile = new File([compressedBlob], file.name, { type: 'application/pdf' });
                     return await compressPDF(newFile, targetSizeMB * 0.8);
@@ -338,22 +411,22 @@
                 
                 return new File([compressedBlob], file.name, { type: 'application/pdf' });
             } catch (e) {
-                console.error('压缩失败:', e);
+                console.error('Compression failed:', e);
                 return file;
             }
         }
         
-        // ========== 单文件直接 OCR（小于 1MB 用此方法）==========
+        // Direct OCR for small files
         async function directOCR(file, progressCallback) {
             try {
                 if (progressCallback) {
-                    progressCallback(30, '正在上传文件...');
+                    progressCallback(30, 'Uploading file...');
                 }
                 
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('apikey', OCR_SPACE_API_KEY);
-                formData.append('language', 'chs,eng');
+                formData.append('language', 'eng');
                 formData.append('OCREngine', '2');
                 formData.append('scale', 'true');
                 
@@ -363,27 +436,27 @@
                 });
                 
                 if (progressCallback) {
-                    progressCallback(80, '正在识别文字...');
+                    progressCallback(80, 'Recognizing text...');
                 }
                 
                 const result = await response.json();
                 
                 if (result.IsErroredOnProcessing) {
-                    throw new Error(result.ErrorMessage || 'OCR 识别失败');
+                    throw new Error(result.ErrorMessage || 'OCR failed');
                 }
                 
                 if (result.ParsedResults && result.ParsedResults[0]) {
                     return result.ParsedResults[0].ParsedText || '';
                 }
                 
-                throw new Error('未能提取到文字');
+                throw new Error('Failed to extract text');
             } catch (error) {
-                console.error('OCR 失败:', error);
+                console.error('OCR failed:', error);
                 throw error;
             }
         }
         
-        // ========== 分割 PDF 并逐页 OCR ==========
+        // Split PDF and OCR page by page
         async function splitAndOCR(file, progressCallback) {
             try {
                 const { PDFDocument } = window.PDFLib;
@@ -391,7 +464,7 @@
                 const pdfDoc = await PDFDocument.load(arrayBuffer);
                 const pageCount = pdfDoc.getPageCount();
                 
-                console.log(`PDF 总页数: ${pageCount}`);
+                console.log(`Total pages: ${pageCount}`);
                 
                 let allText = '';
                 let processedPages = 0;
@@ -400,36 +473,31 @@
                     try {
                         const percent = ((i / pageCount) * 100);
                         if (progressCallback) {
-                            progressCallback(percent, `正在处理第 ${i+1}/${pageCount} 页...`);
+                            progressCallback(percent, `Processing page ${i+1}/${pageCount}...`);
                         }
                         
-                        // 提取单页
                         const singlePagePdf = await PDFDocument.create();
                         const [page] = await singlePagePdf.copyPages(pdfDoc, [i]);
                         singlePagePdf.addPage(page);
                         
                         const singlePageBytes = await singlePagePdf.save();
                         const singlePageBlob = new Blob([singlePageBytes], { type: 'application/pdf' });
-                        const singlePageFile = new File([singlePageBlob], `page_${i+1}.pdf`, { type: 'application/pdf' });
+                        let singlePageFile = new File([singlePageBlob], `page_${i+1}.pdf`, { type: 'application/pdf' });
                         
-                        let fileToOCR = singlePageFile;
-                        
-                        // 检查单页大小
                         if (singlePageFile.size > 1024 * 1024) {
-                            console.warn(`第 ${i+1} 页超过 1MB，尝试压缩...`);
-                            fileToOCR = await compressPDF(singlePageFile, 0.8);
-                            if (fileToOCR.size > 1024 * 1024) {
-                                allText += `\n\n--- Page ${i+1} (文件过大，跳过) ---\n\n`;
+                            console.warn(`Page ${i+1} exceeds 1MB, compressing...`);
+                            singlePageFile = await compressPDF(singlePageFile, 0.8);
+                            if (singlePageFile.size > 1024 * 1024) {
+                                allText += `\n\n--- Page ${i+1} (file too large, skipped) ---\n\n`;
                                 processedPages++;
                                 continue;
                             }
                         }
                         
-                        // 调用 OCR.space API
                         const formData = new FormData();
-                        formData.append('file', fileToOCR, `page_${i+1}.pdf`);
+                        formData.append('file', singlePageFile, `page_${i+1}.pdf`);
                         formData.append('apikey', OCR_SPACE_API_KEY);
-                        formData.append('language', 'chs,eng');
+                        formData.append('language', 'eng');
                         formData.append('OCREngine', '2');
                         formData.append('scale', 'true');
                         
@@ -441,42 +509,90 @@
                         const result = await response.json();
                         
                         if (result.IsErroredOnProcessing) {
-                            allText += `\n\n--- Page ${i+1} (OCR 失败: ${result.ErrorMessage}) ---\n\n`;
+                            allText += `\n\n--- Page ${i+1} (OCR failed: ${result.ErrorMessage}) ---\n\n`;
                         } else if (result.ParsedResults && result.ParsedResults[0]) {
                             const pageText = result.ParsedResults[0].ParsedText || '';
                             allText += `\n\n--- Page ${i+1} ---\n\n${pageText}`;
                             processedPages++;
                         }
                         
-                        // 避免请求过快（API 限制）
                         await new Promise(r => setTimeout(r, 500));
                         
                     } catch (pageError) {
-                        console.error(`第 ${i+1} 页处理失败:`, pageError);
-                        allText += `\n\n--- Page ${i+1} (处理失败: ${pageError.message}) ---\n\n`;
+                        console.error(`Page ${i+1} failed:`, pageError);
+                        allText += `\n\n--- Page ${i+1} (processing failed: ${pageError.message}) ---\n\n`;
                     }
                 }
                 
                 if (progressCallback) {
-                    progressCallback(100, `完成！共处理 ${processedPages} 页`);
+                    progressCallback(100, `Completed! Processed ${processedPages} pages`);
                 }
                 
                 return allText;
             } catch (error) {
-                console.error('分割 OCR 失败:', error);
-                throw new Error(`PDF 处理失败: ${error.message}`);
+                console.error('Split OCR failed:', error);
+                throw new Error(`PDF processing failed: ${error.message}`);
             }
         }
         
-        // ========== 主 OCR 函数 ==========
-        async function performOCR() {
-            // 检查 API Key
-            if (!OCR_SPACE_API_KEY || OCR_SPACE_API_KEY === 'YOUR_OCR_SPACE_API_KEY_HERE') {
-                errorMsg.textContent = '请先在代码中配置 OCR.SPACE_API_KEY';
-                errorSection.classList.remove('hidden');
-                return;
+        // Download as TXT
+        function downloadAsTxt() {
+            const text = extractedText.textContent;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ocr_result_${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Download as DOCX
+        async function downloadAsDocx() {
+            const text = extractedText.textContent;
+            const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
+            
+            const lines = text.split('\n');
+            const paragraphs = [];
+            
+            for (const line of lines) {
+                if (line.trim() === '') {
+                    paragraphs.push(new Paragraph({ children: [new TextRun({ text: '', break: 1 })] }));
+                } else if (line.startsWith('--- Page')) {
+                    // Page header - bold and centered
+                    paragraphs.push(new Paragraph({ 
+                        children: [new TextRun({ text: line, bold: true, size: 28 })],
+                        alignment: AlignmentType.CENTER,
+                        spacing: { before: 400, after: 200 }
+                    }));
+                } else {
+                    // Normal text - preserve spacing
+                    paragraphs.push(new Paragraph({ 
+                        children: [new TextRun({ text: line, size: 24 })],
+                        spacing: { after: 120 },
+                        indent: { firstLine: 480 }  // First line indent for readability
+                    }));
+                }
             }
             
+            const doc = new Document({
+                sections: [{
+                    properties: {},
+                    children: paragraphs
+                }]
+            });
+            
+            const blob = await Packer.toBlob(doc);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ocr_result_${Date.now()}.docx`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Main OCR function
+        async function performOCR() {
             if (!canUseOCR) {
                 alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.');
                 return;
@@ -499,36 +615,40 @@
                     loadingText.textContent = message;
                 };
                 
-                updateProgress(10, '正在分析文件...');
+                updateProgress(10, 'Analyzing file...');
                 
-                // 获取页数
-                const pageCount = await getPdfPageCount(selectedFile);
-                const fileSizeKB = selectedFile.size / 1024;
-                
-                console.log(`文件大小: ${fileSizeKB.toFixed(2)}KB, 页数: ${pageCount}`);
-                
-                // 决策：哪种方式处理
-                if (fileSizeKB <= 900 || pageCount <= 3) {
-                    updateProgress(20, '文件较小，直接识别...');
-                    allText = await directOCR(selectedFile, updateProgress);
-                } else {
-                    updateProgress(20, '文件较大，逐页识别中...');
-                    allText = await splitAndOCR(selectedFile, updateProgress);
+                // Try direct text extraction first (for digital PDFs)
+                try {
+                    updateProgress(20, 'Extracting text directly...');
+                    allText = await extractTextDirectly(selectedFile);
+                    updateProgress(100, 'Extraction completed!');
+                } catch (directError) {
+                    console.log('Direct extraction failed, using OCR:', directError.message);
+                    updateProgress(30, 'Scanned document detected, starting OCR...');
+                    
+                    const pageCount = await getPdfPageCount(selectedFile);
+                    const fileSizeKB = selectedFile.size / 1024;
+                    
+                    if (fileSizeKB <= 900 || pageCount <= 3) {
+                        allText = await directOCR(selectedFile, updateProgress);
+                    } else {
+                        allText = await splitAndOCR(selectedFile, updateProgress);
+                    }
                 }
                 
-                updateProgress(100, '识别完成！');
+                updateProgress(100, 'Recognition completed!');
                 
                 if (allText && allText.trim().length > 0) {
                     extractedText.textContent = allText;
                     resultSection.classList.remove('hidden');
                     recordOCRUsage();
                 } else {
-                    throw new Error('未能提取到任何文字，请确保 PDF 包含可识别的文本或扫描内容');
+                    throw new Error('No text extracted. Please ensure the PDF contains recognizable text or scanned content');
                 }
                 
             } catch (error) {
-                console.error('OCR 失败:', error);
-                errorMsg.textContent = error.message || 'OCR 处理失败，请稍后重试';
+                console.error('OCR failed:', error);
+                errorMsg.textContent = error.message || 'OCR processing failed. Please try again.';
                 errorSection.classList.remove('hidden');
             } finally {
                 loadingOverlay.classList.add('hidden');
@@ -539,7 +659,7 @@
             }
         }
         
-        // ========== 文件处理 ==========
+        // File handling
         function handleFile(file) { 
             if (file && file.type === 'application/pdf') { 
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
@@ -578,7 +698,7 @@
             processingMessage.innerHTML = '';
         }
         
-        // ========== 事件绑定 ==========
+        // Event listeners
         copyBtn?.addEventListener('click', () => { 
             const text = extractedText.textContent; 
             navigator.clipboard.writeText(text).then(() => { 
@@ -587,6 +707,9 @@
                 setTimeout(() => copyBtn.innerHTML = orig, 2000); 
             }); 
         });
+        
+        downloadTxtBtn?.addEventListener('click', downloadAsTxt);
+        downloadDocxBtn?.addEventListener('click', downloadAsDocx);
         
         dropZone?.addEventListener('click', () => fileInput.click());
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
