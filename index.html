@@ -43,9 +43,11 @@
 
     <header class="bg-white shadow-sm sticky top-0 z-10">
         <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
-            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
+            <!-- 改动1：logo链接从index.html改为根路径/，消除308跳转权重损耗 -->
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PDFHub.AI</a>
             <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
-                <a href="index.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <!-- 改动2：Tools标签页href同步改成/ -->
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-wrench mr-2"></i> Tools</a>
                 <a href="blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-newspaper mr-2"></i> Blog</a>
                 <a href="pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
             </div>
@@ -67,12 +69,16 @@
     <section class="bg-gradient-to-r from-purple-50 to-blue-50 py-16 lg:py-20">
         <div class="container mx-auto px-4 lg:px-8 text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">Free PDF Tools with AI</h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Merge, split, compress, convert PDFs, and chat with your documents using AI.<span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device</span></p>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Merge, split, compress, convert PDFs, and chat with your documents using AI.<span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device</span>
+            <!-- 新增：正文自然文字内链，提升关键词锚文本权重 -->
+            <span class="block mt-4 text-base">Try our most popular tools: <a href="merge-pdf.html" class="text-purple-600 font-medium hover:underline">Merge PDF</a>, <a href="compress-pdf.html" class="text-purple-600 font-medium hover:underline">Compress PDF</a>, <a href="ocr.html" class="text-purple-600 font-medium hover:underline">OCR PDF</a> and <a href="ai-chat.html" class="text-purple-600 font-medium hover:underline">AI PDF Chat</a>.</span>
+            </p>
         </div>
     </section>
 
     <section class="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <!-- 这里你原本的9个tool-card a链接全部保留不动，本身就是完美内链 -->
             <a href="ai-chat.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-robot text-2xl text-white"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Chat PDF<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3><p class="text-gray-500">Chat with your PDF documents. Ask questions and get instant answers.</p><div class="mt-4 text-purple-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
             <a href="ai-summary.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-gradient-to-r from-teal-500 to-green-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-file-alt text-2xl text-white"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Summary<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3><p class="text-gray-500">Generate intelligent summaries of your PDF documents instantly.</p><div class="mt-4 text-teal-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
             <a href="ocr.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-text-height text-2xl text-blue-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">OCR Text Extractor</h3><p class="text-gray-500">Extract text from scanned PDFs and images using OCR.</p><div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
