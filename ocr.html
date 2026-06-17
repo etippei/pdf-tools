@@ -242,9 +242,14 @@
                         ocrBtn.disabled = false;
                     }
                 }
-                // 转换按钮不限制次数（使用 VPS 服务）
+                // 转换按钮也跟随限制
                 if (convertBtn) {
-                    convertBtn.disabled = false;
+                    if (!data.allowed) {
+                        convertBtn.disabled = true;
+                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                    } else {
+                        convertBtn.disabled = false;
+                    }
                 }
                 updateUsageDisplay(data);
                 return data.allowed;
@@ -279,7 +284,7 @@
             if (!banner) return;
             if (data.isPro) {
                 banner.classList.remove('hidden');
-                banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR pages ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR & Word conversion ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
             } else {
                 const remaining = data.remaining;
                 const limit = data.limit;
@@ -288,9 +293,9 @@
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
                     if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's OCR: ${used}/${limit} pages. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's usage: ${used}/${limit} tasks. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
                     } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's OCR: ${used}/${limit} pages. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's usage: ${used}/${limit} tasks. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
                     }
                 } else {
                     if (!isLoggedIn) {
@@ -572,22 +577,29 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF 转 Word（调用 VPS 服务）==========
+        // ========== PDF 转 Word（异步轮询 + 次数限制 + 英文提示）==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
                 return;
             }
             
-            // 检查文件大小
             if (selectedFile.size > 50 * 1024 * 1024) {
                 alert('File too large. Max 50MB.');
                 return;
             }
             
+            // ===== 检查使用次数 =====
+            const canUse = await checkUsage();
+            if (!canUse) {
+                alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
+                return;
+            }
+            // ===== 检查结束 =====
+            
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
-            loadingText.textContent = 'Converting PDF to Word (preserving format)...';
+            loadingText.innerHTML = '⏳ Submitting conversion task...';
             
             try {
                 const formData = new FormData();
@@ -603,26 +615,109 @@
                     body: formData
                 });
                 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Conversion failed');
+                const data = await response.json();
+                
+                if (!response.ok || !data.success) {
+                    // 如果是限制错误，显示友好信息
+                    if (data.limitReached) {
+                        alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
+                        loadingOverlay.classList.add('hidden');
+                        convertWordBtn.disabled = false;
+                        return;
+                    }
+                    throw new Error(data.error || 'Task submission failed');
                 }
                 
-                // 下载文件
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `converted_${Date.now()}.docx`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                const taskId = data.taskId;
+                loadingText.innerHTML = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
+                
+                // 轮询结果
+                let attempts = 0;
+                const maxAttempts = 180;
+                let lastStatusMessage = '';
+                let isProcessing = true;
+                
+                const pollInterval = setInterval(async () => {
+                    attempts++;
+                    
+                    try {
+                        const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${taskId}`);
+                        
+                        if (statusResponse.status === 200) {
+                            const contentType = statusResponse.headers.get('content-type');
+                            if (contentType && contentType.includes('docx')) {
+                                // 转换完成，下载文件
+                                const blob = await statusResponse.blob();
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                
+                                const originalName = selectedFile.name || 'document.pdf';
+                                const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
+                                a.download = `${nameWithoutExt}_converted.docx`;
+                                
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                URL.revokeObjectURL(url);
+                                
+                                clearInterval(pollInterval);
+                                loadingOverlay.classList.add('hidden');
+                                convertWordBtn.disabled = false;
+                                
+                                // ===== 记录使用次数 =====
+                                await recordUsage();
+                                // ===== 记录结束 =====
+                                
+                                loadingText.innerHTML = '✅ Conversion completed!';
+                                return;
+                            }
+                        }
+                        
+                        const statusData = await statusResponse.json();
+                        
+                        if (statusData.status === 'completed') {
+                            clearInterval(pollInterval);
+                            loadingOverlay.classList.add('hidden');
+                            convertWordBtn.disabled = false;
+                            alert('Conversion completed but file download failed. Please try again.');
+                            return;
+                        }
+                        
+                        if (statusData.status === 'failed') {
+                            clearInterval(pollInterval);
+                            loadingOverlay.classList.add('hidden');
+                            convertWordBtn.disabled = false;
+                            alert('Conversion failed: ' + (statusData.error || 'Unknown error'));
+                            return;
+                        }
+                        
+                        // 更新进度信息
+                        if (statusData.message && statusData.message !== lastStatusMessage) {
+                            lastStatusMessage = statusData.message;
+                            loadingText.innerHTML = `⏳ Processing your document...<br><span style="font-size: 14px; color: #94a3b8;">${statusData.message}</span>`;
+                        }
+                        
+                        // 超过 2 分钟时显示额外提示
+                        if (attempts > 40 && isProcessing) {
+                            loadingText.innerHTML = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Your document is taking longer than expected. Please continue waiting.</span>';
+                        }
+                        
+                        if (attempts >= maxAttempts) {
+                            clearInterval(pollInterval);
+                            loadingOverlay.classList.add('hidden');
+                            convertWordBtn.disabled = false;
+                            alert('⏳ Your document is taking longer than expected.\n\nPlease try again later, or contact support if this issue persists.\n\n📧 etiplpl@outlook.com');
+                        }
+                        
+                    } catch (error) {
+                        console.error('Polling error:', error);
+                    }
+                }, 3000);
                 
             } catch (error) {
                 alert('Conversion failed: ' + error.message);
                 console.error('PDF to Word error:', error);
-            } finally {
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
             }
