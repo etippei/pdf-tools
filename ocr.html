@@ -242,7 +242,6 @@
                         ocrBtn.disabled = false;
                     }
                 }
-                // 转换按钮也跟随限制
                 if (convertBtn) {
                     if (!data.allowed) {
                         convertBtn.disabled = true;
@@ -589,13 +588,11 @@
                 return;
             }
             
-            // ===== 检查使用次数 =====
             const canUse = await checkUsage();
             if (!canUse) {
                 alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
                 return;
             }
-            // ===== 检查结束 =====
             
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
@@ -618,7 +615,6 @@
                 const data = await response.json();
                 
                 if (!response.ok || !data.success) {
-                    // 如果是限制错误，显示友好信息
                     if (data.limitReached) {
                         alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
                         loadingOverlay.classList.add('hidden');
@@ -631,9 +627,9 @@
                 const taskId = data.taskId;
                 loadingText.innerHTML = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
                 
-                // 轮询结果
+                // Poll for results - 30 minutes timeout (600 attempts × 3 seconds)
                 let attempts = 0;
-                const maxAttempts = 180;
+                const maxAttempts = 600;
                 let lastStatusMessage = '';
                 let isProcessing = true;
                 
@@ -646,7 +642,6 @@
                         if (statusResponse.status === 200) {
                             const contentType = statusResponse.headers.get('content-type');
                             if (contentType && contentType.includes('docx')) {
-                                // 转换完成，下载文件
                                 const blob = await statusResponse.blob();
                                 const url = URL.createObjectURL(blob);
                                 const a = document.createElement('a');
@@ -665,9 +660,7 @@
                                 loadingOverlay.classList.add('hidden');
                                 convertWordBtn.disabled = false;
                                 
-                                // ===== 记录使用次数 =====
                                 await recordUsage();
-                                // ===== 记录结束 =====
                                 
                                 loadingText.innerHTML = '✅ Conversion completed!';
                                 return;
@@ -692,15 +685,29 @@
                             return;
                         }
                         
-                        // 更新进度信息
-                        if (statusData.message && statusData.message !== lastStatusMessage) {
-                            lastStatusMessage = statusData.message;
-                            loadingText.innerHTML = `⏳ Processing your document...<br><span style="font-size: 14px; color: #94a3b8;">${statusData.message}</span>`;
+                        // Time-based progress messages
+                        const seconds = attempts * 3;
+                        let statusMessage = '';
+                        
+                        if (seconds < 120) {
+                            // 0-2 minutes
+                            statusMessage = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
+                        } else if (seconds < 600) {
+                            // 2-10 minutes
+                            statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Your document is being converted. This may take a while depending on the file size.</span>';
+                        } else if (seconds < 1200) {
+                            // 10-20 minutes
+                            statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">This is taking longer than usual. The process is still running. Thank you for your patience.</span>';
+                        } else {
+                            // 20-30 minutes
+                            statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Large files can take time. The conversion is still in progress. Please continue waiting.</span>';
                         }
                         
-                        // 超过 2 分钟时显示额外提示
-                        if (attempts > 40 && isProcessing) {
-                            loadingText.innerHTML = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Your document is taking longer than expected. Please continue waiting.</span>';
+                        if (statusData.message && statusData.message !== lastStatusMessage) {
+                            lastStatusMessage = statusData.message;
+                            loadingText.innerHTML = statusMessage + `<br><span style="font-size: 13px; color: #94a3b8;">${statusData.message}</span>`;
+                        } else {
+                            loadingText.innerHTML = statusMessage;
                         }
                         
                         if (attempts >= maxAttempts) {
