@@ -61,6 +61,18 @@
             margin-left: 8px;
         }
         .btn-download-docx:hover { background-color: #059669; }
+        .btn-advanced-word {
+            background-color: #8b5cf6;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 8px;
+        }
+        .btn-advanced-word:hover { background-color: #7c3aed; }
         .processing-message {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -126,13 +138,16 @@
 
         <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-        <div class="flex justify-center"><button id="ocrBtn" disabled class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-text-height"></i> Extract Text</button></div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button id="ocrBtn" disabled class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-text-height"></i> Extract Text</button>
+            <button id="convertWordBtn" disabled class="bg-emerald-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-file-word"></i> Export to Word (Preserve Format)</button>
+        </div>
 
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl p-8 text-center">
                 <i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i>
-                <p id="loadingText" class="text-gray-700">Processing OCR...</p>
-                <p class="text-sm text-gray-500 mt-2">This may take a few seconds for large files</p>
+                <p id="loadingText" class="text-gray-700">Processing...</p>
+                <p class="text-sm text-gray-500 mt-2">This may take a few seconds</p>
             </div>
         </div>
 
@@ -164,6 +179,7 @@
         // ========== Configuration ==========
         const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
         const OCR_SPACE_API_KEY = 'K86198983388957';
+        const MAX_API_FILE_SIZE = 950 * 1024;
         
         // ========== Page initialization ==========
         const currentPage = window.location.pathname.split('/').pop() || 'ocr.html';
@@ -211,14 +227,13 @@
             const token = localStorage.getItem('authToken');
             const headers = {};
             if (token) headers['Authorization'] = `Bearer ${token}`;
-            
             try {
                 const response = await fetch(`${API_BASE}/api/usage?feature=ocr`, { headers });
                 const data = await response.json();
                 usageInfo = data;
                 isPro = data.isPro;
-                
                 const ocrBtn = document.getElementById('ocrBtn');
+                const convertBtn = document.getElementById('convertWordBtn');
                 if (ocrBtn) {
                     if (!data.allowed) {
                         ocrBtn.disabled = true;
@@ -226,6 +241,10 @@
                     } else {
                         ocrBtn.disabled = false;
                     }
+                }
+                // 转换按钮不限制次数（使用 VPS 服务）
+                if (convertBtn) {
+                    convertBtn.disabled = false;
                 }
                 updateUsageDisplay(data);
                 return data.allowed;
@@ -239,7 +258,6 @@
             const token = localStorage.getItem('authToken');
             const headers = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
-            
             try {
                 const response = await fetch(`${API_BASE}/api/usage/record`, {
                     method: 'POST',
@@ -259,7 +277,6 @@
         function updateUsageDisplay(data) {
             const banner = document.getElementById('usageBanner');
             if (!banner) return;
-            
             if (data.isPro) {
                 banner.classList.remove('hidden');
                 banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR pages ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
@@ -268,7 +285,6 @@
                 const limit = data.limit;
                 const used = data.used;
                 const isLoggedIn = data.isLoggedIn;
-                
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
                     if (!isLoggedIn) {
@@ -296,6 +312,7 @@
         const pageCountSpan = document.getElementById('pageCount');
         const removeFileBtn = document.getElementById('removeFileBtn');
         const ocrBtn = document.getElementById('ocrBtn');
+        const convertWordBtn = document.getElementById('convertWordBtn');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const resultSection = document.getElementById('resultSection');
@@ -364,6 +381,151 @@
             } catch (e) { return file; }
         }
         
+        async function mergePages(pdfDoc, startIndex, endIndex) {
+            const { PDFDocument } = window.PDFLib;
+            const mergedPdf = await PDFDocument.create();
+            for (let i = startIndex; i <= endIndex; i++) {
+                const [page] = await mergedPdf.copyPages(pdfDoc, [i]);
+                mergedPdf.addPage(page);
+            }
+            const bytes = await mergedPdf.save();
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            return new File([blob], `pages_${startIndex+1}_${endIndex+1}.pdf`, { type: 'application/pdf' });
+        }
+        
+        async function groupedOCR(file, progressCallback) {
+            try {
+                const { PDFDocument } = window.PDFLib;
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+                const pageCount = pdfDoc.getPageCount();
+                
+                let allText = '';
+                let totalApiCalls = 0;
+                
+                let avgPageSize = 0;
+                try {
+                    const testPage = await mergePages(pdfDoc, 0, Math.min(2, pageCount - 1));
+                    avgPageSize = testPage.size / Math.min(3, pageCount);
+                } catch(e) { avgPageSize = 150 * 1024; }
+                
+                let pagesPerGroup = Math.max(1, Math.floor(MAX_API_FILE_SIZE / avgPageSize));
+                pagesPerGroup = Math.min(pagesPerGroup, 5);
+                
+                console.log(`Avg page size: ${(avgPageSize/1024).toFixed(1)}KB, Pages per group: ${pagesPerGroup}`);
+                
+                if (progressCallback) {
+                    progressCallback(10, `Optimizing: ${pagesPerGroup} pages per batch...`);
+                }
+                
+                for (let i = 0; i < pageCount; i += pagesPerGroup) {
+                    const endIdx = Math.min(i + pagesPerGroup - 1, pageCount - 1);
+                    const groupSize = endIdx - i + 1;
+                    
+                    const percent = 10 + ((i / pageCount) * 90);
+                    if (progressCallback) {
+                        progressCallback(percent, `Processing batch ${Math.floor(i/pagesPerGroup)+1}/${Math.ceil(pageCount/pagesPerGroup)} (${groupSize} pages)...`);
+                    }
+                    
+                    try {
+                        let groupFile = await mergePages(pdfDoc, i, endIdx);
+                        
+                        if (groupFile.size > MAX_API_FILE_SIZE) {
+                            groupFile = await compressPDF(groupFile, 0.8);
+                        }
+                        
+                        if (groupFile.size > MAX_API_FILE_SIZE) {
+                            for (let j = i; j <= endIdx; j++) {
+                                const singleFile = await mergePages(pdfDoc, j, j);
+                                let finalFile = singleFile;
+                                if (singleFile.size > MAX_API_FILE_SIZE) {
+                                    finalFile = await compressPDF(singleFile, 0.8);
+                                }
+                                if (finalFile.size > MAX_API_FILE_SIZE) {
+                                    allText += `\n\n--- Page ${j+1} (file too large, skipped) ---\n\n`;
+                                    continue;
+                                }
+                                const formData = new FormData();
+                                formData.append('file', finalFile, `page_${j+1}.pdf`);
+                                formData.append('apikey', OCR_SPACE_API_KEY);
+                                formData.append('language', 'eng');
+                                formData.append('OCREngine', '2');
+                                formData.append('scale', 'true');
+                                const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                                const result = await response.json();
+                                totalApiCalls++;
+                                if (!result.IsErroredOnProcessing && result.ParsedResults && result.ParsedResults[0]) {
+                                    allText += `\n\n--- Page ${j+1} ---\n\n${result.ParsedResults[0].ParsedText || ''}`;
+                                } else {
+                                    allText += `\n\n--- Page ${j+1} (OCR failed) ---\n\n`;
+                                }
+                                await new Promise(r => setTimeout(r, 300));
+                            }
+                            continue;
+                        }
+                        
+                        const formData = new FormData();
+                        formData.append('file', groupFile, `pages_${i+1}_${endIdx+1}.pdf`);
+                        formData.append('apikey', OCR_SPACE_API_KEY);
+                        formData.append('language', 'eng');
+                        formData.append('OCREngine', '2');
+                        formData.append('scale', 'true');
+                        
+                        const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                        const result = await response.json();
+                        totalApiCalls++;
+                        
+                        if (result.IsErroredOnProcessing) {
+                            for (let j = i; j <= endIdx; j++) {
+                                const singleFile = await mergePages(pdfDoc, j, j);
+                                let finalFile = singleFile;
+                                if (singleFile.size > MAX_API_FILE_SIZE) {
+                                    finalFile = await compressPDF(singleFile, 0.8);
+                                }
+                                if (finalFile.size > MAX_API_FILE_SIZE) {
+                                    allText += `\n\n--- Page ${j+1} (file too large, skipped) ---\n\n`;
+                                    continue;
+                                }
+                                const singleFormData = new FormData();
+                                singleFormData.append('file', finalFile, `page_${j+1}.pdf`);
+                                singleFormData.append('apikey', OCR_SPACE_API_KEY);
+                                singleFormData.append('language', 'eng');
+                                singleFormData.append('OCREngine', '2');
+                                singleFormData.append('scale', 'true');
+                                const singleResponse = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: singleFormData });
+                                const singleResult = await singleResponse.json();
+                                totalApiCalls++;
+                                if (!singleResult.IsErroredOnProcessing && singleResult.ParsedResults && singleResult.ParsedResults[0]) {
+                                    allText += `\n\n--- Page ${j+1} ---\n\n${singleResult.ParsedResults[0].ParsedText || ''}`;
+                                } else {
+                                    allText += `\n\n--- Page ${j+1} (OCR failed) ---\n\n`;
+                                }
+                                await new Promise(r => setTimeout(r, 300));
+                            }
+                        } else if (result.ParsedResults && result.ParsedResults[0]) {
+                            const pageText = result.ParsedResults[0].ParsedText || '';
+                            allText += `\n\n--- Pages ${i+1} to ${endIdx+1} ---\n\n${pageText}`;
+                        } else {
+                            allText += `\n\n--- Pages ${i+1} to ${endIdx+1} (OCR failed) ---\n\n`;
+                        }
+                        
+                        await new Promise(r => setTimeout(r, 500));
+                        
+                    } catch (groupError) {
+                        console.error(`Group ${i+1}-${endIdx+1} failed:`, groupError);
+                        allText += `\n\n--- Pages ${i+1} to ${endIdx+1} (processing failed) ---\n\n`;
+                    }
+                }
+                
+                console.log(`Total API calls: ${totalApiCalls}`);
+                if (progressCallback) progressCallback(100, `Completed! Processed ${pageCount} pages`);
+                return allText;
+            } catch (error) {
+                console.error('Grouped OCR failed:', error);
+                throw new Error(`PDF processing failed: ${error.message}`);
+            }
+        }
+        
         async function directOCR(file, progressCallback) {
             try {
                 if (progressCallback) progressCallback(30, 'Uploading file...');
@@ -382,56 +544,6 @@
             } catch (error) { throw error; }
         }
         
-        async function splitAndOCR(file, progressCallback) {
-            try {
-                const { PDFDocument } = window.PDFLib;
-                const arrayBuffer = await file.arrayBuffer();
-                const pdfDoc = await PDFDocument.load(arrayBuffer);
-                const pageCount = pdfDoc.getPageCount();
-                let allText = '';
-                let processedPages = 0;
-                for (let i = 0; i < pageCount; i++) {
-                    try {
-                        const percent = ((i / pageCount) * 100);
-                        if (progressCallback) progressCallback(percent, `Processing page ${i+1}/${pageCount}...`);
-                        const singlePagePdf = await PDFDocument.create();
-                        const [page] = await singlePagePdf.copyPages(pdfDoc, [i]);
-                        singlePagePdf.addPage(page);
-                        const singlePageBytes = await singlePagePdf.save();
-                        const singlePageBlob = new Blob([singlePageBytes], { type: 'application/pdf' });
-                        let singlePageFile = new File([singlePageBlob], `page_${i+1}.pdf`, { type: 'application/pdf' });
-                        if (singlePageFile.size > 1024 * 1024) {
-                            singlePageFile = await compressPDF(singlePageFile, 0.8);
-                            if (singlePageFile.size > 1024 * 1024) {
-                                allText += `\n\n--- Page ${i+1} (file too large, skipped) ---\n\n`;
-                                processedPages++;
-                                continue;
-                            }
-                        }
-                        const formData = new FormData();
-                        formData.append('file', singlePageFile, `page_${i+1}.pdf`);
-                        formData.append('apikey', OCR_SPACE_API_KEY);
-                        formData.append('language', 'eng');
-                        formData.append('OCREngine', '2');
-                        formData.append('scale', 'true');
-                        const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
-                        const result = await response.json();
-                        if (result.IsErroredOnProcessing) allText += `\n\n--- Page ${i+1} (OCR failed: ${result.ErrorMessage}) ---\n\n`;
-                        else if (result.ParsedResults && result.ParsedResults[0]) {
-                            const pageText = result.ParsedResults[0].ParsedText || '';
-                            allText += `\n\n--- Page ${i+1} ---\n\n${pageText}`;
-                            processedPages++;
-                        }
-                        await new Promise(r => setTimeout(r, 500));
-                    } catch (pageError) {
-                        allText += `\n\n--- Page ${i+1} (processing failed: ${pageError.message}) ---\n\n`;
-                    }
-                }
-                if (progressCallback) progressCallback(100, `Completed! Processed ${processedPages} pages`);
-                return allText;
-            } catch (error) { throw new Error(`PDF processing failed: ${error.message}`); }
-        }
-        
         function downloadAsTxt() {
             const text = extractedText.textContent;
             const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
@@ -446,7 +558,7 @@
         function downloadAsDocx() {
             const text = extractedText.textContent;
             const htmlContent = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>OCR Result</title><style>body{font-family:Calibri,Arial,sans-serif;margin:40px;line-height:1.5;}.page-header{font-weight:bold;margin:20px 0 10px 0;text-align:center;font-size:14pt;}.normal-text{margin:0 0 8px 0;font-size:12pt;}</style></head><body>${text.split('\n').map(line => {
-                if (line.startsWith('--- Page')) return `<div class="page-header">${escapeHtml(line)}</div>`;
+                if (line.startsWith('--- Page') || line.startsWith('--- Pages')) return `<div class="page-header">${escapeHtml(line)}</div>`;
                 else if (line.trim() === '') return '<br>';
                 else return `<p class="normal-text">${escapeHtml(line)}</p>`;
             }).join('')}</body></html>`;
@@ -460,6 +572,63 @@
             URL.revokeObjectURL(url);
         }
         
+        // ========== PDF 转 Word（调用 VPS 服务）==========
+        async function convertToWord() {
+            if (!selectedFile) {
+                alert('Please upload a PDF file first.');
+                return;
+            }
+            
+            // 检查文件大小
+            if (selectedFile.size > 50 * 1024 * 1024) {
+                alert('File too large. Max 50MB.');
+                return;
+            }
+            
+            convertWordBtn.disabled = true;
+            loadingOverlay.classList.remove('hidden');
+            loadingText.textContent = 'Converting PDF to Word (preserving format)...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+                
+                const token = localStorage.getItem('authToken');
+                const headers = {};
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+                
+                const response = await fetch(`${API_BASE}/api/pdf-to-word`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Conversion failed');
+                }
+                
+                // 下载文件
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `converted_${Date.now()}.docx`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+            } catch (error) {
+                alert('Conversion failed: ' + error.message);
+                console.error('PDF to Word error:', error);
+            } finally {
+                loadingOverlay.classList.add('hidden');
+                convertWordBtn.disabled = false;
+            }
+        }
+        
+        // ========== Main OCR function ==========
         async function performOCR() {
             const canUse = await checkUsage();
             if (!canUse) { alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); return; }
@@ -486,8 +655,11 @@
                     updateProgress(30, 'Scanned document detected, starting OCR...');
                     const pageCount = await getPdfPageCount(selectedFile);
                     const fileSizeKB = selectedFile.size / 1024;
-                    if (fileSizeKB <= 900 || pageCount <= 3) allText = await directOCR(selectedFile, updateProgress);
-                    else allText = await splitAndOCR(selectedFile, updateProgress);
+                    if (fileSizeKB <= 900 || pageCount <= 3) {
+                        allText = await directOCR(selectedFile, updateProgress);
+                    } else {
+                        allText = await groupedOCR(selectedFile, updateProgress);
+                    }
                 }
                 updateProgress(100, 'Recognition completed!');
                 if (allText && allText.trim().length > 0) {
@@ -516,15 +688,20 @@
                 fileInfo.classList.remove('hidden'); 
                 resultSection.classList.add('hidden'); 
                 errorSection.classList.add('hidden'); 
-                checkUsage().then(canUse => { if (canUse) ocrBtn.disabled = false; });
+                checkUsage().then(canUse => { 
+                    if (canUse) ocrBtn.disabled = false; 
+                    convertWordBtn.disabled = false; 
+                });
             } else { alert('Please select a valid PDF file'); } 
         }
         
-        function removeFile() { selectedFile = null; fileInfo.classList.add('hidden'); ocrBtn.disabled = true; resultSection.classList.add('hidden'); errorSection.classList.add('hidden'); }
+        function removeFile() { selectedFile = null; fileInfo.classList.add('hidden'); ocrBtn.disabled = true; convertWordBtn.disabled = true; resultSection.classList.add('hidden'); errorSection.classList.add('hidden'); }
         
         copyBtn?.addEventListener('click', () => { navigator.clipboard.writeText(extractedText.textContent).then(() => { const orig = copyBtn.innerHTML; copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!'; setTimeout(() => copyBtn.innerHTML = orig, 2000); }); });
         downloadTxtBtn?.addEventListener('click', downloadAsTxt);
         downloadDocxBtn?.addEventListener('click', downloadAsDocx);
+        convertWordBtn?.addEventListener('click', convertToWord);
+        
         dropZone?.addEventListener('click', () => fileInput.click());
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
