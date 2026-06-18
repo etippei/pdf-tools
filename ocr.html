@@ -576,7 +576,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF 转 Word（异步轮询 + 次数限制 + 全英文提示）==========
+        // ========== PDF to Word (Async polling + usage limits + English messages) ==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -584,7 +584,7 @@
             }
             
             if (selectedFile.size > 50 * 1024 * 1024) {
-                alert('File too large. Max 50MB.');
+                alert('File too large. Maximum allowed size is 50MB.');
                 return;
             }
             
@@ -735,10 +735,12 @@
                 
             } catch (error) {
                 let errorMessage = error.message || 'Unknown error';
-                if (errorMessage.includes('Network connection lost') || 
-                    errorMessage.includes('fetch') || 
-                    errorMessage.includes('timeout') ||
-                    errorMessage.includes('AbortError')) {
+                const errorStr = String(errorMessage);
+                if (errorStr.includes('Network connection lost') || 
+                    errorStr.includes('fetch') || 
+                    errorStr.includes('timeout') ||
+                    errorStr.includes('AbortError') ||
+                    errorStr.includes('Failed to fetch')) {
                     errorMessage = 'Network connection lost. Please check your internet connection and try again.';
                 }
                 alert('Conversion failed: ' + errorMessage);
@@ -751,7 +753,10 @@
         // ========== Main OCR function ==========
         async function performOCR() {
             const canUse = await checkUsage();
-            if (!canUse) { alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); return; }
+            if (!canUse) { 
+                alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); 
+                return; 
+            }
             if (!selectedFile) return;
             ocrBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
@@ -800,7 +805,10 @@
         function handleFile(file) { 
             if (file && file.type === 'application/pdf') { 
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
-                if (file.size > maxSize) { alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`); return; }
+                if (file.size > maxSize) { 
+                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`); 
+                    return; 
+                }
                 selectedFile = file; 
                 fileName.textContent = file.name; 
                 fileSizeSpan.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`; 
@@ -812,12 +820,27 @@
                     if (canUse) ocrBtn.disabled = false; 
                     convertWordBtn.disabled = false; 
                 });
-            } else { alert('Please select a valid PDF file'); } 
+            } else { 
+                alert('Please select a valid PDF file'); 
+            } 
         }
         
-        function removeFile() { selectedFile = null; fileInfo.classList.add('hidden'); ocrBtn.disabled = true; convertWordBtn.disabled = true; resultSection.classList.add('hidden'); errorSection.classList.add('hidden'); }
+        function removeFile() { 
+            selectedFile = null; 
+            fileInfo.classList.add('hidden'); 
+            ocrBtn.disabled = true; 
+            convertWordBtn.disabled = true; 
+            resultSection.classList.add('hidden'); 
+            errorSection.classList.add('hidden'); 
+        }
         
-        copyBtn?.addEventListener('click', () => { navigator.clipboard.writeText(extractedText.textContent).then(() => { const orig = copyBtn.innerHTML; copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!'; setTimeout(() => copyBtn.innerHTML = orig, 2000); }); });
+        copyBtn?.addEventListener('click', () => { 
+            navigator.clipboard.writeText(extractedText.textContent).then(() => { 
+                const orig = copyBtn.innerHTML; 
+                copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!'; 
+                setTimeout(() => copyBtn.innerHTML = orig, 2000); 
+            }); 
+        });
         downloadTxtBtn?.addEventListener('click', downloadAsTxt);
         downloadDocxBtn?.addEventListener('click', downloadAsDocx);
         convertWordBtn?.addEventListener('click', convertToWord);
@@ -825,8 +848,15 @@
         dropZone?.addEventListener('click', () => fileInput.click());
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
-        fileInput?.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); fileInput.value = ''; });
+        dropZone?.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover'); 
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); 
+        });
+        fileInput?.addEventListener('change', (e) => { 
+            if (e.target.files.length) handleFile(e.target.files[0]); 
+            fileInput.value = ''; 
+        });
         removeFileBtn?.addEventListener('click', removeFile);
         ocrBtn?.addEventListener('click', performOCR);
         
