@@ -73,6 +73,18 @@
             margin-left: 8px;
         }
         .btn-advanced-word:hover { background-color: #7c3aed; }
+        .btn-retry {
+            background-color: #f59e0b;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 8px;
+        }
+        .btn-retry:hover { background-color: #d97706; }
         .processing-message {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -159,6 +171,7 @@
                         <button id="copyBtn" class="text-sm bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition"><i class="fas fa-copy mr-1"></i> Copy</button>
                         <button id="downloadTxtBtn" class="btn-download-txt"><i class="fas fa-file-alt mr-1"></i> TXT</button>
                         <button id="downloadDocxBtn" class="btn-download-docx"><i class="fas fa-file-word mr-1"></i> DOCX</button>
+                        <button id="retryBtn" class="btn-retry hidden"><i class="fas fa-redo mr-1"></i> Retry</button>
                     </div>
                 </div>
                 <div class="p-6 max-h-96 overflow-y-auto"><pre id="extractedText" class="text-gray-700 whitespace-pre-wrap font-sans text-sm"></pre></div>
@@ -308,6 +321,10 @@
         
         // ========== Helper functions ==========
         let selectedFile = null;
+        let currentTaskId = null;
+        let pollInterval = null;
+        let isRetrying = false;
+        
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const fileInfo = document.getElementById('fileInfo');
@@ -324,6 +341,7 @@
         const copyBtn = document.getElementById('copyBtn');
         const downloadTxtBtn = document.getElementById('downloadTxtBtn');
         const downloadDocxBtn = document.getElementById('downloadDocxBtn');
+        const retryBtn = document.getElementById('retryBtn');
         const errorSection = document.getElementById('errorSection');
         const errorMsg = document.getElementById('errorMsg');
         const progressContainer = document.getElementById('progressContainer');
@@ -576,7 +594,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF to Word (Async polling + usage limits + English messages) ==========
+        // ========== PDF to Word with Retry ==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -593,6 +611,10 @@
                 alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
                 return;
             }
+            
+            // Hide retry button if visible
+            retryBtn.classList.add('hidden');
+            isRetrying = false;
             
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
@@ -625,7 +647,7 @@
                     throw new Error(data.error || 'Task submission failed');
                 }
                 
-                const taskId = data.taskId;
+                currentTaskId = data.taskId;
                 loadingText.innerHTML = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
                 
                 // Poll for results - 30 minutes timeout (600 attempts × 3 seconds)
@@ -635,11 +657,16 @@
                 let isProcessing = true;
                 let networkErrorCount = 0;
                 
-                const pollInterval = setInterval(async () => {
+                // Clear any existing interval
+                if (pollInterval) {
+                    clearInterval(pollInterval);
+                }
+                
+                pollInterval = setInterval(async () => {
                     attempts++;
                     
                     try {
-                        const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${taskId}`, {
+                        const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${currentTaskId}`, {
                             signal: AbortSignal.timeout(15000)
                         });
                         networkErrorCount = 0;
@@ -662,8 +689,10 @@
                                 URL.revokeObjectURL(url);
                                 
                                 clearInterval(pollInterval);
+                                pollInterval = null;
                                 loadingOverlay.classList.add('hidden');
                                 convertWordBtn.disabled = false;
+                                currentTaskId = null;
                                 
                                 await recordUsage();
                                 
@@ -676,16 +705,20 @@
                         
                         if (statusData.status === 'completed') {
                             clearInterval(pollInterval);
+                            pollInterval = null;
                             loadingOverlay.classList.add('hidden');
                             convertWordBtn.disabled = false;
+                            currentTaskId = null;
                             alert('Conversion completed but file download failed. Please try again.');
                             return;
                         }
                         
                         if (statusData.status === 'failed') {
                             clearInterval(pollInterval);
+                            pollInterval = null;
                             loadingOverlay.classList.add('hidden');
                             convertWordBtn.disabled = false;
+                            currentTaskId = null;
                             alert('Conversion failed: ' + (statusData.error || 'Unknown error'));
                             return;
                         }
@@ -713,8 +746,10 @@
                         
                         if (attempts >= maxAttempts) {
                             clearInterval(pollInterval);
+                            pollInterval = null;
                             loadingOverlay.classList.add('hidden');
                             convertWordBtn.disabled = false;
+                            currentTaskId = null;
                             alert('⏳ Your document is taking longer than expected.\n\nPlease try again later, or contact support if this issue persists.\n\n📧 etiplpl@outlook.com');
                         }
                         
@@ -724,9 +759,13 @@
                         
                         if (networkErrorCount >= 3) {
                             clearInterval(pollInterval);
+                            pollInterval = null;
                             loadingOverlay.classList.add('hidden');
                             convertWordBtn.disabled = false;
-                            alert('Network connection lost. Please check your internet connection and try again.');
+                            
+                            // Show retry button instead of just alert
+                            retryBtn.classList.remove('hidden');
+                            loadingText.innerHTML = '⚠️ Connection lost.<br><span style="font-size: 14px; color: #94a3b8;">Click the Retry button to try again.</span>';
                         } else {
                             loadingText.innerHTML = '⏳ Reconnecting...<br><span style="font-size: 14px; color: #94a3b8;">Network issue detected. Retrying...</span>';
                         }
@@ -747,7 +786,29 @@
                 console.error('PDF to Word error:', error);
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
+                currentTaskId = null;
             }
+        }
+        
+        // ========== Retry function ==========
+        async function retryConversion() {
+            if (!selectedFile) {
+                alert('Please upload a PDF file first.');
+                return;
+            }
+            
+            retryBtn.classList.add('hidden');
+            isRetrying = true;
+            
+            // Reset the state and start over
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+            currentTaskId = null;
+            
+            // Call convertToWord again
+            await convertToWord();
         }
         
         // ========== Main OCR function ==========
@@ -816,6 +877,13 @@
                 fileInfo.classList.remove('hidden'); 
                 resultSection.classList.add('hidden'); 
                 errorSection.classList.add('hidden'); 
+                // Hide retry button when new file is uploaded
+                retryBtn.classList.add('hidden');
+                if (pollInterval) {
+                    clearInterval(pollInterval);
+                    pollInterval = null;
+                }
+                currentTaskId = null;
                 checkUsage().then(canUse => { 
                     if (canUse) ocrBtn.disabled = false; 
                     convertWordBtn.disabled = false; 
@@ -827,6 +895,12 @@
         
         function removeFile() { 
             selectedFile = null; 
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+            currentTaskId = null;
+            retryBtn.classList.add('hidden');
             fileInfo.classList.add('hidden'); 
             ocrBtn.disabled = true; 
             convertWordBtn.disabled = true; 
@@ -843,6 +917,7 @@
         });
         downloadTxtBtn?.addEventListener('click', downloadAsTxt);
         downloadDocxBtn?.addEventListener('click', downloadAsDocx);
+        retryBtn?.addEventListener('click', retryConversion);
         convertWordBtn?.addEventListener('click', convertToWord);
         
         dropZone?.addEventListener('click', () => fileInput.click());
