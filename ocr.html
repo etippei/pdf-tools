@@ -576,7 +576,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF 转 Word（异步轮询 + 次数限制 + 英文提示）==========
+        // ========== PDF 转 Word（异步轮询 + 次数限制 + 全英文提示）==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -609,7 +609,8 @@
                 const response = await fetch(`${API_BASE}/api/pdf-to-word`, {
                     method: 'POST',
                     headers: headers,
-                    body: formData
+                    body: formData,
+                    signal: AbortSignal.timeout(35000)
                 });
                 
                 const data = await response.json();
@@ -632,12 +633,16 @@
                 const maxAttempts = 600;
                 let lastStatusMessage = '';
                 let isProcessing = true;
+                let networkErrorCount = 0;
                 
                 const pollInterval = setInterval(async () => {
                     attempts++;
                     
                     try {
-                        const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${taskId}`);
+                        const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${taskId}`, {
+                            signal: AbortSignal.timeout(15000)
+                        });
+                        networkErrorCount = 0;
                         
                         if (statusResponse.status === 200) {
                             const contentType = statusResponse.headers.get('content-type');
@@ -690,16 +695,12 @@
                         let statusMessage = '';
                         
                         if (seconds < 120) {
-                            // 0-2 minutes
                             statusMessage = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
                         } else if (seconds < 600) {
-                            // 2-10 minutes
                             statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Your document is being converted. This may take a while depending on the file size.</span>';
                         } else if (seconds < 1200) {
-                            // 10-20 minutes
                             statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">This is taking longer than usual. The process is still running. Thank you for your patience.</span>';
                         } else {
-                            // 20-30 minutes
                             statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Large files can take time. The conversion is still in progress. Please continue waiting.</span>';
                         }
                         
@@ -717,13 +718,30 @@
                             alert('⏳ Your document is taking longer than expected.\n\nPlease try again later, or contact support if this issue persists.\n\n📧 etiplpl@outlook.com');
                         }
                         
-                    } catch (error) {
-                        console.error('Polling error:', error);
+                    } catch (pollError) {
+                        networkErrorCount++;
+                        console.error('Polling error:', pollError);
+                        
+                        if (networkErrorCount >= 3) {
+                            clearInterval(pollInterval);
+                            loadingOverlay.classList.add('hidden');
+                            convertWordBtn.disabled = false;
+                            alert('Network connection lost. Please check your internet connection and try again.');
+                        } else {
+                            loadingText.innerHTML = '⏳ Reconnecting...<br><span style="font-size: 14px; color: #94a3b8;">Network issue detected. Retrying...</span>';
+                        }
                     }
                 }, 3000);
                 
             } catch (error) {
-                alert('Conversion failed: ' + error.message);
+                let errorMessage = error.message || 'Unknown error';
+                if (errorMessage.includes('Network connection lost') || 
+                    errorMessage.includes('fetch') || 
+                    errorMessage.includes('timeout') ||
+                    errorMessage.includes('AbortError')) {
+                    errorMessage = 'Network connection lost. Please check your internet connection and try again.';
+                }
+                alert('Conversion failed: ' + errorMessage);
                 console.error('PDF to Word error:', error);
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
