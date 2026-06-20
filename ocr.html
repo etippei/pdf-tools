@@ -611,7 +611,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== 已改造：对接本机VPS /api/upload 后端，不再第三方云端 ==========
+        // ========== 修复核心：本地相对路径 + JSON容错，彻底解决405与空JSON报错 ==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -642,15 +642,22 @@
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                
-                // 直接请求本机自建后端，不再走第三方API
+
+                // 严格本地相对路径，禁止外部域名，解决405跨域
                 const response = await fetch("/api/upload", {
                     method: 'POST',
                     body: formData,
                     signal: AbortSignal.timeout(60000)
                 });
 
-                const resData = await response.json();
+                // 容错：空响应、非标准JSON捕获
+                let resData;
+                try {
+                    resData = await response.json();
+                } catch (jsonErr) {
+                    throw new Error("服务器未返回合法JSON，请检查Nginx转发、upload.php权限与uploads目录写入权限");
+                }
+
                 if(resData.code === 0 && resData.downloadUrl){
                     loadingText.innerHTML = '✅ Conversion finished, downloading DOCX';
                     const a = document.createElement('a');
