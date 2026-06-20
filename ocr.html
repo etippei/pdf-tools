@@ -137,7 +137,7 @@
         <div class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">OCR - Extract Text from PDF</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert scanned PDFs and images into editable text using AI-powered OCR.</p>
-            <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device</span>
+            <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device for OCR</span>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -611,7 +611,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF to Word with Cancel, Retry, and English messages ==========
+        // ========== 已改造：对接本机VPS /api/upload 后端，不再第三方云端 ==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -629,7 +629,6 @@
                 return;
             }
             
-            // Reset cancel flag
             isCancelled = false;
             retryBtn.classList.add('hidden');
             isRetrying = false;
@@ -637,229 +636,39 @@
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
             cancelBtn.style.display = 'inline-block';
-            loadingText.innerHTML = '⏳ Submitting conversion task...';
-            loadingSubtext.textContent = 'Please wait...';
+            loadingText.innerHTML = '⏳ Uploading to local server for conversion...';
+            loadingSubtext.textContent = 'Server LibreOffice converting, keep page open';
             
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
                 
-                const token = localStorage.getItem('authToken');
-                const headers = {};
-                if (token) headers['Authorization'] = `Bearer ${token}`;
-                
-                const response = await fetch(`${API_BASE}/api/pdf-to-word`, {
+                // 直接请求本机自建后端，不再走第三方API
+                const response = await fetch("/api/upload", {
                     method: 'POST',
-                    headers: headers,
                     body: formData,
-                    signal: AbortSignal.timeout(35000)
+                    signal: AbortSignal.timeout(60000)
                 });
-                
-                const data = await response.json();
-                
-                if (!response.ok || !data.success) {
-                    if (data.limitReached) {
-                        alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
-                        loadingOverlay.classList.add('hidden');
-                        convertWordBtn.disabled = false;
-                        return;
-                    }
-                    throw new Error(data.error || 'Task submission failed');
+
+                const resData = await response.json();
+                if(resData.code === 0 && resData.downloadUrl){
+                    loadingText.innerHTML = '✅ Conversion finished, downloading DOCX';
+                    const a = document.createElement('a');
+                    a.href = resData.downloadUrl;
+                    a.download = resData.fileName || "convert_result.docx";
+                    a.click();
+                    await recordUsage();
+                }else{
+                    throw new Error(resData.msg || "Server conversion failed");
                 }
-                
-                currentTaskId = data.taskId;
-                loadingText.innerHTML = '⏳ Processing your document, please wait...';
-                loadingSubtext.textContent = 'This may take a few minutes. Please do not close this page.';
-                
-                // Poll for results - 30 minutes timeout (600 attempts × 3 seconds)
-                let attempts = 0;
-                const maxAttempts = 600;
-                let lastStatusMessage = '';
-                let networkErrorCount = 0;
-                
-                // Clear any existing interval
-                if (pollInterval) {
-                    clearInterval(pollInterval);
-                }
-                
-                pollInterval = setInterval(async () => {
-                    attempts++;
-                    
-                    // Check if cancelled
-                    if (isCancelled) {
-                        clearInterval(pollInterval);
-                        pollInterval = null;
-                        loadingOverlay.classList.add('hidden');
-                        convertWordBtn.disabled = false;
-                        currentTaskId = null;
-                        loadingText.innerHTML = '⏹️ Conversion cancelled.';
-                        loadingSubtext.textContent = '';
-                        return;
-                    }
-                    
-                    try {
-                        const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${currentTaskId}`, {
-                            signal: AbortSignal.timeout(15000)
-                        });
-                        networkErrorCount = 0;
-                        
-                        if (statusResponse.status === 200) {
-                            const contentType = statusResponse.headers.get('content-type');
-                            if (contentType && contentType.includes('docx')) {
-                                // This is a file download - handle it
-                                const blob = await statusResponse.blob();
-                                const url = URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.href = url;
-                                
-                                const originalName = selectedFile.name || 'document.pdf';
-                                const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
-                                a.download = `${nameWithoutExt}_converted.docx`;
-                                
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                                URL.revokeObjectURL(url);
-                                
-                                clearInterval(pollInterval);
-                                pollInterval = null;
-                                loadingOverlay.classList.add('hidden');
-                                convertWordBtn.disabled = false;
-                                currentTaskId = null;
-                                
-                                await recordUsage();
-                                
-                                loadingText.innerHTML = '✅ Conversion completed!';
-                                loadingSubtext.textContent = '';
-                                cancelBtn.style.display = 'none';
-                                return;
-                            }
-                        }
-                        
-                        // Try to parse as JSON for status updates
-                        let statusData;
-                        try {
-                            statusData = await statusResponse.json();
-                        } catch (parseError) {
-                            // If it's not JSON, it might be a file (already handled above)
-                            console.log('Response is not JSON, likely a file:', parseError);
-                            return;
-                        }
-                        
-                        if (statusData.status === 'completed') {
-                            // This shouldn't happen normally as we handle files above
-                            // but just in case
-                            if (statusData.fileContent) {
-                                // Handle base64 encoded file
-                                const binaryString = atob(statusData.fileContent);
-                                const bytes = new Uint8Array(binaryString.length);
-                                for (let i = 0; i < binaryString.length; i++) {
-                                    bytes[i] = binaryString.charCodeAt(i);
-                                }
-                                const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-                                const url = URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.href = url;
-                                const originalName = selectedFile.name || 'document.pdf';
-                                const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
-                                a.download = `${nameWithoutExt}_converted.docx`;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                                URL.revokeObjectURL(url);
-                                
-                                clearInterval(pollInterval);
-                                pollInterval = null;
-                                loadingOverlay.classList.add('hidden');
-                                convertWordBtn.disabled = false;
-                                currentTaskId = null;
-                                await recordUsage();
-                                loadingText.innerHTML = '✅ Conversion completed!';
-                                loadingSubtext.textContent = '';
-                                cancelBtn.style.display = 'none';
-                            }
-                            return;
-                        }
-                        
-                        if (statusData.status === 'failed') {
-                            clearInterval(pollInterval);
-                            pollInterval = null;
-                            loadingOverlay.classList.add('hidden');
-                            convertWordBtn.disabled = false;
-                            currentTaskId = null;
-                            alert('Conversion failed: ' + (statusData.error || 'Unknown error'));
-                            return;
-                        }
-                        
-                        // Time-based progress messages
-                        const seconds = attempts * 3;
-                        let statusMessage = '';
-                        
-                        if (seconds < 120) {
-                            statusMessage = '⏳ Processing your document, please wait...';
-                            loadingSubtext.textContent = 'This may take a few minutes. Please do not close this page.';
-                        } else if (seconds < 600) {
-                            statusMessage = '⏳ Still processing...';
-                            loadingSubtext.textContent = 'Your document is being converted. This may take a while depending on the file size.';
-                        } else if (seconds < 1200) {
-                            statusMessage = '⏳ Still processing...';
-                            loadingSubtext.textContent = 'This is taking longer than usual. The process is still running. Thank you for your patience.';
-                        } else {
-                            statusMessage = '⏳ Still processing...';
-                            loadingSubtext.textContent = 'Large files can take time. The conversion is still in progress. Please continue waiting.';
-                        }
-                        
-                        if (statusData.message && statusData.message !== lastStatusMessage) {
-                            lastStatusMessage = statusData.message;
-                            loadingText.innerHTML = statusMessage;
-                            loadingSubtext.textContent = statusData.message;
-                        } else {
-                            loadingText.innerHTML = statusMessage;
-                        }
-                        
-                        if (attempts >= maxAttempts) {
-                            clearInterval(pollInterval);
-                            pollInterval = null;
-                            loadingOverlay.classList.add('hidden');
-                            convertWordBtn.disabled = false;
-                            currentTaskId = null;
-                            alert('⏳ Your document is taking longer than expected.\n\nPlease try again later, or contact support if this issue persists.\n\n📧 etiplpl@outlook.com');
-                        }
-                        
-                    } catch (pollError) {
-                        networkErrorCount++;
-                        console.error('Polling error:', pollError);
-                        
-                        if (networkErrorCount >= 3) {
-                            clearInterval(pollInterval);
-                            pollInterval = null;
-                            loadingOverlay.classList.add('hidden');
-                            convertWordBtn.disabled = false;
-                            retryBtn.classList.remove('hidden');
-                            loadingText.innerHTML = '⚠️ Connection lost.';
-                            loadingSubtext.textContent = 'Click the Retry button to try again.';
-                        } else {
-                            loadingText.innerHTML = '⏳ Reconnecting...';
-                            loadingSubtext.textContent = 'Network issue detected. Retrying...';
-                        }
-                    }
-                }, 3000);
-                
-            } catch (error) {
-                let errorMessage = error.message || 'Unknown error';
-                const errorStr = String(errorMessage);
-                if (errorStr.includes('Network connection lost') || 
-                    errorStr.includes('fetch') || 
-                    errorStr.includes('timeout') ||
-                    errorStr.includes('AbortError') ||
-                    errorStr.includes('Failed to fetch')) {
-                    errorMessage = 'Network connection lost. Please check your internet connection and try again.';
-                }
-                alert('Conversion failed: ' + errorMessage);
-                console.error('PDF to Word error:', error);
+
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
-                currentTaskId = null;
+            } catch (error) {
+                errorMsg.textContent = error.message;
+                errorSection.classList.remove('hidden');
+                loadingOverlay.classList.add('hidden');
+                convertWordBtn.disabled = false;
             }
         }
         
