@@ -85,6 +85,19 @@
             margin-left: 8px;
         }
         .btn-retry:hover { background-color: #d97706; }
+        .btn-cancel {
+            background-color: #ef4444;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+        .btn-cancel:hover { background-color: #dc2626; }
         .processing-message {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -156,10 +169,11 @@
         </div>
 
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-            <div class="bg-white rounded-2xl p-8 text-center">
+            <div class="bg-white rounded-2xl p-8 text-center" style="max-width: 500px; width: 90%;">
                 <i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i>
                 <p id="loadingText" class="text-gray-700">Processing...</p>
-                <p class="text-sm text-gray-500 mt-2">This may take a few seconds</p>
+                <p class="text-sm text-gray-500 mt-2" id="loadingSubtext">This may take a few seconds</p>
+                <button id="cancelBtn" class="btn-cancel"><i class="fas fa-times-circle mr-2"></i> Cancel</button>
             </div>
         </div>
 
@@ -324,6 +338,7 @@
         let currentTaskId = null;
         let pollInterval = null;
         let isRetrying = false;
+        let isCancelled = false;
         
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -336,6 +351,8 @@
         const convertWordBtn = document.getElementById('convertWordBtn');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
+        const loadingSubtext = document.getElementById('loadingSubtext');
+        const cancelBtn = document.getElementById('cancelBtn');
         const resultSection = document.getElementById('resultSection');
         const extractedText = document.getElementById('extractedText');
         const copyBtn = document.getElementById('copyBtn');
@@ -594,7 +611,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF to Word with Retry ==========
+        // ========== PDF to Word with Cancel, Retry, and English messages ==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -612,13 +629,16 @@
                 return;
             }
             
-            // Hide retry button if visible
+            // Reset cancel flag
+            isCancelled = false;
             retryBtn.classList.add('hidden');
             isRetrying = false;
             
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
+            cancelBtn.style.display = 'inline-block';
             loadingText.innerHTML = '⏳ Submitting conversion task...';
+            loadingSubtext.textContent = 'Please wait...';
             
             try {
                 const formData = new FormData();
@@ -648,13 +668,13 @@
                 }
                 
                 currentTaskId = data.taskId;
-                loadingText.innerHTML = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
+                loadingText.innerHTML = '⏳ Processing your document, please wait...';
+                loadingSubtext.textContent = 'This may take a few minutes. Please do not close this page.';
                 
                 // Poll for results - 30 minutes timeout (600 attempts × 3 seconds)
                 let attempts = 0;
                 const maxAttempts = 600;
                 let lastStatusMessage = '';
-                let isProcessing = true;
                 let networkErrorCount = 0;
                 
                 // Clear any existing interval
@@ -665,6 +685,18 @@
                 pollInterval = setInterval(async () => {
                     attempts++;
                     
+                    // Check if cancelled
+                    if (isCancelled) {
+                        clearInterval(pollInterval);
+                        pollInterval = null;
+                        loadingOverlay.classList.add('hidden');
+                        convertWordBtn.disabled = false;
+                        currentTaskId = null;
+                        loadingText.innerHTML = '⏹️ Conversion cancelled.';
+                        loadingSubtext.textContent = '';
+                        return;
+                    }
+                    
                     try {
                         const statusResponse = await fetch(`${API_BASE}/api/pdf-to-word/result?taskId=${currentTaskId}`, {
                             signal: AbortSignal.timeout(15000)
@@ -674,6 +706,7 @@
                         if (statusResponse.status === 200) {
                             const contentType = statusResponse.headers.get('content-type');
                             if (contentType && contentType.includes('docx')) {
+                                // This is a file download - handle it
                                 const blob = await statusResponse.blob();
                                 const url = URL.createObjectURL(blob);
                                 const a = document.createElement('a');
@@ -697,19 +730,54 @@
                                 await recordUsage();
                                 
                                 loadingText.innerHTML = '✅ Conversion completed!';
+                                loadingSubtext.textContent = '';
+                                cancelBtn.style.display = 'none';
                                 return;
                             }
                         }
                         
-                        const statusData = await statusResponse.json();
+                        // Try to parse as JSON for status updates
+                        let statusData;
+                        try {
+                            statusData = await statusResponse.json();
+                        } catch (parseError) {
+                            // If it's not JSON, it might be a file (already handled above)
+                            console.log('Response is not JSON, likely a file:', parseError);
+                            return;
+                        }
                         
                         if (statusData.status === 'completed') {
-                            clearInterval(pollInterval);
-                            pollInterval = null;
-                            loadingOverlay.classList.add('hidden');
-                            convertWordBtn.disabled = false;
-                            currentTaskId = null;
-                            alert('Conversion completed but file download failed. Please try again.');
+                            // This shouldn't happen normally as we handle files above
+                            // but just in case
+                            if (statusData.fileContent) {
+                                // Handle base64 encoded file
+                                const binaryString = atob(statusData.fileContent);
+                                const bytes = new Uint8Array(binaryString.length);
+                                for (let i = 0; i < binaryString.length; i++) {
+                                    bytes[i] = binaryString.charCodeAt(i);
+                                }
+                                const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                const originalName = selectedFile.name || 'document.pdf';
+                                const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
+                                a.download = `${nameWithoutExt}_converted.docx`;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                URL.revokeObjectURL(url);
+                                
+                                clearInterval(pollInterval);
+                                pollInterval = null;
+                                loadingOverlay.classList.add('hidden');
+                                convertWordBtn.disabled = false;
+                                currentTaskId = null;
+                                await recordUsage();
+                                loadingText.innerHTML = '✅ Conversion completed!';
+                                loadingSubtext.textContent = '';
+                                cancelBtn.style.display = 'none';
+                            }
                             return;
                         }
                         
@@ -728,18 +796,23 @@
                         let statusMessage = '';
                         
                         if (seconds < 120) {
-                            statusMessage = '⏳ Processing your document, please wait...<br><span style="font-size: 14px; color: #94a3b8;">This may take a few minutes. Please do not close this page.</span>';
+                            statusMessage = '⏳ Processing your document, please wait...';
+                            loadingSubtext.textContent = 'This may take a few minutes. Please do not close this page.';
                         } else if (seconds < 600) {
-                            statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Your document is being converted. This may take a while depending on the file size.</span>';
+                            statusMessage = '⏳ Still processing...';
+                            loadingSubtext.textContent = 'Your document is being converted. This may take a while depending on the file size.';
                         } else if (seconds < 1200) {
-                            statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">This is taking longer than usual. The process is still running. Thank you for your patience.</span>';
+                            statusMessage = '⏳ Still processing...';
+                            loadingSubtext.textContent = 'This is taking longer than usual. The process is still running. Thank you for your patience.';
                         } else {
-                            statusMessage = '⏳ Still processing...<br><span style="font-size: 14px; color: #94a3b8;">Large files can take time. The conversion is still in progress. Please continue waiting.</span>';
+                            statusMessage = '⏳ Still processing...';
+                            loadingSubtext.textContent = 'Large files can take time. The conversion is still in progress. Please continue waiting.';
                         }
                         
                         if (statusData.message && statusData.message !== lastStatusMessage) {
                             lastStatusMessage = statusData.message;
-                            loadingText.innerHTML = statusMessage + `<br><span style="font-size: 13px; color: #94a3b8;">${statusData.message}</span>`;
+                            loadingText.innerHTML = statusMessage;
+                            loadingSubtext.textContent = statusData.message;
                         } else {
                             loadingText.innerHTML = statusMessage;
                         }
@@ -762,12 +835,12 @@
                             pollInterval = null;
                             loadingOverlay.classList.add('hidden');
                             convertWordBtn.disabled = false;
-                            
-                            // Show retry button instead of just alert
                             retryBtn.classList.remove('hidden');
-                            loadingText.innerHTML = '⚠️ Connection lost.<br><span style="font-size: 14px; color: #94a3b8;">Click the Retry button to try again.</span>';
+                            loadingText.innerHTML = '⚠️ Connection lost.';
+                            loadingSubtext.textContent = 'Click the Retry button to try again.';
                         } else {
-                            loadingText.innerHTML = '⏳ Reconnecting...<br><span style="font-size: 14px; color: #94a3b8;">Network issue detected. Retrying...</span>';
+                            loadingText.innerHTML = '⏳ Reconnecting...';
+                            loadingSubtext.textContent = 'Network issue detected. Retrying...';
                         }
                     }
                 }, 3000);
@@ -790,6 +863,20 @@
             }
         }
         
+        // ========== Cancel function ==========
+        function cancelConversion() {
+            isCancelled = true;
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+            loadingOverlay.classList.add('hidden');
+            convertWordBtn.disabled = false;
+            currentTaskId = null;
+            loadingText.innerHTML = '⏹️ Conversion cancelled.';
+            loadingSubtext.textContent = '';
+        }
+        
         // ========== Retry function ==========
         async function retryConversion() {
             if (!selectedFile) {
@@ -800,14 +887,12 @@
             retryBtn.classList.add('hidden');
             isRetrying = true;
             
-            // Reset the state and start over
             if (pollInterval) {
                 clearInterval(pollInterval);
                 pollInterval = null;
             }
             currentTaskId = null;
             
-            // Call convertToWord again
             await convertToWord();
         }
         
@@ -821,6 +906,7 @@
             if (!selectedFile) return;
             ocrBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
+            cancelBtn.style.display = 'none';
             progressContainer.classList.remove('hidden');
             progressBar.style.width = '0%';
             resultSection.classList.add('hidden');
@@ -877,13 +963,13 @@
                 fileInfo.classList.remove('hidden'); 
                 resultSection.classList.add('hidden'); 
                 errorSection.classList.add('hidden'); 
-                // Hide retry button when new file is uploaded
                 retryBtn.classList.add('hidden');
                 if (pollInterval) {
                     clearInterval(pollInterval);
                     pollInterval = null;
                 }
                 currentTaskId = null;
+                isCancelled = false;
                 checkUsage().then(canUse => { 
                     if (canUse) ocrBtn.disabled = false; 
                     convertWordBtn.disabled = false; 
@@ -900,6 +986,7 @@
                 pollInterval = null;
             }
             currentTaskId = null;
+            isCancelled = false;
             retryBtn.classList.add('hidden');
             fileInfo.classList.add('hidden'); 
             ocrBtn.disabled = true; 
@@ -907,6 +994,9 @@
             resultSection.classList.add('hidden'); 
             errorSection.classList.add('hidden'); 
         }
+        
+        // ========== Event listeners ==========
+        cancelBtn?.addEventListener('click', cancelConversion);
         
         copyBtn?.addEventListener('click', () => { 
             navigator.clipboard.writeText(extractedText.textContent).then(() => { 
