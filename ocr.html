@@ -8,12 +8,13 @@
     <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Free and private.">
     <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free, image to text, pdf text extractor">
     <link rel="canonical" href="https://aipdfly.com/ocr.html">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <link rel="stylesheet" href="dark-mode.css">
-    <script src="darkmode.js"></script>
+    <!-- 防缓存参数，强制加载最新文件 -->
+    <script src="https://cdn.tailwindcss.com?v=20260621"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260621">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260621"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260621"></script>
+    <link rel="stylesheet" href="dark-mode.css?v=20260621">
+    <script src="darkmode.js?v=20260621"></script>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWCSYTJ60S"></script>
     <script>
@@ -241,7 +242,7 @@
                         document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
                     }
                     const logout = document.getElementById('logoutBtn');
-                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('authToken'); localStorage.removeItem('userEmail'); localStorage.removeItem('isPro'); window.location.reload(); });
                 }, 100);
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
@@ -293,10 +294,11 @@
                 const response = await fetch(`${API_BASE}/api/usage/record`, {
                     method: 'POST',
                     headers: headers,
-                    body: JSON.stringify({ feature: 'ocr' })
+                    body: JSON.stringify({ feature: 'word' })
                 });
                 const data = await response.json();
-                usageInfo = { ...usageInfo, remaining: data.remaining, used: data.used };
+                usageInfo.remaining = data.remaining;
+                usageInfo.used = data.used;
                 updateUsageDisplay(usageInfo);
                 return true;
             } catch (error) {
@@ -310,7 +312,7 @@
             if (!banner) return;
             if (data.isPro) {
                 banner.classList.remove('hidden');
-                banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR & Word conversion ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR & Word Conversion ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Manage Plan</a>`;
             } else {
                 const remaining = data.remaining;
                 const limit = data.limit;
@@ -319,16 +321,12 @@
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
                     if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's usage: ${used}/${limit} tasks. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for Extra Quota</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>`;
                     } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's usage: ${used}/${limit} tasks. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>`;
                     }
                 } else {
-                    if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit}). </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
-                    } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit}). </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
-                    }
+                    banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily Quota Exhausted</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Unlock Unlimited Pro</a>`;
                 }
             }
         }
@@ -368,9 +366,8 @@
         async function getPdfPageCount(file) {
             try {
                 const arrayBuffer = await file.arrayBuffer();
-                const { PDFDocument } = window.PDFLib;
-                const pdf = await PDFDocument.load(arrayBuffer);
-                return pdf.getPageCount();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                return pdf.numPages;
             } catch (e) { return 0; }
         }
         
@@ -380,7 +377,7 @@
                 reader.onload = async function(e) {
                     try {
                         const typedarray = new Uint8Array(e.target.result);
-                        const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
+                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
                         let fullText = '';
                         for (let i = 1; i <= pdf.numPages; i++) {
                             const page = await pdf.getPage(i);
@@ -400,15 +397,13 @@
         async function compressPDF(file, targetSizeMB = 0.8) {
             try {
                 const arrayBuffer = await file.arrayBuffer();
-                const { PDFDocument } = window.PDFLib;
                 const pdfDoc = await PDFDocument.load(arrayBuffer);
                 const pageCount = pdfDoc.getPageCount();
                 if (pageCount <= 5) return file;
                 const pages = pdfDoc.getPages();
                 for (const page of pages) {
                     const { width, height } = page.getSize();
-                    page.scaleContent(0.7, 0.7);
-                    page.setSize(width * 0.7, height * 0.7);
+                    page.scale(0.7, 0.7);
                 }
                 const compressedBytes = await pdfDoc.save({ useObjectStreams: false });
                 const compressedBlob = new Blob([compressedBytes], { type: 'application/pdf' });
@@ -421,7 +416,6 @@
         }
         
         async function mergePages(pdfDoc, startIndex, endIndex) {
-            const { PDFDocument } = window.PDFLib;
             const mergedPdf = await PDFDocument.create();
             for (let i = startIndex; i <= endIndex; i++) {
                 const [page] = await mergedPdf.copyPages(pdfDoc, [i]);
@@ -434,52 +428,32 @@
         
         async function groupedOCR(file, progressCallback) {
             try {
-                const { PDFDocument } = window.PDFLib;
-                const arrayBuffer = await file.arrayBuffer();
-                const pdfDoc = await PDFDocument.load(arrayBuffer);
+                const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
                 const pageCount = pdfDoc.getPageCount();
-                
                 let allText = '';
                 let totalApiCalls = 0;
-                
                 let avgPageSize = 0;
                 try {
-                    const testPage = await mergePages(pdfDoc, 0, Math.min(2, pageCount - 1));
-                    avgPageSize = testPage.size / Math.min(3, pageCount);
+                    const testPageFile = await mergePages(pdfDoc, 0, Math.min(2, pageCount - 1));
+                    avgPageSize = testPageFile.size / Math.min(3, pageCount);
                 } catch(e) { avgPageSize = 150 * 1024; }
-                
                 let pagesPerGroup = Math.max(1, Math.floor(MAX_API_FILE_SIZE / avgPageSize));
                 pagesPerGroup = Math.min(pagesPerGroup, 5);
-                
                 console.log(`Avg page size: ${(avgPageSize/1024).toFixed(1)}KB, Pages per group: ${pagesPerGroup}`);
-                
-                if (progressCallback) {
-                    progressCallback(10, `Optimizing: ${pagesPerGroup} pages per batch...`);
-                }
-                
+                if (progressCallback) progressCallback(10, `Optimizing: ${pagesPerGroup} pages per batch...`);
                 for (let i = 0; i < pageCount; i += pagesPerGroup) {
                     const endIdx = Math.min(i + pagesPerGroup - 1, pageCount - 1);
                     const groupSize = endIdx - i + 1;
-                    
                     const percent = 10 + ((i / pageCount) * 90);
-                    if (progressCallback) {
-                        progressCallback(percent, `Processing batch ${Math.floor(i/pagesPerGroup)+1}/${Math.ceil(pageCount/pagesPerGroup)} (${groupSize} pages)...`);
-                    }
-                    
+                    if (progressCallback) progressCallback(percent, `Processing batch ${Math.floor(i/pagesPerGroup)+1}/${Math.ceil(pageCount/pagesPerGroup)} (${groupSize} pages)...`);
                     try {
                         let groupFile = await mergePages(pdfDoc, i, endIdx);
-                        
-                        if (groupFile.size > MAX_API_FILE_SIZE) {
-                            groupFile = await compressPDF(groupFile, 0.8);
-                        }
-                        
+                        if (groupFile.size > MAX_API_FILE_SIZE) groupFile = await compressPDF(groupFile, 0.8);
                         if (groupFile.size > MAX_API_FILE_SIZE) {
                             for (let j = i; j <= endIdx; j++) {
-                                const singleFile = await mergePages(pdfDoc, j, j);
-                                let finalFile = singleFile;
-                                if (singleFile.size > MAX_API_FILE_SIZE) {
-                                    finalFile = await compressPDF(singleFile, 0.8);
-                                }
+                                const singlePageFile = await mergePages(pdfDoc, j, j);
+                                let finalFile = singlePageFile;
+                                if (singlePageFile.size > MAX_API_FILE_SIZE) finalFile = await compressPDF(singlePageFile, 0.8);
                                 if (finalFile.size > MAX_API_FILE_SIZE) {
                                     allText += `\n\n--- Page ${j+1} (file too large, skipped) ---\n\n`;
                                     continue;
@@ -490,11 +464,11 @@
                                 formData.append('language', 'eng');
                                 formData.append('OCREngine', '2');
                                 formData.append('scale', 'true');
-                                const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
-                                const result = await response.json();
+                                const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                                const resJson = await res.json();
                                 totalApiCalls++;
-                                if (!result.IsErroredOnProcessing && result.ParsedResults && result.ParsedResults[0]) {
-                                    allText += `\n\n--- Page ${j+1} ---\n\n${result.ParsedResults[0].ParsedText || ''}`;
+                                if (!resJson.IsErroredOnProcessing && resJson.ParsedResults && resJson.ParsedResults[0]) {
+                                    allText += `\n\n--- Page ${j+1} ---\n\n${resJson.ParsedResults[0].ParsedText || ''}`;
                                 } else {
                                     allText += `\n\n--- Page ${j+1} (OCR failed) ---\n\n`;
                                 }
@@ -502,60 +476,52 @@
                             }
                             continue;
                         }
-                        
                         const formData = new FormData();
                         formData.append('file', groupFile, `pages_${i+1}_${endIdx+1}.pdf`);
                         formData.append('apikey', OCR_SPACE_API_KEY);
                         formData.append('language', 'eng');
                         formData.append('OCREngine', '2');
                         formData.append('scale', 'true');
-                        
-                        const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
-                        const result = await response.json();
+                        const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                        const resJson = await res.json();
                         totalApiCalls++;
-                        
-                        if (result.IsErroredOnProcessing) {
+                        if (resJson.IsErroredOnProcessing) {
                             for (let j = i; j <= endIdx; j++) {
-                                const singleFile = await mergePages(pdfDoc, j, j);
-                                let finalFile = singleFile;
-                                if (singleFile.size > MAX_API_FILE_SIZE) {
-                                    finalFile = await compressPDF(singleFile, 0.8);
-                                }
+                                const singlePageFile = await mergePages(pdfDoc, j, j);
+                                let finalFile = singlePageFile;
+                                if (singlePageFile.size > MAX_API_FILE_SIZE) finalFile = await compressPDF(singlePageFile, 0.8);
                                 if (finalFile.size > MAX_API_FILE_SIZE) {
                                     allText += `\n\n--- Page ${j+1} (file too large, skipped) ---\n\n`;
                                     continue;
                                 }
-                                const singleFormData = new FormData();
-                                singleFormData.append('file', finalFile, `page_${j+1}.pdf`);
-                                singleFormData.append('apikey', OCR_SPACE_API_KEY);
-                                singleFormData.append('language', 'eng');
-                                singleFormData.append('OCREngine', '2');
-                                singleFormData.append('scale', 'true');
-                                const singleResponse = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: singleFormData });
-                                const singleResult = await singleResponse.json();
+                                const singleForm = new FormData();
+                                singleForm.append('file', finalFile, `page_${j+1}.pdf`);
+                                singleForm.append('apikey', OCR_SPACE_API_KEY);
+                                singleForm.append('language', 'eng');
+                                singleForm.append('OCREngine', '2');
+                                singleForm.append('scale', 'true');
+                                const singleRes = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: singleForm });
+                                const singleJson = await singleRes.json();
                                 totalApiCalls++;
-                                if (!singleResult.IsErroredOnProcessing && singleResult.ParsedResults && singleResult.ParsedResults[0]) {
-                                    allText += `\n\n--- Page ${j+1} ---\n\n${singleResult.ParsedResults[0].ParsedText || ''}`;
+                                if (!singleJson.IsErroredOnProcessing && singleJson.ParsedResults && singleJson.ParsedResults[0]) {
+                                    allText += `\n\n--- Page ${j+1} ---\n\n${singleJson.ParsedResults[0].ParsedText || ''}`;
                                 } else {
                                     allText += `\n\n--- Page ${j+1} (OCR failed) ---\n\n`;
                                 }
                                 await new Promise(r => setTimeout(r, 300));
                             }
-                        } else if (result.ParsedResults && result.ParsedResults[0]) {
-                            const pageText = result.ParsedResults[0].ParsedText || '';
-                            allText += `\n\n--- Pages ${i+1} to ${endIdx+1} ---\n\n${pageText}`;
+                        } else if (resJson.ParsedResults && resJson.ParsedResults[0]) {
+                            const pageTxt = resJson.ParsedResults[0].ParsedText || '';
+                            allText += `\n\n--- Pages ${i+1} to ${endIdx+1} ---\n\n${pageTxt}`;
                         } else {
                             allText += `\n\n--- Pages ${i+1} to ${endIdx+1} (OCR failed) ---\n\n`;
                         }
-                        
                         await new Promise(r => setTimeout(r, 500));
-                        
-                    } catch (groupError) {
-                        console.error(`Group ${i+1}-${endIdx+1} failed:`, groupError);
+                    } catch (groupErr) {
+                        console.error(`Group ${i+1}-${endIdx+1} error:`, groupErr);
                         allText += `\n\n--- Pages ${i+1} to ${endIdx+1} (processing failed) ---\n\n`;
                     }
                 }
-                
                 console.log(`Total API calls: ${totalApiCalls}`);
                 if (progressCallback) progressCallback(100, `Completed! Processed ${pageCount} pages`);
                 return allText;
@@ -567,18 +533,18 @@
         
         async function directOCR(file, progressCallback) {
             try {
-                if (progressCallback) progressCallback(30, 'Uploading file...');
+                if (progressCallback) progressCallback(30, 'Uploading file to OCR service...');
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('apikey', OCR_SPACE_API_KEY);
                 formData.append('language', 'eng');
                 formData.append('OCREngine', '2');
                 formData.append('scale', 'true');
-                const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
                 if (progressCallback) progressCallback(80, 'Recognizing text...');
-                const result = await response.json();
-                if (result.IsErroredOnProcessing) throw new Error(result.ErrorMessage || 'OCR failed');
-                if (result.ParsedResults && result.ParsedResults[0]) return result.ParsedResults[0].ParsedText || '';
+                const resJson = await res.json();
+                if (resJson.IsErroredOnProcessing) throw new Error(resJson.ErrorMessage || 'OCR failed');
+                if (resJson.ParsedResults && resJson.ParsedResults[0]) return resJson.ParsedResults[0].ParsedText || '';
                 throw new Error('Failed to extract text');
             } catch (error) { throw error; }
         }
@@ -611,108 +577,131 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== 修复核心：本地相对路径 + JSON容错，彻底解决405与空JSON报错 ==========
+        // ========== 方案A 正式PDF转Word函数（对接Worker原生/api/pdf-to-word 异步接口）==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
                 return;
             }
-            
             if (selectedFile.size > 50 * 1024 * 1024) {
                 alert('File too large. Maximum allowed size is 50MB.');
                 return;
             }
-            
             const canUse = await checkUsage();
             if (!canUse) {
                 alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
                 return;
             }
-            
+
             isCancelled = false;
             retryBtn.classList.add('hidden');
-            isRetrying = false;
-            
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
             cancelBtn.style.display = 'inline-block';
-            loadingText.innerHTML = '⏳ Uploading to local server for conversion...';
-            loadingSubtext.textContent = 'Server LibreOffice converting, keep page open';
-            
+            loadingText.textContent = '⏳ Uploading file to conversion service';
+            loadingSubtext.textContent = 'Submitting task, please wait...';
+
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
+                // 官方原生安全接口，无自定义转发
+                const apiUrl = "/api/pdf-to-word";
+                // 读取登录JWT鉴权，保证额度、会员权限生效
+                const authToken = localStorage.getItem('authToken') || "";
+                const reqHeaders = {};
+                if (authToken) reqHeaders.Authorization = `Bearer ${authToken}`;
 
-                // 严格本地相对路径，禁止外部域名，解决405跨域
-                const response = await fetch("/api/upload", {
-                    method: 'POST',
+                // 提交异步转换任务
+                const submitRes = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: reqHeaders,
                     body: formData,
-                    signal: AbortSignal.timeout(60000)
+                    signal: AbortSignal.timeout(90000)
                 });
 
-                // 容错：空响应、非标准JSON捕获
-                let resData;
+                let submitData;
                 try {
-                    resData = await response.json();
+                    submitData = await submitRes.json();
                 } catch (jsonErr) {
-                    throw new Error("服务器未返回合法JSON，请检查Nginx转发、upload.php权限与uploads目录写入权限");
+                    throw new Error("Service response empty, check VPS service status and Cloudflare connectivity");
                 }
 
-                if(resData.code === 0 && resData.downloadUrl){
-                    loadingText.innerHTML = '✅ Conversion finished, downloading DOCX';
-                    const a = document.createElement('a');
-                    a.href = resData.downloadUrl;
-                    a.download = resData.fileName || "convert_result.docx";
-                    a.click();
-                    await recordUsage();
-                }else{
-                    throw new Error(resData.msg || "Server conversion failed");
+                if (!submitData.success || !submitData.taskId) {
+                    throw new Error(submitData.error || "Failed to create conversion task");
                 }
 
-                loadingOverlay.classList.add('hidden');
-                convertWordBtn.disabled = false;
+                loadingText.textContent = "⌛ Converting PDF, polling task progress";
+                loadingSubtext.textContent = "Do not close page during conversion";
+
+                // 轮询任务状态，最大20轮，间隔2秒
+                let pollTimes = 0;
+                const maxPoll = 20;
+                let downloadBlob = null;
+                const resultUrlBase = "/api/pdf-to-word/result";
+
+                while (pollTimes < maxPoll && !downloadBlob && !isCancelled) {
+                    await new Promise(res => setTimeout(res, 2000));
+                    pollTimes++;
+                    const pollRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { headers: reqHeaders });
+                    const pollData = await pollRes.json();
+
+                    if (pollData.status === "completed") {
+                        // 二次请求获取二进制文件下载流
+                        const fileRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { headers: reqHeaders });
+                        downloadBlob = await fileRes.blob();
+                    } else if (pollData.status === "failed") {
+                        throw new Error(pollData.message || "PDF conversion failed on VPS server");
+                    }
+                }
+
+                if (isCancelled) throw new Error("Conversion cancelled by user");
+                if (!downloadBlob) {
+                    throw new Error("Conversion timeout, please retry later or use smaller PDF");
+                }
+
+                // 浏览器本地触发下载
+                const downloadLink = document.createElement("a");
+                downloadLink.href = URL.createObjectURL(downloadBlob);
+                downloadLink.download = `PDF_Convert_${submitData.taskId}.docx`;
+                downloadLink.click();
+                URL.revokeObjectURL(downloadLink.href);
+
+                // 后端统计使用次数，同步额度
+                await recordUsage();
+                loadingText.textContent = "✅ Conversion completed, file downloaded automatically";
+
             } catch (error) {
                 errorMsg.textContent = error.message;
-                errorSection.classList.remove('hidden');
-                loadingOverlay.classList.add('hidden');
+                errorSection.classList.remove("hidden");
+            } finally {
+                loadingOverlay.classList.add("hidden");
                 convertWordBtn.disabled = false;
             }
         }
         
-        // ========== Cancel function ==========
+        // ========== Cancel conversion ==========
         function cancelConversion() {
             isCancelled = true;
-            if (pollInterval) {
-                clearInterval(pollInterval);
-                pollInterval = null;
-            }
             loadingOverlay.classList.add('hidden');
             convertWordBtn.disabled = false;
-            currentTaskId = null;
-            loadingText.innerHTML = '⏹️ Conversion cancelled.';
-            loadingSubtext.textContent = '';
+            loadingText.textContent = "⏹️ Conversion cancelled";
+            loadingSubtext.textContent = "";
         }
         
-        // ========== Retry function ==========
+        // ========== Retry conversion ==========
         async function retryConversion() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
                 return;
             }
-            
             retryBtn.classList.add('hidden');
             isRetrying = true;
-            
-            if (pollInterval) {
-                clearInterval(pollInterval);
-                pollInterval = null;
-            }
+            if (pollInterval) clearInterval(pollInterval);
             currentTaskId = null;
-            
             await convertToWord();
         }
         
-        // ========== Main OCR function ==========
+        // ========== Local OCR main function ==========
         async function performOCR() {
             const canUse = await checkUsage();
             if (!canUse) { 
@@ -734,27 +723,27 @@
                     progressText.textContent = message;
                     loadingText.textContent = message;
                 };
-                updateProgress(10, 'Analyzing file...');
+                updateProgress(10, 'Analyzing PDF structure...');
                 try {
-                    updateProgress(20, 'Extracting text directly...');
+                    updateProgress(20, 'Extracting text locally...');
                     allText = await extractTextDirectly(selectedFile);
-                    updateProgress(100, 'Extraction completed!');
+                    updateProgress(100, 'Local text extraction completed!');
                 } catch (directError) {
-                    updateProgress(30, 'Scanned document detected, starting OCR...');
+                    updateProgress(30, 'Scanned PDF detected, starting cloud OCR...');
                     const pageCount = await getPdfPageCount(selectedFile);
                     const fileSizeKB = selectedFile.size / 1024;
-                    if (fileSizeKB <= 900 || pageCount <= 3) {
+                    if (fileSizeKB <= MAX_API_FILE_SIZE || pageCount <= 3) {
                         allText = await directOCR(selectedFile, updateProgress);
                     } else {
                         allText = await groupedOCR(selectedFile, updateProgress);
                     }
                 }
-                updateProgress(100, 'Recognition completed!');
+                updateProgress(100, 'Recognition finished successfully!');
                 if (allText && allText.trim().length > 0) {
                     extractedText.textContent = allText;
                     resultSection.classList.remove('hidden');
                     await recordUsage();
-                } else throw new Error('No text extracted. Please ensure the PDF contains recognizable text or scanned content');
+                } else throw new Error('No text extracted. Ensure PDF contains readable content.');
             } catch (error) {
                 errorMsg.textContent = error.message || 'OCR processing failed. Please try again.';
                 errorSection.classList.remove('hidden');
@@ -769,7 +758,7 @@
             if (file && file.type === 'application/pdf') { 
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
                 if (file.size > maxSize) { 
-                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`); 
+                    alert(`File too large! ${isPro ? 'Pro max 20MB' : 'Free max 10MB'}.`); 
                     return; 
                 }
                 selectedFile = file; 
@@ -780,10 +769,7 @@
                 resultSection.classList.add('hidden'); 
                 errorSection.classList.add('hidden'); 
                 retryBtn.classList.add('hidden');
-                if (pollInterval) {
-                    clearInterval(pollInterval);
-                    pollInterval = null;
-                }
+                if (pollInterval) clearInterval(pollInterval);
                 currentTaskId = null;
                 isCancelled = false;
                 checkUsage().then(canUse => { 
@@ -797,10 +783,7 @@
         
         function removeFile() { 
             selectedFile = null; 
-            if (pollInterval) {
-                clearInterval(pollInterval);
-                pollInterval = null;
-            }
+            if (pollInterval) clearInterval(pollInterval);
             currentTaskId = null;
             isCancelled = false;
             retryBtn.classList.add('hidden');
@@ -811,14 +794,14 @@
             errorSection.classList.add('hidden'); 
         }
         
-        // ========== Event listeners ==========
+        // ========== Event Listeners ==========
         cancelBtn?.addEventListener('click', cancelConversion);
         
         copyBtn?.addEventListener('click', () => { 
             navigator.clipboard.writeText(extractedText.textContent).then(() => { 
-                const orig = copyBtn.innerHTML; 
+                const originalText = copyBtn.innerHTML; 
                 copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!'; 
-                setTimeout(() => copyBtn.innerHTML = orig, 2000); 
+                setTimeout(() => copyBtn.innerHTML = originalText, 2000); 
             }); 
         });
         downloadTxtBtn?.addEventListener('click', downloadAsTxt);
@@ -841,6 +824,7 @@
         removeFileBtn?.addEventListener('click', removeFile);
         ocrBtn?.addEventListener('click', performOCR);
         
+        // Init usage on page load
         checkUsage();
     </script>
 </body>
