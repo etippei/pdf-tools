@@ -8,7 +8,6 @@
     <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Free and private.">
     <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free, image to text, pdf text extractor">
     <link rel="canonical" href="https://aipdfly.com/ocr.html">
-    <!-- 防缓存参数，强制加载最新文件 -->
     <script src="https://cdn.tailwindcss.com?v=20260621"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260621">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260621"></script>
@@ -205,7 +204,7 @@
 
     <script>
         // ========== Configuration ==========
-        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        // API_BASE 不再需要，使用相对路径走 Cloudflare Workers 路由绑定
         const OCR_SPACE_API_KEY = 'K86198983388957';
         const MAX_API_FILE_SIZE = 950 * 1024;
         
@@ -256,7 +255,7 @@
             const headers = {};
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                const response = await fetch(`${API_BASE}/api/usage?feature=ocr`, { headers });
+                const response = await fetch('/api/usage?feature=ocr', { headers });
                 const data = await response.json();
                 usageInfo = data;
                 isPro = data.isPro;
@@ -291,7 +290,7 @@
             const headers = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                const response = await fetch(`${API_BASE}/api/usage/record`, {
+                const response = await fetch('/api/usage/record', {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({ feature: 'word' })
@@ -577,7 +576,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== 方案A 正式PDF转Word函数（对接Worker原生/api/pdf-to-word 异步接口）==========
+        // ========== PDF转Word（使用相对路径，走Cloudflare路由绑定）==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -604,14 +603,15 @@
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                // 官方原生安全接口，无自定义转发
+                
+                // 使用相对路径，Cloudflare 会通过路由绑定转发到 Worker
                 const apiUrl = "/api/pdf-to-word";
-                // 读取登录JWT鉴权，保证额度、会员权限生效
+                const resultUrlBase = "/api/pdf-to-word/result";
+                
                 const authToken = localStorage.getItem('authToken') || "";
                 const reqHeaders = {};
                 if (authToken) reqHeaders.Authorization = `Bearer ${authToken}`;
 
-                // 提交异步转换任务【核心修复：强制添加跨域参数触发OPTIONS预检】
                 const submitRes = await fetch(apiUrl, {
                     method: "POST",
                     headers: reqHeaders,
@@ -635,11 +635,9 @@
                 loadingText.textContent = "⌛ Converting PDF, polling task progress";
                 loadingSubtext.textContent = "Do not close page during conversion";
 
-                // 轮询任务状态，最大20轮，间隔2秒
                 let pollTimes = 0;
                 const maxPoll = 20;
                 let downloadBlob = null;
-                const resultUrlBase = "/api/pdf-to-word/result";
 
                 while (pollTimes < maxPoll && !downloadBlob && !isCancelled) {
                     await new Promise(res => setTimeout(res, 2000));
@@ -652,7 +650,6 @@
                     const pollData = await pollRes.json();
 
                     if (pollData.status === "completed") {
-                        // 二次请求获取二进制文件下载流
                         const fileRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { 
                             headers: reqHeaders,
                             mode: "cors",
@@ -669,22 +666,27 @@
                     throw new Error("Conversion timeout, please retry later or use smaller PDF");
                 }
 
-                // 浏览器本地触发下载
                 const downloadLink = document.createElement("a");
                 downloadLink.href = URL.createObjectURL(downloadBlob);
-                downloadLink.download = `PDF_Convert_${submitData.taskId}.docx`;
+                
+                // 使用原文件名 + _converted 后缀
+                const originalName = selectedFile.name || 'document.pdf';
+                const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
+                downloadLink.download = `${nameWithoutExt}_converted.docx`;
+                
+                document.body.appendChild(downloadLink);
                 downloadLink.click();
+                document.body.removeChild(downloadLink);
                 URL.revokeObjectURL(downloadLink.href);
 
-                // 后端统计使用次数，同步额度
                 await recordUsage();
                 loadingText.textContent = "✅ Conversion completed, file downloaded automatically";
+                loadingSubtext.textContent = "";
 
             } catch (error) {
-                errorMsg.textContent = error.message;
-                errorSection.classList.remove("hidden");
-            } finally {
-                loadingOverlay.classList.add("hidden");
+                alert('Conversion failed: ' + error.message);
+                console.error('PDF to Word error:', error);
+                loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
             }
         }
