@@ -611,12 +611,14 @@
                 const reqHeaders = {};
                 if (authToken) reqHeaders.Authorization = `Bearer ${authToken}`;
 
-                // 提交异步转换任务
+                // 提交异步转换任务【核心修复：强制添加跨域参数触发OPTIONS预检】
                 const submitRes = await fetch(apiUrl, {
                     method: "POST",
                     headers: reqHeaders,
                     body: formData,
-                    signal: AbortSignal.timeout(90000)
+                    signal: AbortSignal.timeout(90000),
+                    mode: "cors",
+                    credentials: "same-origin"
                 });
 
                 let submitData;
@@ -642,12 +644,20 @@
                 while (pollTimes < maxPoll && !downloadBlob && !isCancelled) {
                     await new Promise(res => setTimeout(res, 2000));
                     pollTimes++;
-                    const pollRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { headers: reqHeaders });
+                    const pollRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { 
+                        headers: reqHeaders,
+                        mode: "cors",
+                        credentials: "same-origin"
+                    });
                     const pollData = await pollRes.json();
 
                     if (pollData.status === "completed") {
                         // 二次请求获取二进制文件下载流
-                        const fileRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { headers: reqHeaders });
+                        const fileRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { 
+                            headers: reqHeaders,
+                            mode: "cors",
+                            credentials: "same-origin"
+                        });
                         downloadBlob = await fileRes.blob();
                     } else if (pollData.status === "failed") {
                         throw new Error(pollData.message || "PDF conversion failed on VPS server");
@@ -800,7 +810,7 @@
         copyBtn?.addEventListener('click', () => { 
             navigator.clipboard.writeText(extractedText.textContent).then(() => { 
                 const originalText = copyBtn.innerHTML; 
-                copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!'; 
+                copyBtn.innerHTML = '<i class="fas fa-copy mr-1"></i> Copied!'; 
                 setTimeout(() => copyBtn.innerHTML = originalText, 2000); 
             }); 
         });
