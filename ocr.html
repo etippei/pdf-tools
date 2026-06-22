@@ -587,8 +587,8 @@
                 formData.append('file', selectedFile);
                 
                 // 直连 VPS（绕过 Worker，规避 1102 限制）
-                const apiUrl = "https://pdf.aipdfly.com/api/convert/async";
-                const resultUrlBase = "https://pdf.aipdfly.com/api/convert/status";
+                const apiUrl = "http://pdf.aipdfly.com/api/convert/async";
+                const resultUrlBase = "http://pdf.aipdfly.com/api/convert/status";
                 
                 const authToken = localStorage.getItem('authToken') || "";
                 const reqHeaders = {};
