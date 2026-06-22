@@ -61,18 +61,6 @@
             margin-left: 8px;
         }
         .btn-download-docx:hover { background-color: #059669; }
-        .btn-advanced-word {
-            background-color: #8b5cf6;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-left: 8px;
-        }
-        .btn-advanced-word:hover { background-color: #7c3aed; }
         .btn-retry {
             background-color: #f59e0b;
             color: white;
@@ -204,7 +192,6 @@
 
     <script>
         // ========== Configuration ==========
-        // API_BASE 不再需要，使用相对路径走 Cloudflare Workers 路由绑定
         const OCR_SPACE_API_KEY = 'K86198983388957';
         const MAX_API_FILE_SIZE = 950 * 1024;
         
@@ -576,7 +563,7 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF转Word（使用相对路径，走Cloudflare路由绑定）==========
+        // ========== PDF转Word（直连VPS，绕过Worker，规避1102）==========
         async function convertToWord() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -586,27 +573,22 @@
                 alert('File too large. Maximum allowed size is 50MB.');
                 return;
             }
-            const canUse = await checkUsage();
-            if (!canUse) {
-                alert('Daily limit reached for PDF to Word feature. Please upgrade to Pro.');
-                return;
-            }
 
             isCancelled = false;
             retryBtn.classList.add('hidden');
             convertWordBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
             cancelBtn.style.display = 'inline-block';
-            loadingText.textContent = '⏳ Uploading file to conversion service';
+            loadingText.textContent = '⏳ Uploading file...';
             loadingSubtext.textContent = 'Submitting task, please wait...';
 
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
                 
-                // 使用相对路径，Cloudflare 会通过路由绑定转发到 Worker
-                const apiUrl = "/api/pdf-to-word";
-                const resultUrlBase = "/api/pdf-to-word/result";
+                // 直连 VPS（绕过 Worker，规避 1102 限制）
+                const apiUrl = "https://pdf.aipdfly.com/api/convert/async";
+                const resultUrlBase = "https://pdf.aipdfly.com/api/convert/status";
                 
                 const authToken = localStorage.getItem('authToken') || "";
                 const reqHeaders = {};
@@ -616,24 +598,22 @@
                     method: "POST",
                     headers: reqHeaders,
                     body: formData,
-                    signal: AbortSignal.timeout(90000),
-                    mode: "cors",
-                    credentials: "same-origin"
+                    signal: AbortSignal.timeout(90000)
                 });
 
                 let submitData;
                 try {
                     submitData = await submitRes.json();
                 } catch (jsonErr) {
-                    throw new Error("Service response empty, check VPS service status and Cloudflare connectivity");
+                    throw new Error("Service response empty, please try again");
                 }
 
                 if (!submitData.success || !submitData.taskId) {
                     throw new Error(submitData.error || "Failed to create conversion task");
                 }
 
-                loadingText.textContent = "⌛ Converting PDF, polling task progress";
-                loadingSubtext.textContent = "Do not close page during conversion";
+                loadingText.textContent = "⏳ Converting PDF, please wait...";
+                loadingSubtext.textContent = "This may take a few minutes";
 
                 let pollTimes = 0;
                 const maxPoll = 20;
@@ -642,45 +622,37 @@
                 while (pollTimes < maxPoll && !downloadBlob && !isCancelled) {
                     await new Promise(res => setTimeout(res, 2000));
                     pollTimes++;
-                    const pollRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { 
-                        headers: reqHeaders,
-                        mode: "cors",
-                        credentials: "same-origin"
+                    const pollRes = await fetch(`${resultUrlBase}/${submitData.taskId}`, { 
+                        headers: reqHeaders
                     });
                     const pollData = await pollRes.json();
 
                     if (pollData.status === "completed") {
-                        const fileRes = await fetch(`${resultUrlBase}?taskId=${submitData.taskId}`, { 
-                            headers: reqHeaders,
-                            mode: "cors",
-                            credentials: "same-origin"
+                        const fileRes = await fetch(`${resultUrlBase}/${submitData.taskId}`, { 
+                            headers: reqHeaders
                         });
                         downloadBlob = await fileRes.blob();
                     } else if (pollData.status === "failed") {
-                        throw new Error(pollData.message || "PDF conversion failed on VPS server");
+                        throw new Error(pollData.error || "PDF conversion failed");
                     }
                 }
 
                 if (isCancelled) throw new Error("Conversion cancelled by user");
                 if (!downloadBlob) {
-                    throw new Error("Conversion timeout, please retry later or use smaller PDF");
+                    throw new Error("Conversion timeout, please retry later");
                 }
 
                 const downloadLink = document.createElement("a");
                 downloadLink.href = URL.createObjectURL(downloadBlob);
-                
-                // 使用原文件名 + _converted 后缀
                 const originalName = selectedFile.name || 'document.pdf';
                 const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
                 downloadLink.download = `${nameWithoutExt}_converted.docx`;
-                
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
                 URL.revokeObjectURL(downloadLink.href);
 
-                await recordUsage();
-                loadingText.textContent = "✅ Conversion completed, file downloaded automatically";
+                loadingText.textContent = "✅ Conversion completed!";
                 loadingSubtext.textContent = "";
 
             } catch (error) {
