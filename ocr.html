@@ -8,12 +8,12 @@
     <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Free and private.">
     <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free, image to text, pdf text extractor">
     <link rel="canonical" href="https://aipdfly.com/ocr.html">
-    <script src="https://cdn.tailwindcss.com?v=20260621"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260621">
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260621"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260621"></script>
-    <link rel="stylesheet" href="dark-mode.css?v=20260621">
-    <script src="darkmode.js?v=20260621"></script>
+    <script src="https://cdn.tailwindcss.com?v=20260623"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260623">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260623"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260623"></script>
+    <link rel="stylesheet" href="dark-mode.css?v=20260623">
+    <script src="darkmode.js?v=20260623"></script>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWCSYTJ60S"></script>
     <script>
@@ -627,7 +627,6 @@
                     const pollData = await pollRes.json();
 
                     if (pollData.status === "completed") {
-                        // ✅ 修复：从 JSON 中提取 base64 并解码
                         if (pollData.fileContent) {
                             const binaryString = atob(pollData.fileContent);
                             const bytes = new Uint8Array(binaryString.length);
@@ -656,8 +655,14 @@
                 document.body.removeChild(downloadLink);
                 URL.revokeObjectURL(downloadLink.href);
 
+                // ===== 转换完成，自动关闭弹窗 =====
                 loadingText.textContent = "✅ Conversion completed!";
                 loadingSubtext.textContent = "";
+                cancelBtn.style.display = 'none';
+                convertWordBtn.disabled = false;
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 1500);
 
             } catch (error) {
                 alert('Conversion failed: ' + error.message);
