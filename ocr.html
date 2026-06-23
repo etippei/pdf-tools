@@ -283,9 +283,11 @@
                     body: JSON.stringify({ feature: 'word' })
                 });
                 const data = await response.json();
+                console.log('📊 [recordUsage] 后端返回:', data);
                 usageInfo.remaining = data.remaining;
                 usageInfo.used = data.used;
                 updateUsageDisplay(usageInfo);
+                console.log('📊 [recordUsage] 更新后 used:', usageInfo.used);
                 return true;
             } catch (error) {
                 console.error('Record usage failed:', error);
@@ -774,14 +776,16 @@
         // ========== Local OCR main function ==========
         async function performOCR() {
             // ===== 登录检查 =====
+            console.log('🔍 [performOCR] 开始执行');
             const authToken = localStorage.getItem('authToken');
             if (!authToken) {
                 showLoginRequiredModal();
                 return;
             }
             // ===== 登录检查结束 =====
-
+            console.log('🔍 [performOCR] 调用 checkUsage 前');
             const canUse = await checkUsage();
+            console.log('🔍 [performOCR] checkUsage 返回:', canUse);
             if (!canUse) { 
                 alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); 
                 return; 
