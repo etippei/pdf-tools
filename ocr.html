@@ -586,7 +586,6 @@
                 const formData = new FormData();
                 formData.append('file', selectedFile);
                 
-                // 直连 VPS（绕过 Worker，规避 1102 限制）
                 const apiUrl = "https://pdf.aipdfly.com/api/convert/async";
                 const resultUrlBase = "https://pdf.aipdfly.com/api/convert/status";
                 
@@ -616,7 +615,7 @@
                 loadingSubtext.textContent = "This may take a few minutes";
 
                 let pollTimes = 0;
-                const maxPoll = 20;
+                const maxPoll = 30;
                 let downloadBlob = null;
 
                 while (pollTimes < maxPoll && !downloadBlob && !isCancelled) {
@@ -628,10 +627,15 @@
                     const pollData = await pollRes.json();
 
                     if (pollData.status === "completed") {
-                        const fileRes = await fetch(`${resultUrlBase}/${submitData.taskId}`, { 
-                            headers: reqHeaders
-                        });
-                        downloadBlob = await fileRes.blob();
+                        // ✅ 修复：从 JSON 中提取 base64 并解码
+                        if (pollData.fileContent) {
+                            const binaryString = atob(pollData.fileContent);
+                            const bytes = new Uint8Array(binaryString.length);
+                            for (let i = 0; i < binaryString.length; i++) {
+                                bytes[i] = binaryString.charCodeAt(i);
+                            }
+                            downloadBlob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+                        }
                     } else if (pollData.status === "failed") {
                         throw new Error(pollData.error || "PDF conversion failed");
                     }
