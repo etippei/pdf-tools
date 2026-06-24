@@ -109,6 +109,7 @@
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
         const userSection = document.getElementById('userSection');
+        let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
         
         function initUserMenu() {
             if (!userSection) return;
@@ -128,41 +129,102 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
+            setTimeout(() => { checkUsage(); }, 300);
         }
         initUserMenu();
         
-        function updateUsageDisplay() {
-            const banner = document.getElementById('usageBanner');
-            const text = document.getElementById('usageText');
-            if (!banner) return;
-            const isLoggedIn = localStorage.getItem('authToken') !== null;
-            const limit = isLoggedIn ? 5 : 3;
-            if (!isPro) {
-                const today = new Date().toDateString();
-                let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
-                let remaining = limit - usage;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    if (!isLoggedIn) { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a>`; }
-                    else { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining.`; }
-                } else {
-                    if (!isLoggedIn) { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a> or Upgrade to Pro!`; }
-                    else { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`; }
-                    text.style.color = '#dc2626';
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUsage(); });
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
+                isPro = localStorage.getItem('isPro') === 'true';
+                initUserMenu();
+                checkUsage();
+            }
+        });
+        
+        async function checkUsage() {
+            const token = localStorage.getItem('authToken');
+            const headers = {};
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage?feature=split`, { headers });
+                const data = await response.json();
+                usageInfo = data;
+                const splitBtn = document.getElementById('splitBtn');
+                if (splitBtn) {
+                    if (!data.allowed) {
+                        splitBtn.disabled = true;
+                        splitBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                    } else {
+                        splitBtn.disabled = false;
+                    }
                 }
-            } else {
-                banner.classList.remove('hidden');
-                text.innerHTML = `✨ Pro Member · Unlimited access · No ads ✨`;
-                text.style.color = '#16a34a';
+                updateUsageDisplay(data);
+                return data.allowed;
+            } catch (error) {
+                console.error('Check usage failed:', error);
+                if (!localStorage.getItem('authToken')) {
+                    const today = new Date().toDateString();
+                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                    const limit = 3;
+                    const remaining = limit - usage;
+                    const allowed = remaining > 0;
+                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
+                    updateUsageDisplay(usageInfo);
+                    return allowed;
+                }
+                return true;
             }
         }
         
-        function recordUsage() { if (!isPro) { const today = new Date().toDateString(); let u = parseInt(localStorage.getItem(`usage_${today}`) || '0'); localStorage.setItem(`usage_${today}`, u + 1); updateUsageDisplay(); } }
+        let isRecording = false;
+        async function recordUsage() {
+            if (isRecording) return false;
+            isRecording = true;
+            const token = localStorage.getItem('authToken');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage/record`, { method: 'POST', headers, body: JSON.stringify({ feature: 'split' }) });
+                const data = await response.json();
+                usageInfo.remaining = data.remaining;
+                usageInfo.used = data.used;
+                usageInfo.limit = data.limit;
+                updateUsageDisplay(usageInfo);
+                return true;
+            } catch (error) { return false; } finally { isRecording = false; }
+        }
         
-        updateUsageDisplay();
+        function updateUsageDisplay(data) {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const info = data || usageInfo;
+            if (info.isPro) {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited PDF splits ✨`;
+                text.style.color = '#16a34a';
+            } else {
+                const remaining = info.remaining;
+                const limit = info.limit;
+                const used = info.used;
+                const isLoggedIn = info.isLoggedIn;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.`;
+                    }
+                    text.style.color = '#374151';
+                } else {
+                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    text.style.color = '#dc2626';
+                }
+            }
+        }
         
         let selectedFile = null, totalPages = 0;
-        let canUseTool = true;
         const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), pageCountSpan = document.getElementById('pageCount'), removeFileBtn = document.getElementById('removeFileBtn'), splitOptions = document.getElementById('splitOptions'), splitBtn = document.getElementById('splitBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText');
         const rangeMode = document.querySelector('input[value="range"]'), singleMode = document.querySelector('input[value="single"]'), rangeInputs = document.getElementById('rangeInputs'), singleInputs = document.getElementById('singleInputs'), startPageInput = document.getElementById('startPage'), endPageInput = document.getElementById('endPage'), singlePagesInput = document.getElementById('singlePages');
         
@@ -175,7 +237,7 @@
             if(file && file.type === 'application/pdf') {
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
                 if (file.size > maxSize) {
-                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}. Please upgrade or compress your file.`);
+                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`);
                     return;
                 }
                 selectedFile = file;
@@ -183,8 +245,8 @@
                 fileInfo.classList.remove('hidden');
                 splitOptions.classList.remove('hidden');
                 resultSection.classList.add('hidden');
-                if(canUseTool) splitBtn.disabled = false;
                 loadPdfInfo(file);
+                checkUsage().then(canUse => { if (canUse) splitBtn.disabled = false; });
             } else {
                 alert('Please select a valid PDF file');
             }
@@ -194,7 +256,40 @@
         
         function parsePageSelection() { if(rangeMode.checked) { let s=parseInt(startPageInput.value)||1, e=parseInt(endPageInput.value)||totalPages; s=Math.max(1,Math.min(s,totalPages)); e=Math.max(s,Math.min(e,totalPages)); let pages=[]; for(let i=s;i<=e;i++) pages.push(i-1); return pages; } else { let input=singlePagesInput.value.trim(); if(!input) return []; let pages=new Set(); let parts=input.split(','); for(let p of parts) { if(p.includes('-')) { let [ps,pe]=p.split('-'); for(let i=parseInt(ps);i<=parseInt(pe);i++) if(i>=1&&i<=totalPages) pages.add(i-1); } else { let page=parseInt(p); if(page>=1&&page<=totalPages) pages.add(page-1); } } return Array.from(pages).sort((a,b)=>a-b); } }
         
-        async function splitPDF() { if(!canUseTool) { alert('Daily limit reached. Upgrade to Pro for unlimited access.'); return; } if(!selectedFile) return; let pages=parsePageSelection(); if(pages.length===0) { alert('Please select at least one valid page'); return; } splitBtn.disabled=true; loadingOverlay.classList.remove('hidden'); progressContainer.classList.remove('hidden'); progressBar.style.width='0%'; progressText.textContent='Extracting pages...'; try { const {PDFDocument}=PDFLib; const ab=await selectedFile.arrayBuffer(); const src=await PDFDocument.load(ab); const newPdf=await PDFDocument.create(); for(let i=0;i<pages.length;i++){ const percent=((i/pages.length)*100); progressBar.style.width=`${percent}%`; progressText.textContent=`Extracting page ${i+1} of ${pages.length}...`; const [page]=await newPdf.copyPages(src,[pages[i]]); newPdf.addPage(page); } progressBar.style.width='100%'; progressText.textContent='Finalizing...'; const bytes=await newPdf.save(); const blob=new Blob([bytes],{type:'application/pdf'}); const url=URL.createObjectURL(blob); downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`extracted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; resultSection.classList.remove('hidden'); recordUsage(); } catch(e){alert('Error splitting PDF');} finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); splitBtn.disabled=false; } }
+        async function splitPDF() { 
+            const canUse = await checkUsage();
+            if (!canUse) { alert('Daily limit reached. Upgrade to Pro for unlimited splits.'); return; }
+            if(!selectedFile) return; 
+            let pages=parsePageSelection(); 
+            if(pages.length===0) { alert('Please select at least one valid page'); return; } 
+            splitBtn.disabled=true; 
+            loadingOverlay.classList.remove('hidden'); 
+            progressContainer.classList.remove('hidden'); 
+            progressBar.style.width='0%'; 
+            progressText.textContent='Extracting pages...'; 
+            try { 
+                const {PDFDocument}=PDFLib; 
+                const ab=await selectedFile.arrayBuffer(); 
+                const src=await PDFDocument.load(ab); 
+                const newPdf=await PDFDocument.create(); 
+                for(let i=0;i<pages.length;i++){ 
+                    const percent=((i/pages.length)*100); 
+                    progressBar.style.width=`${percent}%`; 
+                    progressText.textContent=`Extracting page ${i+1} of ${pages.length}...`; 
+                    const [page]=await newPdf.copyPages(src,[pages[i]]); 
+                    newPdf.addPage(page); 
+                } 
+                progressBar.style.width='100%'; 
+                progressText.textContent='Finalizing...'; 
+                const bytes=await newPdf.save(); 
+                const blob=new Blob([bytes],{type:'application/pdf'}); 
+                const url=URL.createObjectURL(blob); 
+                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`extracted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; 
+                resultSection.classList.remove('hidden'); 
+                await recordUsage();
+            } catch(e){alert('Error splitting PDF');} 
+            finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); splitBtn.disabled=false; } 
+        }
         
         dropZone?.addEventListener('click', () => fileInput.click());
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -204,6 +299,8 @@
         removeFileBtn?.addEventListener('click', removeFile);
         splitBtn?.addEventListener('click', splitPDF);
         resetBtn?.addEventListener('click', () => { removeFile(); resultSection.classList.add('hidden'); });
+        
+        checkUsage();
     </script>
 </body>
 </html>

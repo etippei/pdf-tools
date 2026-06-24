@@ -182,8 +182,28 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
+            // 用户菜单更新后，延迟刷新使用次数
+            setTimeout(() => {
+                checkUsage();
+            }, 300);
         }
         initUserMenu();
+        
+        // 页面可见性变化时刷新使用次数
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                checkUsage();
+            }
+        });
+        
+        // 监听 storage 变化（跨标签页登录/登出）
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
+                isPro = localStorage.getItem('isPro') === 'true';
+                initUserMenu();
+                checkUsage();
+            }
+        });
         
         // ========== Backend usage tracking ==========
         async function checkUsage() {
@@ -206,30 +226,68 @@
                 }
                 updateUsageDisplay(data);
                 return data.allowed;
-            } catch (error) { return true; }
+            } catch (error) {
+                console.error('Check usage failed:', error);
+                // 降级：未登录用户使用 localStorage
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    const today = new Date().toDateString();
+                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                    const limit = 3;
+                    const remaining = limit - usage;
+                    const allowed = remaining > 0;
+                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
+                    updateUsageDisplay(usageInfo);
+                    return allowed;
+                }
+                return true;
+            }
         }
         
+        let isRecording = false;
+        
         async function recordUsage() {
+            if (isRecording) {
+                console.log('Recording already in progress, skipping...');
+                return false;
+            }
+            isRecording = true;
+            
             const token = localStorage.getItem('authToken');
             const headers = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                await fetch(`${API_BASE}/api/usage/record`, { method: 'POST', headers, body: JSON.stringify({ feature: 'summary' }) });
+                const response = await fetch(`${API_BASE}/api/usage/record`, { 
+                    method: 'POST', 
+                    headers, 
+                    body: JSON.stringify({ feature: 'summary' }) 
+                });
+                const data = await response.json();
+                usageInfo.remaining = data.remaining;
+                usageInfo.used = data.used;
+                usageInfo.limit = data.limit;
+                updateUsageDisplay(usageInfo);
                 return true;
-            } catch (error) { return false; }
+            } catch (error) {
+                console.error('Record usage failed:', error);
+                return false;
+            } finally {
+                isRecording = false;
+            }
         }
         
         function updateUsageDisplay(data) {
             const banner = document.getElementById('usageBanner');
             if (!banner) return;
-            if (data.isPro) {
+            const info = data || usageInfo;
+            if (info.isPro) {
                 banner.classList.remove('hidden');
                 banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited AI summaries ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
             } else {
-                const remaining = data.remaining;
-                const limit = data.limit;
-                const used = data.used;
-                const isLoggedIn = data.isLoggedIn;
+                const remaining = info.remaining;
+                const limit = info.limit;
+                const used = info.used;
+                const isLoggedIn = info.isLoggedIn;
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
                     if (!isLoggedIn) {

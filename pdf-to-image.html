@@ -111,6 +111,7 @@
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
         const userSection = document.getElementById('userSection');
+        let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
         
         function initUserMenu() {
             if (!userSection) return;
@@ -130,41 +131,100 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
+            setTimeout(() => { checkUsage(); }, 300);
         }
         initUserMenu();
         
-        let canUseTool = true;
-        let currentLimit = 5;
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUsage(); });
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
+                isPro = localStorage.getItem('isPro') === 'true';
+                initUserMenu();
+                checkUsage();
+            }
+        });
         
-        function updateUsageDisplay() {
-            const banner = document.getElementById('usageBanner');
-            const text = document.getElementById('usageText');
-            if (!banner) return;
-            const isLoggedIn = localStorage.getItem('authToken') !== null;
-            const limit = isLoggedIn ? 5 : 3;
-            if (!isPro) {
-                const today = new Date().toDateString();
-                let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
-                let remaining = limit - usage;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    if (!isLoggedIn) { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a>`; }
-                    else { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining.`; }
-                } else {
-                    if (!isLoggedIn) { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a> or Upgrade to Pro!`; }
-                    else { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`; }
-                    text.style.color = '#dc2626';
+        async function checkUsage() {
+            const token = localStorage.getItem('authToken');
+            const headers = {};
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage?feature=pdf2image`, { headers });
+                const data = await response.json();
+                usageInfo = data;
+                const convertBtn = document.getElementById('convertBtn');
+                if (convertBtn) {
+                    if (!data.allowed) {
+                        convertBtn.disabled = true;
+                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                    } else {
+                        convertBtn.disabled = false;
+                    }
                 }
-            } else {
-                banner.classList.remove('hidden');
-                text.innerHTML = `✨ Pro Member · Unlimited access · No ads ✨`;
-                text.style.color = '#16a34a';
+                updateUsageDisplay(data);
+                return data.allowed;
+            } catch (error) {
+                console.error('Check usage failed:', error);
+                if (!localStorage.getItem('authToken')) {
+                    const today = new Date().toDateString();
+                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                    const limit = 3;
+                    const remaining = limit - usage;
+                    const allowed = remaining > 0;
+                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
+                    updateUsageDisplay(usageInfo);
+                    return allowed;
+                }
+                return true;
             }
         }
         
-        function recordUsage() { if (!isPro) { const today = new Date().toDateString(); let u = parseInt(localStorage.getItem(`usage_${today}`) || '0'); localStorage.setItem(`usage_${today}`, u + 1); updateUsageDisplay(); } }
+        let isRecording = false;
+        async function recordUsage() {
+            if (isRecording) return false;
+            isRecording = true;
+            const token = localStorage.getItem('authToken');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage/record`, { method: 'POST', headers, body: JSON.stringify({ feature: 'pdf2image' }) });
+                const data = await response.json();
+                usageInfo.remaining = data.remaining;
+                usageInfo.used = data.used;
+                usageInfo.limit = data.limit;
+                updateUsageDisplay(usageInfo);
+                return true;
+            } catch (error) { return false; } finally { isRecording = false; }
+        }
         
-        updateUsageDisplay();
+        function updateUsageDisplay(data) {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const info = data || usageInfo;
+            if (info.isPro) {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited PDF to Image conversions ✨`;
+                text.style.color = '#16a34a';
+            } else {
+                const remaining = info.remaining;
+                const limit = info.limit;
+                const used = info.used;
+                const isLoggedIn = info.isLoggedIn;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.`;
+                    }
+                    text.style.color = '#374151';
+                } else {
+                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    text.style.color = '#dc2626';
+                }
+            }
+        }
         
         let selectedFile = null, totalPages = 0, convertedImages = [];
         const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), pageCountSpan = document.getElementById('pageCount'), removeFileBtn = document.getElementById('removeFileBtn'), convertOptions = document.getElementById('convertOptions'), convertBtn = document.getElementById('convertBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadZipBtn = document.getElementById('downloadZipBtn'), loadingOverlay = document.getElementById('loadingOverlay'), loadingText = document.getElementById('loadingText'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText'), convertedPagesSpan = document.getElementById('convertedPages'), formatSelect = document.getElementById('formatSelect'), qualitySelect = document.getElementById('qualitySelect');
@@ -173,7 +233,7 @@
             if(file && file.type === 'application/pdf') {
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
                 if (file.size > maxSize) {
-                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}. Please upgrade or compress your file.`);
+                    alert(`File too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`);
                     return;
                 }
                 selectedFile = file;
@@ -182,7 +242,7 @@
                 fileInfo.classList.remove('hidden');
                 convertOptions.classList.remove('hidden');
                 resultSection.classList.add('hidden');
-                if(canUseTool) convertBtn.disabled = false;
+                checkUsage().then(canUse => { if (canUse) convertBtn.disabled = false; });
             } else {
                 alert('Please select a valid PDF file');
             }
@@ -191,7 +251,44 @@
         async function loadPdfInfo(file) { const ab=await file.arrayBuffer(); const pdf=await pdfjsLib.getDocument({data:ab}).promise; totalPages=pdf.numPages; pageCountSpan.textContent=`${totalPages} page${totalPages>1?'s':''}`; }
         function removeFile() { selectedFile=null; fileInfo.classList.add('hidden'); convertOptions.classList.add('hidden'); convertBtn.disabled=true; resultSection.classList.add('hidden'); }
         
-        async function convertPDFToImages() { if(!canUseTool) { alert('Daily limit reached. Upgrade to Pro for unlimited access.'); return; } if(!selectedFile) return; convertBtn.disabled=true; loadingOverlay.classList.remove('hidden'); progressContainer.classList.remove('hidden'); progressBar.style.width='0%'; progressText.textContent='Loading PDF...'; convertedImages=[]; const format=formatSelect.value; const quality=parseFloat(qualitySelect.value); try { const ab=await selectedFile.arrayBuffer(); const pdf=await pdfjsLib.getDocument({data:ab}).promise; const pages=pdf.numPages; for(let i=1;i<=pages;i++){ const percent=((i/pages)*100); progressBar.style.width=`${percent}%`; progressText.textContent=`Converting page ${i} of ${pages}...`; const page=await pdf.getPage(i); const viewport=page.getViewport({scale:2.0}); const canvas=document.createElement('canvas'); canvas.width=viewport.width; canvas.height=viewport.height; await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise; const blob=await new Promise(r=>canvas.toBlob(r,`image/${format}`,quality)); convertedImages.push({blob,filename:`page_${String(i).padStart(3,'0')}.${format}`}); } progressBar.style.width='100%'; progressText.textContent='Creating ZIP...'; convertedPagesSpan.textContent=pages; resultSection.classList.remove('hidden'); downloadZipBtn.onclick=async()=>{const zip=new JSZip(); for(const img of convertedImages) zip.file(img.filename,img.blob); const zipBlob=await zip.generateAsync({type:'blob'}); const url=URL.createObjectURL(zipBlob); const a=document.createElement('a'); a.href=url; a.download=`${selectedFile.name.replace('.pdf','')}_images.zip`; a.click(); URL.revokeObjectURL(url);}; recordUsage(); } catch(e){alert('Error converting PDF');} finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } }
+        async function convertPDFToImages() { 
+            const canUse = await checkUsage();
+            if (!canUse) { alert('Daily limit reached. Upgrade to Pro for unlimited conversions.'); return; }
+            if(!selectedFile) return; 
+            convertBtn.disabled=true; 
+            loadingOverlay.classList.remove('hidden'); 
+            progressContainer.classList.remove('hidden'); 
+            progressBar.style.width='0%'; 
+            progressText.textContent='Loading PDF...'; 
+            convertedImages=[]; 
+            const format=formatSelect.value; 
+            const quality=parseFloat(qualitySelect.value); 
+            try { 
+                const ab=await selectedFile.arrayBuffer(); 
+                const pdf=await pdfjsLib.getDocument({data:ab}).promise; 
+                const pages=pdf.numPages; 
+                for(let i=1;i<=pages;i++){ 
+                    const percent=((i/pages)*100); 
+                    progressBar.style.width=`${percent}%`; 
+                    progressText.textContent=`Converting page ${i} of ${pages}...`; 
+                    const page=await pdf.getPage(i); 
+                    const viewport=page.getViewport({scale:2.0}); 
+                    const canvas=document.createElement('canvas'); 
+                    canvas.width=viewport.width; 
+                    canvas.height=viewport.height; 
+                    await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise; 
+                    const blob=await new Promise(r=>canvas.toBlob(r,`image/${format}`,quality)); 
+                    convertedImages.push({blob,filename:`page_${String(i).padStart(3,'0')}.${format}`}); 
+                } 
+                progressBar.style.width='100%'; 
+                progressText.textContent='Creating ZIP...'; 
+                convertedPagesSpan.textContent=pages; 
+                resultSection.classList.remove('hidden'); 
+                downloadZipBtn.onclick=async()=>{const zip=new JSZip(); for(const img of convertedImages) zip.file(img.filename,img.blob); const zipBlob=await zip.generateAsync({type:'blob'}); const url=URL.createObjectURL(zipBlob); const a=document.createElement('a'); a.href=url; a.download=`${selectedFile.name.replace('.pdf','')}_images.zip`; a.click(); URL.revokeObjectURL(url);}; 
+                await recordUsage();
+            } catch(e){alert('Error converting PDF');} 
+            finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } 
+        }
         
         dropZone?.addEventListener('click', () => fileInput.click());
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -201,6 +298,8 @@
         removeFileBtn?.addEventListener('click', removeFile);
         convertBtn?.addEventListener('click', convertPDFToImages);
         resetBtn?.addEventListener('click', () => { removeFile(); resultSection.classList.add('hidden'); });
+        
+        checkUsage();
     </script>
 </body>
 </html>

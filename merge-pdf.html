@@ -105,6 +105,7 @@
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
         const userSection = document.getElementById('userSection');
+        let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
         
         function initUserMenu() {
             if (!userSection) return;
@@ -124,47 +125,100 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
+            setTimeout(() => { checkUsage(); }, 300);
         }
         initUserMenu();
         
-        let canUseTool = true;
-        let currentLimit = 5;
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUsage(); });
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
+                isPro = localStorage.getItem('isPro') === 'true';
+                initUserMenu();
+                checkUsage();
+            }
+        });
         
-        function updateUsageDisplay() {
-            const banner = document.getElementById('usageBanner');
-            const text = document.getElementById('usageText');
-            if (!banner) return;
-            const isLoggedIn = localStorage.getItem('authToken') !== null;
-            const limit = isLoggedIn ? 5 : 3;
-            if (!isPro) {
-                const today = new Date().toDateString();
-                let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
-                let remaining = limit - usage;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    if (!isLoggedIn) {
-                        text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a>`;
+        async function checkUsage() {
+            const token = localStorage.getItem('authToken');
+            const headers = {};
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage?feature=merge`, { headers });
+                const data = await response.json();
+                usageInfo = data;
+                const mergeBtn = document.getElementById('mergeBtn');
+                if (mergeBtn) {
+                    if (!data.allowed) {
+                        mergeBtn.disabled = true;
+                        mergeBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
                     } else {
-                        text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining.`;
+                        mergeBtn.disabled = false;
                     }
-                } else {
-                    if (!isLoggedIn) {
-                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a> or Upgrade to Pro!`;
-                    } else {
-                        text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
-                    }
-                    text.style.color = '#dc2626';
                 }
-            } else {
-                banner.classList.remove('hidden');
-                text.innerHTML = `✨ Pro Member · Unlimited access · No ads ✨`;
-                text.style.color = '#16a34a';
+                updateUsageDisplay(data);
+                return data.allowed;
+            } catch (error) {
+                console.error('Check usage failed:', error);
+                if (!localStorage.getItem('authToken')) {
+                    const today = new Date().toDateString();
+                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                    const limit = 3;
+                    const remaining = limit - usage;
+                    const allowed = remaining > 0;
+                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
+                    updateUsageDisplay(usageInfo);
+                    return allowed;
+                }
+                return true;
             }
         }
         
-        function recordUsage() { if (!isPro) { const today = new Date().toDateString(); let u = parseInt(localStorage.getItem(`usage_${today}`) || '0'); localStorage.setItem(`usage_${today}`, u + 1); updateUsageDisplay(); } }
+        let isRecording = false;
+        async function recordUsage() {
+            if (isRecording) return false;
+            isRecording = true;
+            const token = localStorage.getItem('authToken');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage/record`, { method: 'POST', headers, body: JSON.stringify({ feature: 'merge' }) });
+                const data = await response.json();
+                usageInfo.remaining = data.remaining;
+                usageInfo.used = data.used;
+                usageInfo.limit = data.limit;
+                updateUsageDisplay(usageInfo);
+                return true;
+            } catch (error) { return false; } finally { isRecording = false; }
+        }
         
-        updateUsageDisplay();
+        function updateUsageDisplay(data) {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const info = data || usageInfo;
+            if (info.isPro) {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited PDF merges ✨`;
+                text.style.color = '#16a34a';
+            } else {
+                const remaining = info.remaining;
+                const limit = info.limit;
+                const used = info.used;
+                const isLoggedIn = info.isLoggedIn;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.`;
+                    }
+                    text.style.color = '#374151';
+                } else {
+                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    text.style.color = '#dc2626';
+                }
+            }
+        }
         
         let selectedFiles = [];
         const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileList = document.getElementById('fileList'), fileListContainer = document.getElementById('fileListContainer'), fileCountSpan = document.getElementById('fileCount'), mergeBtn = document.getElementById('mergeBtn'), resetBtn = document.getElementById('resetBtn'), clearAllBtn = document.getElementById('clearAllBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText');
@@ -191,11 +245,45 @@
         dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
         fileInput?.addEventListener('change', (e) => { if(e.target.files.length) handleFiles(e.target.files); fileInput.value=''; });
         
-        async function mergePDFs() { if (selectedFiles.length === 0) return; mergeBtn.disabled = true; loadingOverlay.classList.remove('hidden'); progressContainer.classList.remove('hidden'); progressBar.style.width = '0%'; progressText.textContent = 'Loading PDF files...'; try { const { PDFDocument } = PDFLib; const mergedPdf = await PDFDocument.create(); for (let i = 0; i < selectedFiles.length; i++) { const file = selectedFiles[i]; const percent = ((i / selectedFiles.length) * 100); progressBar.style.width = `${percent}%`; progressText.textContent = `Processing file ${i+1} of ${selectedFiles.length}...`; const arrayBuffer = await file.arrayBuffer(); const pdf = await PDFDocument.load(arrayBuffer); const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices()); pages.forEach(page => mergedPdf.addPage(page)); } progressBar.style.width = '100%'; progressText.textContent = 'Finalizing...'; const pdfBytes = await mergedPdf.save(); const blob = new Blob([pdfBytes], { type: 'application/pdf' }); const url = URL.createObjectURL(blob); downloadBtn.onclick = () => { const a = document.createElement('a'); a.href = url; a.download = `merged_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url); }; resultSection.classList.remove('hidden'); recordUsage(); } catch(e) { alert('Error merging PDFs'); } finally { loadingOverlay.classList.add('hidden'); setTimeout(() => progressContainer.classList.add('hidden'), 1000); mergeBtn.disabled = false; } }
+        async function mergePDFs() { 
+            const canUse = await checkUsage();
+            if (!canUse) { alert('Daily limit reached. Upgrade to Pro for unlimited merges.'); return; }
+            if (selectedFiles.length === 0) return; 
+            mergeBtn.disabled = true; 
+            loadingOverlay.classList.remove('hidden'); 
+            progressContainer.classList.remove('hidden'); 
+            progressBar.style.width = '0%'; 
+            progressText.textContent = 'Loading PDF files...'; 
+            try { 
+                const { PDFDocument } = PDFLib; 
+                const mergedPdf = await PDFDocument.create(); 
+                for (let i = 0; i < selectedFiles.length; i++) { 
+                    const file = selectedFiles[i]; 
+                    const percent = ((i / selectedFiles.length) * 100); 
+                    progressBar.style.width = `${percent}%`; 
+                    progressText.textContent = `Processing file ${i+1} of ${selectedFiles.length}...`; 
+                    const arrayBuffer = await file.arrayBuffer(); 
+                    const pdf = await PDFDocument.load(arrayBuffer); 
+                    const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices()); 
+                    pages.forEach(page => mergedPdf.addPage(page)); 
+                } 
+                progressBar.style.width = '100%'; 
+                progressText.textContent = 'Finalizing...'; 
+                const pdfBytes = await mergedPdf.save(); 
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' }); 
+                const url = URL.createObjectURL(blob); 
+                downloadBtn.onclick = () => { const a = document.createElement('a'); a.href = url; a.download = `merged_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url); }; 
+                resultSection.classList.remove('hidden'); 
+                await recordUsage();
+            } catch(e) { alert('Error merging PDFs'); } 
+            finally { loadingOverlay.classList.add('hidden'); setTimeout(() => progressContainer.classList.add('hidden'), 1000); mergeBtn.disabled = false; } 
+        }
         
         mergeBtn?.addEventListener('click', mergePDFs);
         resetBtn?.addEventListener('click', () => { selectedFiles = []; updateFileList(); resultSection.classList.add('hidden'); });
         clearAllBtn?.addEventListener('click', () => { selectedFiles = []; updateFileList(); resultSection.classList.add('hidden'); });
+        
+        checkUsage();
     </script>
 </body>
 </html>

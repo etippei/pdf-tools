@@ -8,12 +8,12 @@
     <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Free and private.">
     <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free, image to text, pdf text extractor">
     <link rel="canonical" href="https://aipdfly.com/ocr.html">
-    <script src="https://cdn.tailwindcss.com?v=20260623"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260623">
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260623"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260623"></script>
-    <link rel="stylesheet" href="dark-mode.css?v=20260623">
-    <script src="darkmode.js?v=20260623"></script>
+    <script src="https://cdn.tailwindcss.com?v=20260621"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260621">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260621"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260621"></script>
+    <link rel="stylesheet" href="dark-mode.css?v=20260621">
+    <script src="darkmode.js?v=20260621"></script>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWCSYTJ60S"></script>
     <script>
@@ -86,6 +86,19 @@
             margin-top: 12px;
         }
         .btn-cancel:hover { background-color: #dc2626; }
+        .btn-done {
+            background-color: #10b981;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+        .btn-done:hover { background-color: #059669; }
         .processing-message {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -233,8 +246,28 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
+            // 用户菜单更新后，延迟刷新使用次数
+            setTimeout(() => {
+                checkUsage();
+            }, 300);
         }
         initUserMenu();
+        
+        // 页面可见性变化时刷新使用次数
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                checkUsage();
+            }
+        });
+        
+        // 监听 storage 变化（跨标签页登录/登出）
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
+                isPro = localStorage.getItem('isPro') === 'true';
+                initUserMenu();
+                checkUsage();
+            }
+        });
         
         // ========== Backend usage tracking ==========
         async function checkUsage() {
@@ -268,11 +301,32 @@
                 return data.allowed;
             } catch (error) {
                 console.error('Check usage failed:', error);
+                // 降级：未登录用户使用 localStorage
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    const today = new Date().toDateString();
+                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                    const limit = 3;
+                    const remaining = limit - usage;
+                    const allowed = remaining > 0;
+                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
+                    updateUsageDisplay(usageInfo);
+                    return allowed;
+                }
                 return true;
             }
         }
         
+        let isRecording = false;
+        
         async function recordUsage() {
+            // 防止并发重复调用
+            if (isRecording) {
+                console.log('Recording already in progress, skipping...');
+                return false;
+            }
+            isRecording = true;
+            
             const token = localStorage.getItem('authToken');
             const headers = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -280,32 +334,34 @@
                 const response = await fetch('/api/usage/record', {
                     method: 'POST',
                     headers: headers,
-                    body: JSON.stringify({ feature: 'word' })
+                    body: JSON.stringify({ feature: 'ocr' })
                 });
                 const data = await response.json();
-                console.log('📊 [recordUsage] 后端返回:', data);
                 usageInfo.remaining = data.remaining;
                 usageInfo.used = data.used;
+                usageInfo.limit = data.limit;
                 updateUsageDisplay(usageInfo);
-                console.log('📊 [recordUsage] 更新后 used:', usageInfo.used);
                 return true;
             } catch (error) {
                 console.error('Record usage failed:', error);
                 return false;
+            } finally {
+                isRecording = false;
             }
         }
         
         function updateUsageDisplay(data) {
             const banner = document.getElementById('usageBanner');
             if (!banner) return;
-            if (data.isPro) {
+            const info = data || usageInfo;
+            if (info.isPro) {
                 banner.classList.remove('hidden');
                 banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR & Word Conversion ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Manage Plan</a>`;
             } else {
-                const remaining = data.remaining;
-                const limit = data.limit;
-                const used = data.used;
-                const isLoggedIn = data.isLoggedIn;
+                const remaining = info.remaining;
+                const limit = info.limit;
+                const used = info.used;
+                const isLoggedIn = info.isLoggedIn;
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
                     if (!isLoggedIn) {
@@ -319,77 +375,13 @@
             }
         }
         
-        // ========== 登录提示弹窗 ==========
-        function showLoginRequiredModal() {
-            const existing = document.getElementById('loginRequiredOverlay');
-            if (existing) existing.remove();
-
-            const overlay = document.createElement('div');
-            overlay.id = 'loginRequiredOverlay';
-            overlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
-                z-index: 99999;
-                backdrop-filter: blur(4px);
-            `;
-
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                background: #fff; padding: 40px 48px; border-radius: 16px;
-                max-width: 440px; width: 90%; text-align: center;
-                box-shadow: 0 24px 64px rgba(0,0,0,0.25);
-                animation: fadeIn 0.25s ease;
-            `;
-            modal.innerHTML = `
-                <div style="font-size: 48px; margin-bottom: 12px;">🔒</div>
-                <p style="font-size: 20px; font-weight: 600; color: #1a1a2e; margin: 0 0 8px 0;">
-                    Please log in to use this feature
-                </p>
-                <p style="font-size: 15px; color: #6b7280; margin: 0 0 28px 0; line-height: 1.6;">
-                    You need to be signed in to convert documents with OCR.
-                </p>
-                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                    <a href="login.html" style="
-                        padding: 12px 36px; background: #7c3aed; color: #fff;
-                        border: none; border-radius: 8px; font-size: 16px; font-weight: 600;
-                        cursor: pointer; text-decoration: none; display: inline-block;
-                        transition: background 0.2s;
-                    " onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
-                        Go to Login
-                    </a>
-                    <button onclick="this.closest('#loginRequiredOverlay').remove()" style="
-                        padding: 12px 24px; background: #f3f4f6; color: #4b5563;
-                        border: none; border-radius: 8px; font-size: 16px; font-weight: 500;
-                        cursor: pointer; transition: background 0.2s;
-                    " onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
-                        Cancel
-                    </button>
-                </div>
-            `;
-
-            overlay.appendChild(modal);
-            document.body.appendChild(overlay);
-
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) this.remove();
-            });
-
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: scale(0.96); }
-                    to { opacity: 1; transform: scale(1); }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
         // ========== Helper functions ==========
         let selectedFile = null;
         let currentTaskId = null;
         let pollInterval = null;
         let isRetrying = false;
         let isCancelled = false;
+        let isConverting = false;
         
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -632,20 +624,29 @@
         
         // ========== PDF转Word（直连VPS，绕过Worker，规避1102）==========
         async function convertToWord() {
-            // ===== 登录检查 =====
-            const authToken = localStorage.getItem('authToken');
-            if (!authToken) {
-                showLoginRequiredModal();
+            // 防止重复点击
+            if (isConverting) {
+                console.log('Conversion already in progress');
                 return;
             }
-            // ===== 登录检查结束 =====
-
+            isConverting = true;
+            
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
+                isConverting = false;
                 return;
             }
             if (selectedFile.size > 50 * 1024 * 1024) {
                 alert('File too large. Maximum allowed size is 50MB.');
+                isConverting = false;
+                return;
+            }
+
+            // 检查使用次数（VPS后端会记录，前端只检查不记录）
+            const canUse = await checkUsage();
+            if (!canUse) {
+                alert('Daily limit reached. Upgrade to Pro for unlimited conversions.');
+                isConverting = false;
                 return;
             }
 
@@ -720,34 +721,65 @@
                     throw new Error("Conversion timeout, please retry later");
                 }
 
-                const downloadLink = document.createElement("a");
-                downloadLink.href = URL.createObjectURL(downloadBlob);
+                // ========== 下载：手动选择路径 ==========
                 const originalName = selectedFile.name || 'document.pdf';
                 const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
-                downloadLink.download = `${nameWithoutExt}_converted.docx`;
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-                URL.revokeObjectURL(downloadLink.href);
+                const fileName = `${nameWithoutExt}_converted.docx`;
 
-                // ===== 转换完成，自动关闭弹窗 =====
+                try {
+                    // 使用 File System Access API（Chrome/Edge）
+                    if ('showSaveFilePicker' in window) {
+                        const handle = await window.showSaveFilePicker({
+                            suggestedName: fileName,
+                            types: [{
+                                description: 'Word Document',
+                                accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }
+                            }]
+                        });
+                        const writable = await handle.createWritable();
+                        await writable.write(downloadBlob);
+                        await writable.close();
+                    } else {
+                        // 降级方案：自动下载
+                        const url = URL.createObjectURL(downloadBlob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.error('Download failed:', error);
+                        alert('Download failed: ' + error.message);
+                    }
+                }
+
                 loadingText.textContent = "✅ Conversion completed!";
                 loadingSubtext.textContent = "";
-                cancelBtn.style.display = 'none';
-                convertWordBtn.disabled = false;
-
-                // ===== 记录使用次数 =====
-                await recordUsage();
-
-                setTimeout(() => {
+                cancelBtn.textContent = "Done";
+                cancelBtn.className = 'btn-done';
+                cancelBtn.onclick = function() {
                     loadingOverlay.classList.add('hidden');
-                }, 1500);
+                    convertWordBtn.disabled = false;
+                    // 恢复 Cancel 按钮
+                    cancelBtn.textContent = "Cancel";
+                    cancelBtn.className = 'btn-cancel';
+                    cancelBtn.onclick = cancelConversion;
+                    isConverting = false;
+                };
+
+                // ===== 重要：移除前端的 recordUsage 调用 =====
+                // VPS 后端已经记录了使用次数，前端不需要再记录
+                // 只需刷新显示即可
+                await checkUsage();
 
             } catch (error) {
                 alert('Conversion failed: ' + error.message);
                 console.error('PDF to Word error:', error);
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
+                isConverting = false;
             }
         }
         
@@ -756,6 +788,7 @@
             isCancelled = true;
             loadingOverlay.classList.add('hidden');
             convertWordBtn.disabled = false;
+            isConverting = false;
             loadingText.textContent = "⏹️ Conversion cancelled";
             loadingSubtext.textContent = "";
         }
@@ -775,17 +808,7 @@
         
         // ========== Local OCR main function ==========
         async function performOCR() {
-            // ===== 登录检查 =====
-            console.log('🔍 [performOCR] 开始执行');
-            const authToken = localStorage.getItem('authToken');
-            if (!authToken) {
-                showLoginRequiredModal();
-                return;
-            }
-            // ===== 登录检查结束 =====
-            console.log('🔍 [performOCR] 调用 checkUsage 前');
             const canUse = await checkUsage();
-            console.log('🔍 [performOCR] checkUsage 返回:', canUse);
             if (!canUse) { 
                 alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); 
                 return; 
@@ -824,6 +847,7 @@
                 if (allText && allText.trim().length > 0) {
                     extractedText.textContent = allText;
                     resultSection.classList.remove('hidden');
+                    // OCR提取时记录使用次数（前端直接调用OCR.space API）
                     await recordUsage();
                 } else throw new Error('No text extracted. Ensure PDF contains readable content.');
             } catch (error) {
@@ -868,6 +892,7 @@
             if (pollInterval) clearInterval(pollInterval);
             currentTaskId = null;
             isCancelled = false;
+            isConverting = false;
             retryBtn.classList.add('hidden');
             fileInfo.classList.add('hidden'); 
             ocrBtn.disabled = true; 

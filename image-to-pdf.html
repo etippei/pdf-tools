@@ -109,6 +109,7 @@
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
         const userSection = document.getElementById('userSection');
+        let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
         
         function initUserMenu() {
             if (!userSection) return;
@@ -128,41 +129,100 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
+            setTimeout(() => { checkUsage(); }, 300);
         }
         initUserMenu();
         
-        let canUseTool = true;
-        let currentLimit = 5;
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUsage(); });
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
+                isPro = localStorage.getItem('isPro') === 'true';
+                initUserMenu();
+                checkUsage();
+            }
+        });
         
-        function updateUsageDisplay() {
-            const banner = document.getElementById('usageBanner');
-            const text = document.getElementById('usageText');
-            if (!banner) return;
-            const isLoggedIn = localStorage.getItem('authToken') !== null;
-            const limit = isLoggedIn ? 5 : 3;
-            if (!isPro) {
-                const today = new Date().toDateString();
-                let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
-                let remaining = limit - usage;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    if (!isLoggedIn) { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a>`; }
-                    else { text.innerHTML = `📊 Today's usage: ${usage}/${limit} tasks. ${remaining} free uses remaining.`; }
-                } else {
-                    if (!isLoggedIn) { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for more</a> or Upgrade to Pro!`; }
-                    else { text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`; }
-                    text.style.color = '#dc2626';
+        async function checkUsage() {
+            const token = localStorage.getItem('authToken');
+            const headers = {};
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage?feature=image2pdf`, { headers });
+                const data = await response.json();
+                usageInfo = data;
+                const convertBtn = document.getElementById('convertBtn');
+                if (convertBtn) {
+                    if (!data.allowed) {
+                        convertBtn.disabled = true;
+                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                    } else {
+                        convertBtn.disabled = false;
+                    }
                 }
-            } else {
-                banner.classList.remove('hidden');
-                text.innerHTML = `✨ Pro Member · Unlimited access · No ads ✨`;
-                text.style.color = '#16a34a';
+                updateUsageDisplay(data);
+                return data.allowed;
+            } catch (error) {
+                console.error('Check usage failed:', error);
+                if (!localStorage.getItem('authToken')) {
+                    const today = new Date().toDateString();
+                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
+                    const limit = 3;
+                    const remaining = limit - usage;
+                    const allowed = remaining > 0;
+                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
+                    updateUsageDisplay(usageInfo);
+                    return allowed;
+                }
+                return true;
             }
         }
         
-        function recordUsage() { if (!isPro) { const today = new Date().toDateString(); let u = parseInt(localStorage.getItem(`usage_${today}`) || '0'); localStorage.setItem(`usage_${today}`, u + 1); updateUsageDisplay(); } }
+        let isRecording = false;
+        async function recordUsage() {
+            if (isRecording) return false;
+            isRecording = true;
+            const token = localStorage.getItem('authToken');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const response = await fetch(`${API_BASE}/api/usage/record`, { method: 'POST', headers, body: JSON.stringify({ feature: 'image2pdf' }) });
+                const data = await response.json();
+                usageInfo.remaining = data.remaining;
+                usageInfo.used = data.used;
+                usageInfo.limit = data.limit;
+                updateUsageDisplay(usageInfo);
+                return true;
+            } catch (error) { return false; } finally { isRecording = false; }
+        }
         
-        updateUsageDisplay();
+        function updateUsageDisplay(data) {
+            const banner = document.getElementById('usageBanner');
+            const text = document.getElementById('usageText');
+            if (!banner) return;
+            const info = data || usageInfo;
+            if (info.isPro) {
+                banner.classList.remove('hidden');
+                text.innerHTML = `✨ Pro Member · Unlimited Image to PDF conversions ✨`;
+                text.style.color = '#16a34a';
+            } else {
+                const remaining = info.remaining;
+                const limit = info.limit;
+                const used = info.used;
+                const isLoggedIn = info.isLoggedIn;
+                banner.classList.remove('hidden');
+                if (remaining > 0) {
+                    if (!isLoggedIn) {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                    } else {
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.`;
+                    }
+                    text.style.color = '#374151';
+                } else {
+                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    text.style.color = '#dc2626';
+                }
+            }
+        }
         
         let images = [];
         const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), previewSection = document.getElementById('previewSection'), imageGrid = document.getElementById('imageGrid'), imageCountSpan = document.getElementById('imageCount'), clearImagesBtn = document.getElementById('clearImagesBtn'), pdfOptions = document.getElementById('pdfOptions'), convertBtn = document.getElementById('convertBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), convertedCountSpan = document.getElementById('convertedCount'), pageSizeSelect = document.getElementById('pageSizeSelect'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText');
@@ -173,7 +233,7 @@
             for (const f of imgFiles) { totalSize += f.size; }
             const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
             if (totalSize > maxSize) {
-                alert(`Total file size too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}. Please upgrade or use fewer images.`);
+                alert(`Total file size too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`);
                 return;
             }
             for(const f of imgFiles){ 
@@ -186,21 +246,66 @@
             } 
         }
         
-        function updatePreview() { if(images.length===0){ previewSection.classList.add('hidden'); pdfOptions.classList.add('hidden'); convertBtn.disabled=true; resultSection.classList.add('hidden'); return; } previewSection.classList.remove('hidden'); pdfOptions.classList.remove('hidden'); if(canUseTool) convertBtn.disabled=false; imageCountSpan.textContent=images.length; imageGrid.innerHTML=''; images.forEach((img,idx)=>{ const div=document.createElement('div'); div.className='image-preview relative group cursor-move'; div.setAttribute('data-index',idx); div.draggable=true; div.innerHTML=`<img src="${img.url}" class="w-full h-32 object-cover rounded-lg border"><div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100"><button class="remove-img bg-red-500 text-white rounded-full w-6 h-6 text-xs" data-index="${idx}"><i class="fas fa-times"></i></button></div><div class="text-xs text-gray-500 mt-1 truncate">${img.name.substring(0,20)}</div>`; imageGrid.appendChild(div); }); document.querySelectorAll('.remove-img').forEach(btn=>btn.addEventListener('click',(e)=>{const idx=parseInt(btn.dataset.index); removeImage(idx);})); let dragIndex=null; const items=document.querySelectorAll('.image-preview'); items.forEach(item=>{ item.addEventListener('dragstart',(e)=>{dragIndex=parseInt(item.dataset.index); e.dataTransfer.effectAllowed='move';}); item.addEventListener('dragover',(e)=>{e.preventDefault(); e.dataTransfer.dropEffect='move';}); item.addEventListener('drop',(e)=>{e.preventDefault(); const target=e.target.closest('.image-preview'); if(!target) return; const targetIndex=parseInt(target.dataset.index); if(dragIndex!==null && dragIndex!==targetIndex){ const moved=images[dragIndex]; images.splice(dragIndex,1); images.splice(targetIndex,0,moved); updatePreview(); } dragIndex=null;}); }); }
+        function updatePreview() { if(images.length===0){ previewSection.classList.add('hidden'); pdfOptions.classList.add('hidden'); convertBtn.disabled=true; resultSection.classList.add('hidden'); return; } previewSection.classList.remove('hidden'); pdfOptions.classList.remove('hidden'); checkUsage().then(canUse => { if(canUse) convertBtn.disabled=false; }); imageCountSpan.textContent=images.length; imageGrid.innerHTML=''; images.forEach((img,idx)=>{ const div=document.createElement('div'); div.className='image-preview relative group cursor-move'; div.setAttribute('data-index',idx); div.draggable=true; div.innerHTML=`<img src="${img.url}" class="w-full h-32 object-cover rounded-lg border"><div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100"><button class="remove-img bg-red-500 text-white rounded-full w-6 h-6 text-xs" data-index="${idx}"><i class="fas fa-times"></i></button></div><div class="text-xs text-gray-500 mt-1 truncate">${img.name.substring(0,20)}</div>`; imageGrid.appendChild(div); }); document.querySelectorAll('.remove-img').forEach(btn=>btn.addEventListener('click',(e)=>{const idx=parseInt(btn.dataset.index); removeImage(idx);})); let dragIndex=null; const items=document.querySelectorAll('.image-preview'); items.forEach(item=>{ item.addEventListener('dragstart',(e)=>{dragIndex=parseInt(item.dataset.index); e.dataTransfer.effectAllowed='move';}); item.addEventListener('dragover',(e)=>{e.preventDefault(); e.dataTransfer.dropEffect='move';}); item.addEventListener('drop',(e)=>{e.preventDefault(); const target=e.target.closest('.image-preview'); if(!target) return; const targetIndex=parseInt(target.dataset.index); if(dragIndex!==null && dragIndex!==targetIndex){ const moved=images[dragIndex]; images.splice(dragIndex,1); images.splice(targetIndex,0,moved); updatePreview(); } dragIndex=null;}); }); }
         
         function removeImage(index){ images.splice(index,1); updatePreview(); resultSection.classList.add('hidden'); }
         function clearAllImages(){ images=[]; updatePreview(); resultSection.classList.add('hidden'); }
         
-        async function convertToPDF(){ if(!canUseTool){ alert('Daily limit reached. Upgrade to Pro for unlimited access.'); return; } if(images.length===0) return; convertBtn.disabled=true; loadingOverlay.classList.remove('hidden'); progressContainer.classList.remove('hidden'); progressBar.style.width='0%'; progressText.textContent='Loading images...'; try { const {PDFDocument}=PDFLib; const pdfDoc=await PDFDocument.create(); const pageSize=pageSizeSelect.value; for(let i=0;i<images.length;i++){ const percent=((i/images.length)*100); progressBar.style.width=`${percent}%`; progressText.textContent=`Processing image ${i+1} of ${images.length}...`; const img=images[i]; const imgBytes=await img.file.arrayBuffer(); let image; if(img.file.type==='image/jpeg') image=await pdfDoc.embedJpg(imgBytes); else if(img.file.type==='image/png') image=await pdfDoc.embedPng(imgBytes); else continue; const imgDims=image.scale(1); let pageWidth=imgDims.width, pageHeight=imgDims.height; if(pageSize==='a4'){ pageWidth=595; pageHeight=842; }else if(pageSize==='letter'){ pageWidth=612; pageHeight=792; } const page=pdfDoc.addPage([pageWidth,pageHeight]); const scale=Math.min(pageWidth/imgDims.width,pageHeight/imgDims.height); const scaledWidth=imgDims.width*scale, scaledHeight=imgDims.height*scale; const x=(pageWidth-scaledWidth)/2, y=(pageHeight-scaledHeight)/2; page.drawImage(image,{x,y,width:scaledWidth,height:scaledHeight}); } progressBar.style.width='100%'; progressText.textContent='Finalizing PDF...'; const bytes=await pdfDoc.save(); const blob=new Blob([bytes],{type:'application/pdf'}); const url=URL.createObjectURL(blob); convertedCountSpan.textContent=images.length; resultSection.classList.remove('hidden'); downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`converted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; recordUsage(); } catch(e){alert('Error converting images');} finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } }
+        async function convertToPDF(){ 
+            const canUse = await checkUsage();
+            if (!canUse) { alert('Daily limit reached. Upgrade to Pro for unlimited access.'); return; }
+            if(images.length===0) return; 
+            convertBtn.disabled=true; 
+            loadingOverlay.classList.remove('hidden'); 
+            progressContainer.classList.remove('hidden'); 
+            progressBar.style.width='0%'; 
+            progressText.textContent='Loading images...'; 
+            try { 
+                const {PDFDocument}=PDFLib; 
+                const pdfDoc=await PDFDocument.create(); 
+                const pageSize=pageSizeSelect.value; 
+                for(let i=0;i<images.length;i++){ 
+                    const percent=((i/images.length)*100); 
+                    progressBar.style.width=`${percent}%`; 
+                    progressText.textContent=`Processing image ${i+1} of ${images.length}...`; 
+                    const img=images[i]; 
+                    const imgBytes=await img.file.arrayBuffer(); 
+                    let image; 
+                    if(img.file.type==='image/jpeg') image=await pdfDoc.embedJpg(imgBytes); 
+                    else if(img.file.type==='image/png') image=await pdfDoc.embedPng(imgBytes); 
+                    else continue; 
+                    const imgDims=image.scale(1); 
+                    let pageWidth=imgDims.width, pageHeight=imgDims.height; 
+                    if(pageSize==='a4'){ pageWidth=595; pageHeight=842; }else if(pageSize==='letter'){ pageWidth=612; pageHeight=792; } 
+                    const page=pdfDoc.addPage([pageWidth,pageHeight]); 
+                    const scale=Math.min(pageWidth/imgDims.width,pageHeight/imgDims.height); 
+                    const scaledWidth=imgDims.width*scale, scaledHeight=imgDims.height*scale; 
+                    const x=(pageWidth-scaledWidth)/2, y=(pageHeight-scaledHeight)/2; 
+                    page.drawImage(image,{x,y,width:scaledWidth,height:scaledHeight}); 
+                } 
+                progressBar.style.width='100%'; 
+                progressText.textContent='Finalizing PDF...'; 
+                const bytes=await pdfDoc.save(); 
+                const blob=new Blob([bytes],{type:'application/pdf'}); 
+                const url=URL.createObjectURL(blob); 
+                convertedCountSpan.textContent=images.length; 
+                resultSection.classList.remove('hidden'); 
+                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`converted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; 
+                await recordUsage();
+            } catch(e){alert('Error converting images');} 
+            finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } 
+        }
         
         dropZone?.addEventListener('click', () => fileInput.click());
-        dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); if(canUseTool) dropZone.classList.add('dragover'); });
+        dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if(canUseTool && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
+        dropZone?.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if(e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
         fileInput?.addEventListener('change', (e) => { if(e.target.files.length) handleFiles(e.target.files); fileInput.value=''; });
         clearImagesBtn?.addEventListener('click', clearAllImages);
         convertBtn?.addEventListener('click', convertToPDF);
         resetBtn?.addEventListener('click', () => { clearAllImages(); resultSection.classList.add('hidden'); });
+        
+        checkUsage();
     </script>
 </body>
 </html>
