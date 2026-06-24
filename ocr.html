@@ -52,13 +52,13 @@
         .btn-download-docx {
             background-color: #10b981;
             color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
             border: none;
             cursor: pointer;
             transition: all 0.2s;
-            margin-left: 8px;
         }
         .btn-download-docx:hover { background-color: #059669; }
         .btn-retry {
@@ -111,6 +111,25 @@
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        /* 下载按钮样式 - 在弹窗中 */
+        .modal-download-btn {
+            background-color: #10b981;
+            color: white;
+            padding: 10px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-download-btn:hover { background-color: #059669; transform: scale(1.02); }
+        .modal-download-btn i { font-size: 18px; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -171,9 +190,12 @@
 
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
             <div class="bg-white rounded-2xl p-8 text-center" style="max-width: 500px; width: 90%;">
-                <i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i>
+                <i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4" id="loadingIcon"></i>
                 <p id="loadingText" class="text-gray-700">Processing...</p>
                 <p class="text-sm text-gray-500 mt-2" id="loadingSubtext">This may take a few seconds</p>
+                <div id="downloadBtnContainer" class="hidden mt-4">
+                    <button id="modalDownloadBtn" class="modal-download-btn"><i class="fas fa-download"></i> Download Word File</button>
+                </div>
                 <button id="cancelBtn" class="btn-cancel"><i class="fas fa-times-circle mr-2"></i> Cancel</button>
             </div>
         </div>
@@ -241,7 +263,7 @@
                         document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
                     }
                     const logout = document.getElementById('logoutBtn');
-                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('authToken'); localStorage.removeItem('userEmail'); localStorage.removeItem('isPro'); window.location.reload(); });
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
                 }, 100);
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
@@ -383,6 +405,10 @@
         let isCancelled = false;
         let isConverting = false;
         
+        // 存储下载数据
+        let pendingDownloadBlob = null;
+        let pendingFileName = '';
+        
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const fileInfo = document.getElementById('fileInfo');
@@ -395,7 +421,10 @@
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const loadingSubtext = document.getElementById('loadingSubtext');
+        const loadingIcon = document.getElementById('loadingIcon');
         const cancelBtn = document.getElementById('cancelBtn');
+        const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+        const downloadBtnContainer = document.getElementById('downloadBtnContainer');
         const resultSection = document.getElementById('resultSection');
         const extractedText = document.getElementById('extractedText');
         const copyBtn = document.getElementById('copyBtn');
@@ -622,7 +651,54 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== PDF转Word（直连VPS，绕过Worker，规避1102）==========
+        // ========== 自动下载辅助函数（降级方案） ==========
+        function autoDownload(blob, fileName) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 10000);
+        }
+        
+        // ========== 使用 showSaveFilePicker 下载（用户手势触发） ==========
+        function downloadWithFilePicker(blob, fileName) {
+            if (!blob) return;
+            
+            // 尝试使用 File System Access API
+            if ('showSaveFilePicker' in window) {
+                window.showSaveFilePicker({
+                    suggestedName: fileName,
+                    types: [{
+                        description: 'Word Document',
+                        accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }
+                    }]
+                })
+                .then(handle => {
+                    return handle.createWritable().then(writable => {
+                        return writable.write(blob).then(() => {
+                            return writable.close();
+                        });
+                    });
+                })
+                .then(() => {
+                    console.log('File saved successfully');
+                })
+                .catch(err => {
+                    if (err.name !== 'AbortError') {
+                        console.warn('File picker failed, using auto download:', err);
+                        autoDownload(blob, fileName);
+                    }
+                });
+            } else {
+                // 不支持 File System Access API，使用自动下载
+                autoDownload(blob, fileName);
+            }
+        }
+        
+        // ========== PDF转Word（直连VPS） ==========
         async function convertToWord() {
             // 防止重复点击
             if (isConverting) {
@@ -653,10 +729,19 @@
             isCancelled = false;
             retryBtn.classList.add('hidden');
             convertWordBtn.disabled = true;
+            
+            // 重置弹窗状态
             loadingOverlay.classList.remove('hidden');
             cancelBtn.style.display = 'inline-block';
+            downloadBtnContainer.classList.add('hidden');
+            loadingIcon.className = 'fas fa-spinner fa-spin text-4xl text-purple-600 mb-4';
             loadingText.textContent = '⏳ Uploading file...';
             loadingSubtext.textContent = 'Submitting task, please wait...';
+            modalDownloadBtn.onclick = null;
+
+            // 清除之前的下载数据
+            pendingDownloadBlob = null;
+            pendingFileName = '';
 
             try {
                 const formData = new FormData();
@@ -721,57 +806,49 @@
                     throw new Error("Conversion timeout, please retry later");
                 }
 
-                // ========== 下载：手动选择路径 ==========
+                // 生成文件名
                 const originalName = selectedFile.name || 'document.pdf';
                 const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
-                const fileName = `${nameWithoutExt}_converted.docx`;
+                pendingFileName = `${nameWithoutExt}_converted.docx`;
+                pendingDownloadBlob = downloadBlob;
 
-                try {
-                    // 使用 File System Access API（Chrome/Edge）
-                    if ('showSaveFilePicker' in window) {
-                        const handle = await window.showSaveFilePicker({
-                            suggestedName: fileName,
-                            types: [{
-                                description: 'Word Document',
-                                accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }
-                            }]
-                        });
-                        const writable = await handle.createWritable();
-                        await writable.write(downloadBlob);
-                        await writable.close();
-                    } else {
-                        // 降级方案：自动下载
-                        const url = URL.createObjectURL(downloadBlob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = fileName;
-                        a.click();
-                        URL.revokeObjectURL(url);
+                // ===== 转换完成，显示下载按钮（用户点击时触发 File Picker） =====
+                loadingIcon.className = 'fas fa-check-circle text-4xl text-green-500 mb-4';
+                loadingText.textContent = '✅ Conversion Completed!';
+                loadingSubtext.textContent = `Your file "${pendingFileName}" is ready for download.`;
+                
+                // 隐藏取消按钮，显示下载按钮
+                cancelBtn.style.display = 'none';
+                downloadBtnContainer.classList.remove('hidden');
+                
+                // 绑定下载按钮点击事件 - 用户手势触发
+                modalDownloadBtn.onclick = function() {
+                    if (pendingDownloadBlob) {
+                        // 用户点击按钮触发，有用户手势
+                        downloadWithFilePicker(pendingDownloadBlob, pendingFileName);
+                        
+                        // 下载后关闭弹窗
+                        loadingOverlay.classList.add('hidden');
+                        convertWordBtn.disabled = false;
+                        isConverting = false;
+                        downloadBtnContainer.classList.add('hidden');
+                        cancelBtn.style.display = 'inline-block';
+                        cancelBtn.textContent = "Done";
+                        cancelBtn.className = 'btn-done';
+                        cancelBtn.onclick = function() {
+                            loadingOverlay.classList.add('hidden');
+                            convertWordBtn.disabled = false;
+                            isConverting = false;
+                            // 恢复 Cancel 按钮
+                            cancelBtn.textContent = "Cancel";
+                            cancelBtn.className = 'btn-cancel';
+                            cancelBtn.onclick = cancelConversion;
+                        };
+                        pendingDownloadBlob = null;
                     }
-                } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        console.error('Download failed:', error);
-                        alert('Download failed: ' + error.message);
-                    }
-                }
-
-                loadingText.textContent = "✅ Conversion completed!";
-                loadingSubtext.textContent = "";
-                cancelBtn.textContent = "Done";
-                cancelBtn.className = 'btn-done';
-                cancelBtn.onclick = function() {
-                    loadingOverlay.classList.add('hidden');
-                    convertWordBtn.disabled = false;
-                    // 恢复 Cancel 按钮
-                    cancelBtn.textContent = "Cancel";
-                    cancelBtn.className = 'btn-cancel';
-                    cancelBtn.onclick = cancelConversion;
-                    isConverting = false;
                 };
 
-                // ===== 重要：移除前端的 recordUsage 调用 =====
-                // VPS 后端已经记录了使用次数，前端不需要再记录
-                // 只需刷新显示即可
+                // 刷新使用次数显示
                 await checkUsage();
 
             } catch (error) {
@@ -780,6 +857,12 @@
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
                 isConverting = false;
+                // 恢复取消按钮
+                cancelBtn.style.display = 'inline-block';
+                cancelBtn.textContent = "Cancel";
+                cancelBtn.className = 'btn-cancel';
+                cancelBtn.onclick = cancelConversion;
+                downloadBtnContainer.classList.add('hidden');
             }
         }
         
@@ -789,8 +872,13 @@
             loadingOverlay.classList.add('hidden');
             convertWordBtn.disabled = false;
             isConverting = false;
+            downloadBtnContainer.classList.add('hidden');
+            cancelBtn.style.display = 'inline-block';
+            cancelBtn.textContent = "Cancel";
+            cancelBtn.className = 'btn-cancel';
             loadingText.textContent = "⏹️ Conversion cancelled";
             loadingSubtext.textContent = "";
+            pendingDownloadBlob = null;
         }
         
         // ========== Retry conversion ==========
@@ -817,6 +905,8 @@
             ocrBtn.disabled = true;
             loadingOverlay.classList.remove('hidden');
             cancelBtn.style.display = 'none';
+            downloadBtnContainer.classList.add('hidden');
+            loadingIcon.className = 'fas fa-spinner fa-spin text-4xl text-purple-600 mb-4';
             progressContainer.classList.remove('hidden');
             progressBar.style.width = '0%';
             resultSection.classList.add('hidden');
@@ -898,7 +988,9 @@
             ocrBtn.disabled = true; 
             convertWordBtn.disabled = true; 
             resultSection.classList.add('hidden'); 
-            errorSection.classList.add('hidden'); 
+            errorSection.classList.add('hidden');
+            pendingDownloadBlob = null;
+            pendingFileName = '';
         }
         
         // ========== Event Listeners ==========
