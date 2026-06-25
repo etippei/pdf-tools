@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFHub Pro 管理后台</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 650px;
+            width: 100%;
+        }
+        
+        /* 登录框样式 */
+        .login-box {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .login-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .login-box .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 14px 18px;
+            margin: 15px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        .login-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .login-box button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .login-box button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .login-box .error {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* 管理后台样式 */
+        .admin-box {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .admin-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .admin-box .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 110px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #64748b;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .result {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #333;
+        }
+        
+        .logout-btn {
+            background: #f1f5f9;
+            color: #64748b;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .logout-btn:hover {
+            background: #e2e8f0;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pro {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        
+        .status-free {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 登录界面 -->
+        <div id="loginPanel" class="login-box">
+            <div class="icon">🔐</div>
+            <h1>PDFHub 管理后台</h1>
+            <p style="color: #666; margin-bottom: 25px;">请输入密码进入</p>
+            <input type="password" id="passwordInput" placeholder="请输入管理密码" onkeypress="if(event.key === 'Enter') checkPassword()">
+            <button onclick="checkPassword()">登录</button>
+            <div id="loginError" class="error">密码错误，请重试</div>
+        </div>
+
+        <!-- 管理后台界面 -->
+        <div id="adminPanel" class="admin-box hidden">
+            <h1>
+                🔧 PDFHub Pro 管理后台
+                <button class="logout-btn" onclick="logout()">🚪 退出登录</button>
+            </h1>
+            <div class="subtitle">管理用户 Pro 权限 · 设置到期时间 · 查询用户状态</div>
+            
+            <div class="input-group">
+                <label>📧 用户邮箱</label>
+                <input type="email" id="emailInput" placeholder="user@example.com">
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="setPro()">✨ 设为 Pro (30天)</button>
+                <button class="btn btn-primary" onclick="setProYear()">⭐ 设为 Pro (1年)</button>
+                <button class="btn btn-danger" onclick="removePro()">❌ 移除 Pro</button>
+                <button class="btn btn-secondary" onclick="checkUser()">🔍 查询状态</button>
+            </div>
+            
+            <div id="result" class="result">
+                ⏳ 等待操作...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
+        // ⚠️ 请修改这个密码为你自己的密码！
+        const ADMIN_PASSWORD = 'XiaoETIP.986';
+        
+        // 检查登录状态
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('admin_logged_in');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginPanel').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+            } else {
+                document.getElementById('loginPanel').classList.remove('hidden');
+                document.getElementById('adminPanel').classList.add('hidden');
+            }
+        }
+        
+        // 验证密码
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_logged_in', 'true');
+                errorDiv.style.display = 'none';
+                document.getElementById('passwordInput').value = '';
+                checkAuth();
+            } else {
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 2000);
+            }
+        }
+        
+        // 退出登录
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            checkAuth();
+            document.getElementById('result').innerHTML = '⏳ 等待操作...';
+        }
+        
+        // 获取管理员密钥
+        function getAdminKey() {
+            // 你可以在这里修改管理员密钥
+            return 'secure-my-xiao7ADDXUT';
+        }
+        
+        // 显示结果
+        function showResult(data, isError = false) {
+            const resultDiv = document.getElementById('result');
+            if (isError) {
+                resultDiv.innerHTML = `❌ 错误：<br>${JSON.stringify(data, null, 2)}`;
+                resultDiv.style.borderColor = '#ef4444';
+                resultDiv.style.backgroundColor = '#fef2f2';
+            } else {
+                resultDiv.innerHTML = `✅ 成功：<br>${JSON.stringify(data, null, 2)}`;
+                resultDiv.style.borderColor = '#e2e8f0';
+                resultDiv.style.backgroundColor = '#f8fafc';
+            }
+            setTimeout(() => {
+                resultDiv.style.borderColor = '#e2e8f0';
+                resultDiv.style.backgroundColor = '#f8fafc';
+            }, 3000);
+        }
+        
+        // 获取邮箱
+        function getEmail() {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email) {
+                alert('请输入用户邮箱');
+                return null;
+            }
+            return email;
+        }
+        
+        // 设置 Pro (30天)
+        async function setPro() {
+            const email = getEmail();
+            if (!email) return;
+            
+            showResult('⏳ 处理中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/set-pro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getAdminKey()}`
+                    },
+                    body: JSON.stringify({ email, expiresDays: 30 })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showResult(data);
+                } else {
+                    showResult(data, true);
+                }
+            } catch(e) {
+                showResult({ error: e.message }, true);
+            }
+        }
+        
+        // 设置 Pro (1年)
+        async function setProYear() {
+            const email = getEmail();
+            if (!email) return;
+            
+            showResult('⏳ 处理中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/set-pro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getAdminKey()}`
+                    },
+                    body: JSON.stringify({ email, expiresDays: 365 })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showResult(data);
+                } else {
+                    showResult(data, true);
+                }
+            } catch(e) {
+                showResult({ error: e.message }, true);
+            }
+        }
+        
+        // 移除 Pro
+        async function removePro() {
+            const email = getEmail();
+            if (!email) return;
+            
+            if (!confirm(`确定要移除 ${email} 的 Pro 权限吗？`)) return;
+            
+            showResult('⏳ 处理中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/set-pro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getAdminKey()}`
+                    },
+                    body: JSON.stringify({ email, action: 'remove' })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showResult(data);
+                } else {
+                    showResult(data, true);
+                }
+            } catch(e) {
+                showResult({ error: e.message }, true);
+            }
+        }
+        
+        // 查询用户状态
+        async function checkUser() {
+            const email = getEmail();
+            if (!email) return;
+            
+            showResult('⏳ 查询中...');
+            try {
+                const res = await fetch(`${API_BASE}/api/admin/check-user?email=${encodeURIComponent(email)}`, {
+                    headers: { 'Authorization': `Bearer ${getAdminKey()}` }
+                });
+                const data = await res.json();
+                showResult(data);
+            } catch(e) {
+                showResult({ error: e.message }, true);
+            }
+        }
+        
+        // 初始化
+        checkAuth();
+        
+        // 按回车键触发查询
+        document.getElementById('emailInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkUser();
+        });
+    </script>
+</body>
+</html>
