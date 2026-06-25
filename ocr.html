@@ -130,6 +130,115 @@
         }
         .modal-download-btn:hover { background-color: #059669; transform: scale(1.02); }
         .modal-download-btn i { font-size: 18px; }
+        
+        /* ========== 🆕 Login Required Modal ========== */
+        #loginRequiredModal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        #loginRequiredModal.show {
+            display: flex;
+        }
+        .login-modal-box {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 32px 32px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .login-modal-box .icon-wrapper {
+            width: 72px;
+            height: 72px;
+            background: #f3e8ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .login-modal-box .icon-wrapper i {
+            font-size: 32px;
+            color: #7c3aed;
+        }
+        .login-modal-box h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        .login-modal-box p {
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .login-modal-box .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .login-modal-box .btn-login {
+            background: #7c3aed;
+            color: white;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .login-modal-box .btn-login:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+        .login-modal-box .btn-cancel-modal {
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .login-modal-box .btn-cancel-modal:hover {
+            background: #e5e7eb;
+        }
+        html.dark-mode .login-modal-box {
+            background: #1f2937;
+        }
+        html.dark-mode .login-modal-box h3 {
+            color: #f9fafb;
+        }
+        html.dark-mode .login-modal-box p {
+            color: #9ca3af;
+        }
+        html.dark-mode .login-modal-box .btn-cancel-modal {
+            background: #374151;
+            color: #e5e7eb;
+        }
+        html.dark-mode .login-modal-box .btn-cancel-modal:hover {
+            background: #4b5563;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -161,7 +270,6 @@
     <i class="fas fa-shield-alt mr-1"></i> 
     OCR processing uses secure API · Your files are not stored
 </span>
-			<!--<span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device for OCR</span>  -->
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -220,83 +328,96 @@
         </div>
 
         <div id="errorSection" class="hidden mt-8"><div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><p id="errorMsg" class="text-red-700"></p></div></div>
-		<!-- ========== 🆕 新增：工具说明、使用教程、FAQ（开始） ========== -->
-<div class="mt-12 prose max-w-none">
-    <!-- 分割线 -->
-    <hr class="my-8 border-gray-200">
-    
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Use OCR to Extract Text from PDF</h2>
-    <p class="text-gray-600 mb-4">OCR (Optical Character Recognition) technology allows you to extract text from scanned PDFs and images. Here's how to use our free OCR tool:</p>
-    
-    <ol class="list-decimal list-inside text-gray-600 space-y-2 mb-6">
-        <li>Upload your PDF file (max 10MB for free users, 20MB for Pro users)</li>
-        <li>Click <strong>"Extract Text"</strong> to start OCR processing</li>
-        <li>Wait for the OCR to complete (this may take a few seconds)</li>
-        <li>Copy the extracted text, download as TXT, or export to Word</li>
-    </ol>
-    
-    <h3 class="text-xl font-semibold text-gray-800 mb-3">Common Use Cases</h3>
-    <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
-        <li><strong>Digitize paper documents</strong> - Convert scanned contracts, invoices, and forms to editable text</li>
-        <li><strong>Extract text from images</strong> - Pull text from photos of documents, signs, or whiteboards</li>
-        <li><strong>Make PDFs searchable</strong> - Enable text search in scanned PDF files</li>
-        <li><strong>Copy text from scanned books</strong> - Extract quotes and passages from scanned publications</li>
-    </ul>
-    
-    <h3 class="text-xl font-semibold text-gray-800 mb-3">Tips for Best OCR Results</h3>
-    <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
-        <li>Use high-quality scans (300 DPI or higher recommended)</li>
-        <li>Ensure text is clear and not skewed</li>
-        <li>For multi-page PDFs, we process all pages automatically</li>
-        <li>English language is fully supported</li>
-    </ul>
-    
-    <div class="bg-gray-100 rounded-xl p-6 mb-6">
-        <h3 class="font-semibold text-gray-800 mb-3">Frequently Asked Questions</h3>
-        <div class="space-y-3">
-            <div>
-                <p class="font-medium text-gray-700">Is OCR free to use?</p>
-                <p class="text-gray-600 text-sm">Yes! Free users get 5 OCR conversions per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited OCR conversions.</p>
-            </div>
-            <div>
-                <p class="font-medium text-gray-700">Is my data secure?</p>
-                <p class="text-gray-600 text-sm">Absolutely. All processing happens locally in your browser. Your files never leave your device. We do not store any of your documents.</p>
-            </div>
-            <div>
-                <p class="font-medium text-gray-700">What file formats are supported?</p>
-                <p class="text-gray-600 text-sm">We support PDF files. For scanned PDFs and images embedded in PDFs, our OCR engine can extract text from all pages.</p>
-            </div>
-            <div>
-                <p class="font-medium text-gray-700">How accurate is the OCR?</p>
-                <p class="text-gray-600 text-sm">Our OCR engine uses AI-powered technology with high accuracy for clear, well-scanned documents. For best results, ensure your documents are clean and legible.</p>
-            </div>
-            <div>
-                <p class="font-medium text-gray-700">Can I export the extracted text to Word?</p>
-                <p class="text-gray-600 text-sm">Yes! After extracting text, click the <strong>"Export to Word (Preserve Format)"</strong> button to download a DOCX file with preserved formatting.</p>
+        
+        <!-- ========== 🆕 Login Required Modal ========== -->
+        <div id="loginRequiredModal">
+            <div class="login-modal-box">
+                <div class="icon-wrapper">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Login Required</h3>
+                <p>Please login to use the OCR to Word feature. It's free and takes only a minute.<br><small style="color: #9ca3af;">Free users get 5 conversions per day · Pro users unlimited</small></p>
+                <div class="btn-group">
+                    <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt mr-2"></i>Login Now</a>
+                    <button onclick="closeLoginModal()" class="btn-cancel-modal">Cancel</button>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <!-- 相关工具导航 -->
-    <div class="border-t border-gray-200 pt-6 text-center">
-        <p class="text-gray-600 mb-3">Try our other free PDF tools:</p>
-        <div class="flex flex-wrap justify-center gap-3">
-            <a href="merge-pdf.html" class="text-purple-600 hover:underline text-sm">Merge PDF</a>
-            <span class="text-gray-300">|</span>
-            <a href="split-pdf.html" class="text-purple-600 hover:underline text-sm">Split PDF</a>
-            <span class="text-gray-300">|</span>
-            <a href="compress-pdf.html" class="text-purple-600 hover:underline text-sm">Compress PDF</a>
-            <span class="text-gray-300">|</span>
-            <a href="pdf-to-image.html" class="text-purple-600 hover:underline text-sm">PDF to Image</a>
-            <span class="text-gray-300">|</span>
-            <a href="ai-chat.html" class="text-purple-600 hover:underline text-sm">AI Chat PDF</a>
-            <span class="text-gray-300">|</span>
-            <a href="ai-summary.html" class="text-purple-600 hover:underline text-sm">AI Summary</a>
+
+        <!-- ========== 工具说明、使用教程、FAQ ========== -->
+        <div class="mt-12 prose max-w-none">
+            <hr class="my-8 border-gray-200">
+            
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Use OCR to Extract Text from PDF</h2>
+            <p class="text-gray-600 mb-4">OCR (Optical Character Recognition) technology allows you to extract text from scanned PDFs and images. Here's how to use our free OCR tool:</p>
+            
+            <ol class="list-decimal list-inside text-gray-600 space-y-2 mb-6">
+                <li>Upload your PDF file (max 10MB for free users, 20MB for Pro users)</li>
+                <li>Click <strong>"Extract Text"</strong> to start OCR processing</li>
+                <li>Wait for the OCR to complete (this may take a few seconds)</li>
+                <li>Copy the extracted text, download as TXT, or export to Word</li>
+            </ol>
+            
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Common Use Cases</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                <li><strong>Digitize paper documents</strong> - Convert scanned contracts, invoices, and forms to editable text</li>
+                <li><strong>Extract text from images</strong> - Pull text from photos of documents, signs, or whiteboards</li>
+                <li><strong>Make PDFs searchable</strong> - Enable text search in scanned PDF files</li>
+                <li><strong>Copy text from scanned books</strong> - Extract quotes and passages from scanned publications</li>
+            </ul>
+            
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Tips for Best OCR Results</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                <li>Use high-quality scans (300 DPI or higher recommended)</li>
+                <li>Ensure text is clear and not skewed</li>
+                <li>For multi-page PDFs, we process all pages automatically</li>
+                <li>English language is fully supported</li>
+            </ul>
+            
+            <div class="bg-gray-100 rounded-xl p-6 mb-6">
+                <h3 class="font-semibold text-gray-800 mb-3">Frequently Asked Questions</h3>
+                <div class="space-y-3">
+                    <div>
+                        <p class="font-medium text-gray-700">Is OCR free to use?</p>
+                        <p class="text-gray-600 text-sm">Yes! Free users get 5 OCR conversions per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited OCR conversions.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">Is my data secure?</p>
+                        <p class="text-gray-600 text-sm">Absolutely. All processing happens locally in your browser. Your files never leave your device. We do not store any of your documents.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">What file formats are supported?</p>
+                        <p class="text-gray-600 text-sm">We support PDF files. For scanned PDFs and images embedded in PDFs, our OCR engine can extract text from all pages.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">How accurate is the OCR?</p>
+                        <p class="text-gray-600 text-sm">Our OCR engine uses AI-powered technology with high accuracy for clear, well-scanned documents. For best results, ensure your documents are clean and legible.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">Can I export the extracted text to Word?</p>
+                        <p class="text-gray-600 text-sm">Yes! After extracting text, click the <strong>"Export to Word (Preserve Format)"</strong> button to download a DOCX file with preserved formatting.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 相关工具导航 -->
+            <div class="border-t border-gray-200 pt-6 text-center">
+                <p class="text-gray-600 mb-3">Try our other free PDF tools:</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="merge-pdf.html" class="text-purple-600 hover:underline text-sm">Merge PDF</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="split-pdf.html" class="text-purple-600 hover:underline text-sm">Split PDF</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="compress-pdf.html" class="text-purple-600 hover:underline text-sm">Compress PDF</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="pdf-to-image.html" class="text-purple-600 hover:underline text-sm">PDF to Image</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="ai-chat.html" class="text-purple-600 hover:underline text-sm">AI Chat PDF</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="ai-summary.html" class="text-purple-600 hover:underline text-sm">AI Summary</a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<!-- ========== 🆕 新增内容（结束） ========== -->
-		
     </div>
 
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
@@ -323,6 +444,33 @@
                 btn.classList.add('text-gray-700'); 
             } 
         });
+        
+        // ========== 🆕 Login Modal Functions ==========
+        function showLoginModal() {
+            const modal = document.getElementById('loginRequiredModal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+        
+        function closeLoginModal() {
+            const modal = document.getElementById('loginRequiredModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+        
+        // ========== 🆕 Check Auth Before API Call ==========
+        function checkAuth() {
+            const authToken = localStorage.getItem('authToken');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!authToken || !userEmail) {
+                showLoginModal();
+                return false;
+            }
+            return true;
+        }
         
         // ========== User menu ==========
         let isPro = localStorage.getItem('isPro') === 'true';
@@ -779,14 +927,18 @@
             }
         }
         
-        // ========== PDF转Word（直连VPS） ==========
+        // ========== 🆕 PDF转Word（带登录检查） ==========
         async function convertToWord() {
             // 防止重复点击
             if (isConverting) {
                 console.log('Conversion already in progress');
                 return;
             }
-            isConverting = true;
+            
+            // 🆕 先检查登录状态
+            if (!checkAuth()) {
+                return; // 未登录，显示弹窗，停止执行
+            }
             
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -798,6 +950,8 @@
                 isConverting = false;
                 return;
             }
+
+            isConverting = true;
 
             // 检查使用次数（VPS后端会记录，前端只检查不记录）
             const canUse = await checkUsage();
@@ -977,6 +1131,11 @@
         
         // ========== Local OCR main function ==========
         async function performOCR() {
+            // 🆕 先检查登录状态
+            if (!checkAuth()) {
+                return; // 未登录，显示弹窗，停止执行
+            }
+            
             const canUse = await checkUsage();
             if (!canUse) { 
                 alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); 
@@ -1032,6 +1191,11 @@
         }
         
         function handleFile(file) { 
+            // 🆕 如果未登录，阻止选择文件并提示登录
+            if (!checkAuth()) {
+                return;
+            }
+            
             if (file && file.type === 'application/pdf') { 
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
                 if (file.size > maxSize) { 
@@ -1089,12 +1253,18 @@
         retryBtn?.addEventListener('click', retryConversion);
         convertWordBtn?.addEventListener('click', convertToWord);
         
-        dropZone?.addEventListener('click', () => fileInput.click());
+        dropZone?.addEventListener('click', () => {
+            // 🆕 点击上传区域时检查登录
+            if (!checkAuth()) return;
+            fileInput.click();
+        });
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
         dropZone?.addEventListener('drop', (e) => { 
             e.preventDefault(); 
             dropZone.classList.remove('dragover'); 
+            // 🆕 拖放文件时检查登录
+            if (!checkAuth()) return;
             if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); 
         });
         fileInput?.addEventListener('change', (e) => { 
@@ -1106,6 +1276,13 @@
         
         // Init usage on page load
         checkUsage();
+        
+        // 🆕 点击弹窗外关闭
+        document.getElementById('loginRequiredModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
+            }
+        });
     </script>
 </body>
 </html>
