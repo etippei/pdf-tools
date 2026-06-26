@@ -8,13 +8,8 @@
     <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Free and private.">
     <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free, image to text, pdf text extractor">
     <link rel="canonical" href="https://aipdfly.com/ocr.html">
-    <script src="https://cdn.tailwindcss.com?v=20260621"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260621">
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260621"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260621"></script>
-    <link rel="stylesheet" href="dark-mode.css?v=20260621">
-    <script src="darkmode.js?v=20260621"></script>
     
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWC5YTJ60S"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -22,6 +17,13 @@
       gtag('js', new Date());
       gtag('config', 'G-ZWC5YTJ60S');
     </script>
+    
+    <script src="https://cdn.tailwindcss.com?v=20260621"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20260621">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js?v=20260621"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js?v=20260621"></script>
+    <link rel="stylesheet" href="dark-mode.css?v=20260621">
+    <script src="darkmode.js?v=20260621"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -112,7 +114,6 @@
         }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         
-        /* 下载按钮样式 - 在弹窗中 */
         .modal-download-btn {
             background-color: #10b981;
             color: white;
@@ -130,115 +131,6 @@
         }
         .modal-download-btn:hover { background-color: #059669; transform: scale(1.02); }
         .modal-download-btn i { font-size: 18px; }
-        
-        /* ========== 🆕 Login Required Modal ========== */
-        #loginRequiredModal {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-        }
-        #loginRequiredModal.show {
-            display: flex;
-        }
-        .login-modal-box {
-            background: white;
-            border-radius: 24px;
-            padding: 40px 32px 32px;
-            max-width: 440px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-            animation: modalFadeIn 0.3s ease;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .login-modal-box .icon-wrapper {
-            width: 72px;
-            height: 72px;
-            background: #f3e8ff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-        }
-        .login-modal-box .icon-wrapper i {
-            font-size: 32px;
-            color: #7c3aed;
-        }
-        .login-modal-box h3 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 8px;
-        }
-        .login-modal-box p {
-            color: #6b7280;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-        .login-modal-box .btn-group {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .login-modal-box .btn-login {
-            background: #7c3aed;
-            color: white;
-            padding: 10px 32px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 15px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .login-modal-box .btn-login:hover {
-            background: #6d28d9;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
-        }
-        .login-modal-box .btn-cancel-modal {
-            background: #f3f4f6;
-            color: #4b5563;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 15px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .login-modal-box .btn-cancel-modal:hover {
-            background: #e5e7eb;
-        }
-        html.dark-mode .login-modal-box {
-            background: #1f2937;
-        }
-        html.dark-mode .login-modal-box h3 {
-            color: #f9fafb;
-        }
-        html.dark-mode .login-modal-box p {
-            color: #9ca3af;
-        }
-        html.dark-mode .login-modal-box .btn-cancel-modal {
-            background: #374151;
-            color: #e5e7eb;
-        }
-        html.dark-mode .login-modal-box .btn-cancel-modal:hover {
-            background: #4b5563;
-        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -266,10 +158,7 @@
         <div class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">OCR - Extract Text from PDF</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert scanned PDFs and images into editable text using AI-powered OCR.</p>
-            <span class="block text-sm mt-3 text-green-600 font-medium">
-    <i class="fas fa-shield-alt mr-1"></i> 
-    OCR processing uses secure API · Your files are not stored
-</span>
+            <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> OCR processing uses secure API · Your files are not stored</span>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -328,23 +217,8 @@
         </div>
 
         <div id="errorSection" class="hidden mt-8"><div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><p id="errorMsg" class="text-red-700"></p></div></div>
-        
-        <!-- ========== 🆕 Login Required Modal ========== -->
-        <div id="loginRequiredModal">
-            <div class="login-modal-box">
-                <div class="icon-wrapper">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h3>Login Required</h3>
-                <p>Please login to use the OCR to Word feature. It's free and takes only a minute.<br><small style="color: #9ca3af;">Free users get 5 conversions per day · Pro users unlimited</small></p>
-                <div class="btn-group">
-                    <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt mr-2"></i>Login Now</a>
-                    <button onclick="closeLoginModal()" class="btn-cancel-modal">Cancel</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- ========== 工具说明、使用教程、FAQ ========== -->
+        <!-- ========== SEO 内容 ========== -->
         <div class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
@@ -400,7 +274,6 @@
                 </div>
             </div>
             
-            <!-- 相关工具导航 -->
             <div class="border-t border-gray-200 pt-6 text-center">
                 <p class="text-gray-600 mb-3">Try our other free PDF tools:</p>
                 <div class="flex flex-wrap justify-center gap-3">
@@ -418,6 +291,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
@@ -429,6 +303,7 @@
 
     <script>
         // ========== Configuration ==========
+        const API_BASE = 'https://pdfhub-api.etiplpl.workers.dev';
         const OCR_SPACE_API_KEY = 'K86198983388957';
         const MAX_API_FILE_SIZE = 950 * 1024;
         
@@ -444,33 +319,6 @@
                 btn.classList.add('text-gray-700'); 
             } 
         });
-        
-        // ========== 🆕 Login Modal Functions ==========
-        function showLoginModal() {
-            const modal = document.getElementById('loginRequiredModal');
-            if (modal) {
-                modal.classList.add('show');
-            }
-        }
-        
-        function closeLoginModal() {
-            const modal = document.getElementById('loginRequiredModal');
-            if (modal) {
-                modal.classList.remove('show');
-            }
-        }
-        
-        // ========== 🆕 Check Auth Before API Call ==========
-        function checkAuth() {
-            const authToken = localStorage.getItem('authToken');
-            const userEmail = localStorage.getItem('userEmail');
-            
-            if (!authToken || !userEmail) {
-                showLoginModal();
-                return false;
-            }
-            return true;
-        }
         
         // ========== User menu ==========
         let isPro = localStorage.getItem('isPro') === 'true';
@@ -497,21 +345,11 @@
             } else {
                 userSection.innerHTML = `<a href="login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
-            // 用户菜单更新后，延迟刷新使用次数
-            setTimeout(() => {
-                checkUsage();
-            }, 300);
+            setTimeout(() => { checkUsage(); }, 300);
         }
         initUserMenu();
         
-        // 页面可见性变化时刷新使用次数
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) {
-                checkUsage();
-            }
-        });
-        
-        // 监听 storage 变化（跨标签页登录/登出）
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUsage(); });
         window.addEventListener('storage', (e) => {
             if (e.key === 'authToken' || e.key === 'userEmail' || e.key === 'isPro') {
                 isPro = localStorage.getItem('isPro') === 'true';
@@ -526,24 +364,34 @@
             const headers = {};
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                const response = await fetch('/api/usage?feature=ocr', { headers });
+                const response = await fetch(`${API_BASE}/api/usage?feature=ocr`, { 
+                    headers,
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 usageInfo = data;
                 isPro = data.isPro;
+                
                 const ocrBtn = document.getElementById('ocrBtn');
                 const convertBtn = document.getElementById('convertWordBtn');
+                const isLoggedIn = !!localStorage.getItem('authToken');
+                
                 if (ocrBtn) {
                     if (!data.allowed) {
                         ocrBtn.disabled = true;
-                        ocrBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                        ocrBtn.title = `Daily limit reached (${data.used}/${data.limit}).`;
                     } else {
                         ocrBtn.disabled = false;
                     }
                 }
                 if (convertBtn) {
-                    if (!data.allowed) {
+                    if (!isLoggedIn) {
+                        // 未登录：禁用按钮，提示需要登录
                         convertBtn.disabled = true;
-                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                        convertBtn.title = 'Please login to use this feature.';
+                    } else if (!data.allowed) {
+                        convertBtn.disabled = true;
+                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}).`;
                     } else {
                         convertBtn.disabled = false;
                     }
@@ -552,18 +400,6 @@
                 return data.allowed;
             } catch (error) {
                 console.error('Check usage failed:', error);
-                // 降级：未登录用户使用 localStorage
-                const token = localStorage.getItem('authToken');
-                if (!token) {
-                    const today = new Date().toDateString();
-                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
-                    const limit = 3;
-                    const remaining = limit - usage;
-                    const allowed = remaining > 0;
-                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
-                    updateUsageDisplay(usageInfo);
-                    return allowed;
-                }
                 return true;
             }
         }
@@ -571,7 +407,6 @@
         let isRecording = false;
         
         async function recordUsage() {
-            // 防止并发重复调用
             if (isRecording) {
                 console.log('Recording already in progress, skipping...');
                 return false;
@@ -582,17 +417,28 @@
             const headers = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                const response = await fetch('/api/usage/record', {
+                const response = await fetch(`${API_BASE}/api/usage/record`, {
                     method: 'POST',
                     headers: headers,
-                    body: JSON.stringify({ feature: 'ocr' })
+                    body: JSON.stringify({ feature: 'ocr' }),
+                    credentials: 'include'
                 });
                 const data = await response.json();
-                usageInfo.remaining = data.remaining;
-                usageInfo.used = data.used;
-                usageInfo.limit = data.limit;
-                updateUsageDisplay(usageInfo);
-                return true;
+                if (data.success) {
+                    usageInfo.remaining = data.remaining;
+                    usageInfo.used = data.used;
+                    usageInfo.limit = data.limit;
+                    usageInfo.isPro = data.isPro || false;
+                    updateUsageDisplay(usageInfo);
+                    return true;
+                } else {
+                    const token = localStorage.getItem('authToken');
+                    const msg = token 
+                        ? 'Daily limit reached. Upgrade to Pro for unlimited.'
+                        : 'Today\'s free limit reached (3/3). Please login to unlock unlimited.';
+                    alert(msg);
+                    return false;
+                }
             } catch (error) {
                 console.error('Record usage failed:', error);
                 return false;
@@ -634,7 +480,6 @@
         let isCancelled = false;
         let isConverting = false;
         
-        // 存储下载数据
         let pendingDownloadBlob = null;
         let pendingFileName = '';
         
@@ -880,7 +725,6 @@
             URL.revokeObjectURL(url);
         }
         
-        // ========== 自动下载辅助函数（降级方案） ==========
         function autoDownload(blob, fileName) {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -892,11 +736,8 @@
             setTimeout(() => URL.revokeObjectURL(url), 10000);
         }
         
-        // ========== 使用 showSaveFilePicker 下载（用户手势触发） ==========
         function downloadWithFilePicker(blob, fileName) {
             if (!blob) return;
-            
-            // 尝试使用 File System Access API
             if ('showSaveFilePicker' in window) {
                 window.showSaveFilePicker({
                     suggestedName: fileName,
@@ -912,9 +753,6 @@
                         });
                     });
                 })
-                .then(() => {
-                    console.log('File saved successfully');
-                })
                 .catch(err => {
                     if (err.name !== 'AbortError') {
                         console.warn('File picker failed, using auto download:', err);
@@ -922,22 +760,24 @@
                     }
                 });
             } else {
-                // 不支持 File System Access API，使用自动下载
                 autoDownload(blob, fileName);
             }
         }
         
-        // ========== 🆕 PDF转Word（带登录检查） ==========
+        // ========== PDF转Word（直连VPS） ==========
         async function convertToWord() {
-            // 防止重复点击
             if (isConverting) {
                 console.log('Conversion already in progress');
                 return;
             }
+            isConverting = true;
             
-            // 🆕 先检查登录状态
-            if (!checkAuth()) {
-                return; // 未登录，显示弹窗，停止执行
+            // ===== 检查是否已登录 =====
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                alert('Please login to use this feature. Free users get 5 conversions per day.');
+                isConverting = false;
+                return;
             }
             
             if (!selectedFile) {
@@ -951,12 +791,10 @@
                 return;
             }
 
-            isConverting = true;
-
-            // 检查使用次数（VPS后端会记录，前端只检查不记录）
             const canUse = await checkUsage();
             if (!canUse) {
-                alert('Daily limit reached. Upgrade to Pro for unlimited conversions.');
+                const msg = 'Daily limit reached. Upgrade to Pro for unlimited conversions.';
+                alert(msg);
                 isConverting = false;
                 return;
             }
@@ -965,7 +803,6 @@
             retryBtn.classList.add('hidden');
             convertWordBtn.disabled = true;
             
-            // 重置弹窗状态
             loadingOverlay.classList.remove('hidden');
             cancelBtn.style.display = 'inline-block';
             downloadBtnContainer.classList.add('hidden');
@@ -974,7 +811,6 @@
             loadingSubtext.textContent = 'Submitting task, please wait...';
             modalDownloadBtn.onclick = null;
 
-            // 清除之前的下载数据
             pendingDownloadBlob = null;
             pendingFileName = '';
 
@@ -993,7 +829,8 @@
                     method: "POST",
                     headers: reqHeaders,
                     body: formData,
-                    signal: AbortSignal.timeout(90000)
+                    signal: AbortSignal.timeout(90000),
+                    credentials: 'include'
                 });
 
                 let submitData;
@@ -1018,7 +855,8 @@
                     await new Promise(res => setTimeout(res, 2000));
                     pollTimes++;
                     const pollRes = await fetch(`${resultUrlBase}/${submitData.taskId}`, { 
-                        headers: reqHeaders
+                        headers: reqHeaders,
+                        credentials: 'include'
                     });
                     const pollData = await pollRes.json();
 
@@ -1041,28 +879,26 @@
                     throw new Error("Conversion timeout, please retry later");
                 }
 
-                // 生成文件名
                 const originalName = selectedFile.name || 'document.pdf';
                 const nameWithoutExt = originalName.replace(/\.[^.]+$/, '');
                 pendingFileName = `${nameWithoutExt}_converted.docx`;
                 pendingDownloadBlob = downloadBlob;
 
-                // ===== 转换完成，显示下载按钮（用户点击时触发 File Picker） =====
+                // VPS 后端已记录使用次数，前端不需要再记录
+                // 只需刷新显示
+                await checkUsage();
+
                 loadingIcon.className = 'fas fa-check-circle text-4xl text-green-500 mb-4';
                 loadingText.textContent = '✅ Conversion Completed!';
                 loadingSubtext.textContent = `Your file "${pendingFileName}" is ready for download.`;
                 
-                // 隐藏取消按钮，显示下载按钮
                 cancelBtn.style.display = 'none';
                 downloadBtnContainer.classList.remove('hidden');
                 
-                // 绑定下载按钮点击事件 - 用户手势触发
                 modalDownloadBtn.onclick = function() {
                     if (pendingDownloadBlob) {
-                        // 用户点击按钮触发，有用户手势
                         downloadWithFilePicker(pendingDownloadBlob, pendingFileName);
                         
-                        // 下载后关闭弹窗
                         loadingOverlay.classList.add('hidden');
                         convertWordBtn.disabled = false;
                         isConverting = false;
@@ -1074,7 +910,6 @@
                             loadingOverlay.classList.add('hidden');
                             convertWordBtn.disabled = false;
                             isConverting = false;
-                            // 恢复 Cancel 按钮
                             cancelBtn.textContent = "Cancel";
                             cancelBtn.className = 'btn-cancel';
                             cancelBtn.onclick = cancelConversion;
@@ -1083,16 +918,12 @@
                     }
                 };
 
-                // 刷新使用次数显示
-                await checkUsage();
-
             } catch (error) {
                 alert('Conversion failed: ' + error.message);
                 console.error('PDF to Word error:', error);
                 loadingOverlay.classList.add('hidden');
                 convertWordBtn.disabled = false;
                 isConverting = false;
-                // 恢复取消按钮
                 cancelBtn.style.display = 'inline-block';
                 cancelBtn.textContent = "Cancel";
                 cancelBtn.className = 'btn-cancel';
@@ -1101,7 +932,6 @@
             }
         }
         
-        // ========== Cancel conversion ==========
         function cancelConversion() {
             isCancelled = true;
             loadingOverlay.classList.add('hidden');
@@ -1116,7 +946,6 @@
             pendingDownloadBlob = null;
         }
         
-        // ========== Retry conversion ==========
         async function retryConversion() {
             if (!selectedFile) {
                 alert('Please upload a PDF file first.');
@@ -1129,16 +958,14 @@
             await convertToWord();
         }
         
-        // ========== Local OCR main function ==========
         async function performOCR() {
-            // 🆕 先检查登录状态
-            if (!checkAuth()) {
-                return; // 未登录，显示弹窗，停止执行
-            }
-            
             const canUse = await checkUsage();
             if (!canUse) { 
-                alert('Daily OCR limit reached. Upgrade to Pro for unlimited pages.'); 
+                const token = localStorage.getItem('authToken');
+                const msg = token 
+                    ? 'Daily OCR limit reached. Upgrade to Pro for unlimited pages.'
+                    : 'Today\'s free limit reached (3/3). Please login to unlock unlimited.';
+                alert(msg);
                 return; 
             }
             if (!selectedFile) return;
@@ -1177,7 +1004,6 @@
                 if (allText && allText.trim().length > 0) {
                     extractedText.textContent = allText;
                     resultSection.classList.remove('hidden');
-                    // OCR提取时记录使用次数（前端直接调用OCR.space API）
                     await recordUsage();
                 } else throw new Error('No text extracted. Ensure PDF contains readable content.');
             } catch (error) {
@@ -1191,11 +1017,6 @@
         }
         
         function handleFile(file) { 
-            // 🆕 如果未登录，阻止选择文件并提示登录
-            if (!checkAuth()) {
-                return;
-            }
-            
             if (file && file.type === 'application/pdf') { 
                 const maxSize = isPro ? 20 * 1024 * 1024 : 10 * 1024 * 1024;
                 if (file.size > maxSize) { 
@@ -1215,7 +1036,7 @@
                 isCancelled = false;
                 checkUsage().then(canUse => { 
                     if (canUse) ocrBtn.disabled = false; 
-                    convertWordBtn.disabled = false; 
+                    // convertWordBtn 由 checkUsage 控制
                 });
             } else { 
                 alert('Please select a valid PDF file'); 
@@ -1238,7 +1059,6 @@
             pendingFileName = '';
         }
         
-        // ========== Event Listeners ==========
         cancelBtn?.addEventListener('click', cancelConversion);
         
         copyBtn?.addEventListener('click', () => { 
@@ -1253,18 +1073,12 @@
         retryBtn?.addEventListener('click', retryConversion);
         convertWordBtn?.addEventListener('click', convertToWord);
         
-        dropZone?.addEventListener('click', () => {
-            // 🆕 点击上传区域时检查登录
-            if (!checkAuth()) return;
-            fileInput.click();
-        });
+        dropZone?.addEventListener('click', () => fileInput.click());
         dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
         dropZone?.addEventListener('drop', (e) => { 
             e.preventDefault(); 
             dropZone.classList.remove('dragover'); 
-            // 🆕 拖放文件时检查登录
-            if (!checkAuth()) return;
             if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); 
         });
         fileInput?.addEventListener('change', (e) => { 
@@ -1274,15 +1088,7 @@
         removeFileBtn?.addEventListener('click', removeFile);
         ocrBtn?.addEventListener('click', performOCR);
         
-        // Init usage on page load
         checkUsage();
-        
-        // 🆕 点击弹窗外关闭
-        document.getElementById('loginRequiredModal')?.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeLoginModal();
-            }
-        });
     </script>
 </body>
 </html>

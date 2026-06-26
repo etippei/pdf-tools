@@ -8,7 +8,7 @@
     <meta name="description" content="Convert multiple images (JPG, PNG, GIF) to a single PDF file online for free. Drag to reorder images. No upload required.">
     <meta name="keywords" content="image to pdf, jpg to pdf, png to pdf, convert images to pdf, multiple images to pdf, picture to pdf">
     <link rel="canonical" href="https://aipdfly.com/image-to-pdf.html">
-     <!-- ====== 👇 在这里添加 GA 代码 ====== -->
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWC5YTJ60S"></script>
     <script>
@@ -17,8 +17,8 @@
       gtag('js', new Date());
       gtag('config', 'G-ZWC5YTJ60S');
     </script>
-    <!-- ====== 👆 GA 代码结束 ====== -->
-	<script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <link rel="stylesheet" href="dark-mode.css">
@@ -67,8 +67,11 @@
     </div>
 
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
-        <div class="text-center mb-6"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Image to PDF</h1><p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert JPG, PNG, GIF images into a single PDF document. Drag to reorder.</p></div>
-		<div class="mt-8 text-center text-sm text-gray-500"><i class="fas fa-shield-alt mr-1 text-green-600"></i> All processing happens locally.</div>
+        <div class="text-center mb-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Image to PDF</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert JPG, PNG, GIF images into a single PDF document. Drag to reorder.</p>
+            <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> All processing happens locally in your browser. Your files never leave your device.</span>
+        </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
             <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
@@ -97,75 +100,73 @@
 
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p>Converting images to PDF...</p><p class="text-sm text-gray-500 mt-2">This may take a few seconds</p></div></div>
 
-        
-		<!-- ========== SEO 内容：Image to PDF 说明 ========== -->
-<div class="mt-12 prose max-w-none">
-    <hr class="my-8 border-gray-200">
-    
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Convert Images to PDF Online</h2>
-    <p class="text-gray-600 mb-4">Convert multiple images (JPG, PNG, GIF) into a single PDF document. Drag to reorder images. Perfect for creating photo albums, reports, and presentations.</p>
-    
-    <ol class="list-decimal list-inside text-gray-600 space-y-2 mb-6">
-        <li>Upload your images (JPG, PNG, or GIF)</li>
-        <li>Drag and drop to reorder images</li>
-        <li>Choose page size: Fit to image, A4, or Letter</li>
-        <li>Click "Convert to PDF"</li>
-        <li>Download your PDF file</li>
-    </ol>
-    
-    <h3 class="text-xl font-semibold text-gray-800 mb-3">Page Size Options</h3>
-    <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
-        <li><strong>Fit to image</strong> - Each page matches the image size (Recommended)</li>
-        <li><strong>A4</strong> - Standard A4 page (210 x 297 mm)</li>
-        <li><strong>Letter</strong> - US Letter size (8.5 x 11 inches)</li>
-    </ul>
-    
-    <h3 class="text-xl font-semibold text-gray-800 mb-3">Common Use Cases</h3>
-    <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
-        <li><strong>Photo albums</strong> - Create PDF photo albums from multiple images</li>
-        <li><strong>Reports</strong> - Convert screenshots and images into a professional PDF report</li>
-        <li><strong>Presentations</strong> - Create presentation materials from images</li>
-        <li><strong>Document scanning</strong> - Combine scanned images into a single PDF</li>
-    </ul>
-    
-    <div class="bg-gray-100 rounded-xl p-6 mb-6">
-        <h3 class="font-semibold text-gray-800 mb-3">Frequently Asked Questions</h3>
-        <div class="space-y-3">
-            <div>
-                <p class="font-medium text-gray-700">Is Image to PDF conversion free?</p>
-                <p class="text-gray-600 text-sm">Yes! Free users can convert up to 5 image sets per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited conversions.</p>
+        <!-- ========== SEO 内容 ========== -->
+        <div class="mt-12 prose max-w-none">
+            <hr class="my-8 border-gray-200">
+            
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Convert Images to PDF Online</h2>
+            <p class="text-gray-600 mb-4">Convert multiple images (JPG, PNG, GIF) into a single PDF document. Drag to reorder images. Perfect for creating photo albums, reports, and presentations.</p>
+            
+            <ol class="list-decimal list-inside text-gray-600 space-y-2 mb-6">
+                <li>Upload your images (JPG, PNG, or GIF)</li>
+                <li>Drag and drop to reorder images</li>
+                <li>Choose page size: Fit to image, A4, or Letter</li>
+                <li>Click "Convert to PDF"</li>
+                <li>Download your PDF file</li>
+            </ol>
+            
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Page Size Options</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                <li><strong>Fit to image</strong> - Each page matches the image size (Recommended)</li>
+                <li><strong>A4</strong> - Standard A4 page (210 x 297 mm)</li>
+                <li><strong>Letter</strong> - US Letter size (8.5 x 11 inches)</li>
+            </ul>
+            
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Common Use Cases</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                <li><strong>Photo albums</strong> - Create PDF photo albums from multiple images</li>
+                <li><strong>Reports</strong> - Convert screenshots and images into a professional PDF report</li>
+                <li><strong>Presentations</strong> - Create presentation materials from images</li>
+                <li><strong>Document scanning</strong> - Combine scanned images into a single PDF</li>
+            </ul>
+            
+            <div class="bg-gray-100 rounded-xl p-6 mb-6">
+                <h3 class="font-semibold text-gray-800 mb-3">Frequently Asked Questions</h3>
+                <div class="space-y-3">
+                    <div>
+                        <p class="font-medium text-gray-700">Is Image to PDF conversion free?</p>
+                        <p class="text-gray-600 text-sm">Yes! Free users can convert up to 5 image sets per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited conversions.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">Can I reorder images?</p>
+                        <p class="text-gray-600 text-sm">Yes! Simply drag and drop the images in the preview to rearrange them.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">What image formats are supported?</p>
+                        <p class="text-gray-600 text-sm">We support JPG, PNG, and GIF formats.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">Is my data secure?</p>
+                        <p class="text-gray-600 text-sm">Absolutely. All processing happens locally in your browser. Your images never leave your device.</p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <p class="font-medium text-gray-700">Can I reorder images?</p>
-                <p class="text-gray-600 text-sm">Yes! Simply drag and drop the images in the preview to rearrange them.</p>
-            </div>
-            <div>
-                <p class="font-medium text-gray-700">What image formats are supported?</p>
-                <p class="text-gray-600 text-sm">We support JPG, PNG, and GIF formats.</p>
-            </div>
-            <div>
-                <p class="font-medium text-gray-700">Is my data secure?</p>
-                <p class="text-gray-600 text-sm">Absolutely. All processing happens locally in your browser. Your images never leave your device.</p>
+            
+            <div class="border-t border-gray-200 pt-6 text-center">
+                <p class="text-gray-600 mb-3">Try our other free PDF tools:</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="pdf-to-image.html" class="text-purple-600 hover:underline text-sm">PDF to Image</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="merge-pdf.html" class="text-purple-600 hover:underline text-sm">Merge PDF</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="compress-pdf.html" class="text-purple-600 hover:underline text-sm">Compress PDF</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="split-pdf.html" class="text-purple-600 hover:underline text-sm">Split PDF</a>
+                </div>
             </div>
         </div>
+
     </div>
-    
-    <!-- 相关工具导航 -->
-    <div class="border-t border-gray-200 pt-6 text-center">
-        <p class="text-gray-600 mb-3">Try our other free PDF tools:</p>
-        <div class="flex flex-wrap justify-center gap-3">
-            <a href="pdf-to-image.html" class="text-purple-600 hover:underline text-sm">PDF to Image</a>
-            <span class="text-gray-300">|</span>
-            <a href="merge-pdf.html" class="text-purple-600 hover:underline text-sm">Merge PDF</a>
-            <span class="text-gray-300">|</span>
-            <a href="compress-pdf.html" class="text-purple-600 hover:underline text-sm">Compress PDF</a>
-            <span class="text-gray-300">|</span>
-            <a href="split-pdf.html" class="text-purple-600 hover:underline text-sm">Split PDF</a>
-        </div>
-    </div>
-</div>
-<!-- ========== SEO 内容结束 ========== -->
-	</div>
 
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
@@ -225,14 +226,17 @@
             const headers = {};
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                const response = await fetch(`${API_BASE}/api/usage?feature=image2pdf`, { headers });
+                const response = await fetch(`${API_BASE}/api/usage?feature=image2pdf`, { 
+                    headers,
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 usageInfo = data;
                 const convertBtn = document.getElementById('convertBtn');
                 if (convertBtn) {
                     if (!data.allowed) {
                         convertBtn.disabled = true;
-                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}). Upgrade to Pro for unlimited.`;
+                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}).`;
                     } else {
                         convertBtn.disabled = false;
                     }
@@ -241,16 +245,6 @@
                 return data.allowed;
             } catch (error) {
                 console.error('Check usage failed:', error);
-                if (!localStorage.getItem('authToken')) {
-                    const today = new Date().toDateString();
-                    let usage = parseInt(localStorage.getItem(`usage_${today}`) || '0');
-                    const limit = 3;
-                    const remaining = limit - usage;
-                    const allowed = remaining > 0;
-                    usageInfo = { allowed, remaining, used: usage, limit, isPro: false, isLoggedIn: false };
-                    updateUsageDisplay(usageInfo);
-                    return allowed;
-                }
                 return true;
             }
         }
@@ -263,14 +257,30 @@
             const headers = { 'Content-Type': 'application/json' };
             if (token) headers['Authorization'] = `Bearer ${token}`;
             try {
-                const response = await fetch(`${API_BASE}/api/usage/record`, { method: 'POST', headers, body: JSON.stringify({ feature: 'image2pdf' }) });
+                const response = await fetch(`${API_BASE}/api/usage/record`, { 
+                    method: 'POST', 
+                    headers, 
+                    body: JSON.stringify({ feature: 'image2pdf' }),
+                    credentials: 'include'
+                });
                 const data = await response.json();
-                usageInfo.remaining = data.remaining;
-                usageInfo.used = data.used;
-                usageInfo.limit = data.limit;
-                updateUsageDisplay(usageInfo);
-                return true;
-            } catch (error) { return false; } finally { isRecording = false; }
+                if (data.success) {
+                    usageInfo.remaining = data.remaining;
+                    usageInfo.used = data.used;
+                    usageInfo.limit = data.limit;
+                    usageInfo.isPro = data.isPro || false;
+                    updateUsageDisplay(usageInfo);
+                    return true;
+                } else {
+                    const token = localStorage.getItem('authToken');
+                    const msg = token 
+                        ? 'Daily limit reached. Upgrade to Pro for unlimited.'
+                        : 'Today\'s free limit reached (3/3). Please login to unlock unlimited.';
+                    alert(msg);
+                    return false;
+                }
+            } catch (error) { return false; } 
+            finally { isRecording = false; }
         }
         
         function updateUsageDisplay(data) {
@@ -331,7 +341,14 @@
         
         async function convertToPDF(){ 
             const canUse = await checkUsage();
-            if (!canUse) { alert('Daily limit reached. Upgrade to Pro for unlimited access.'); return; }
+            if (!canUse) { 
+                const token = localStorage.getItem('authToken');
+                const msg = token 
+                    ? 'Daily limit reached. Upgrade to Pro for unlimited access.'
+                    : 'Today\'s free limit reached (3/3). Please login to unlock unlimited.';
+                alert(msg);
+                return; 
+            }
             if(images.length===0) return; 
             convertBtn.disabled=true; 
             loadingOverlay.classList.remove('hidden'); 

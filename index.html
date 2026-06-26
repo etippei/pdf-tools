@@ -8,10 +8,6 @@
     <meta name="description" content="Free PDF tools that work 100% in your browser. No upload, no subscription. Merge, split, compress, OCR, and chat with PDFs using AI.">
     <meta name="keywords" content="free pdf tools, merge pdf, split pdf, compress pdf, pdf to image, image to pdf, ocr pdf, ai pdf chat">
     <link rel="canonical" href="https://aipdfly.com/">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="dark-mode.css">
-    <script src="darkmode.js"></script>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWC5YTJ60S"></script>
@@ -21,6 +17,11 @@
       gtag('js', new Date());
       gtag('config', 'G-ZWC5YTJ60S');
     </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    <script src="darkmode.js"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -149,7 +150,8 @@
             if (token) {
                 try {
                     const response = await fetch(`${API_BASE}/api/usage?feature=merge`, {
-                        headers: { 'Authorization': `Bearer ${token}` }
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        credentials: 'include'
                     });
                     const data = await response.json();
                     const limit = data.limit || 5;

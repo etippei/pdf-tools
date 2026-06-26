@@ -8,10 +8,6 @@
     <meta name="description" content="Step-by-step tutorials for using all PDFHub.AI tools. Learn how to merge, split, compress, OCR, and chat with PDFs.">
     <meta name="keywords" content="pdf help, pdf tutorial, how to merge pdf, how to compress pdf, pdf tools guide, help center">
     <link rel="canonical" href="https://aipdfly.com/help.html">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="dark-mode.css">
-    <script src="darkmode.js"></script>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWC5YTJ60S"></script>
@@ -21,6 +17,11 @@
       gtag('js', new Date());
       gtag('config', 'G-ZWC5YTJ60S');
     </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    <script src="darkmode.js"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -201,7 +202,6 @@
             }
         });
         
-        // help.html 使用简单的 usage 显示，不需要记录功能
         async function checkAndUpdateUsage() {
             const token = localStorage.getItem('authToken');
             const isPro = localStorage.getItem('isPro') === 'true';
@@ -219,7 +219,8 @@
             if (token) {
                 try {
                     const response = await fetch(`${API_BASE}/api/usage?feature=merge`, {
-                        headers: { 'Authorization': `Bearer ${token}` }
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        credentials: 'include'
                     });
                     const data = await response.json();
                     const limit = data.limit || 5;
