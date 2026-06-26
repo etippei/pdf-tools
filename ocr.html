@@ -131,6 +131,86 @@
         }
         .modal-download-btn:hover { background-color: #059669; transform: scale(1.02); }
         .modal-download-btn i { font-size: 18px; }
+        
+        /* 登录提示弹窗样式 */
+        .login-prompt-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-prompt-overlay.active {
+            display: flex;
+        }
+        .login-prompt-box {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 40px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .login-prompt-box .icon {
+            font-size: 48px;
+            color: #8b5cf6;
+            margin-bottom: 16px;
+        }
+        .login-prompt-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        .login-prompt-box p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .login-prompt-box .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .login-prompt-box .btn-login {
+            background: #8b5cf6;
+            color: white;
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+        }
+        .login-prompt-box .btn-login:hover { background: #7c3aed; }
+        .login-prompt-box .btn-close {
+            background: #e5e7eb;
+            color: #374151;
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+        }
+        .login-prompt-box .btn-close:hover { background: #d1d5db; }
+        .dark-mode .login-prompt-box { background: #1e293b; }
+        .dark-mode .login-prompt-box h3 { color: #f1f5f9; }
+        .dark-mode .login-prompt-box p { color: #94a3b8; }
+        .dark-mode .login-prompt-box .btn-close { background: #334155; color: #e2e8f0; }
+        .dark-mode .login-prompt-box .btn-close:hover { background: #475569; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -153,6 +233,19 @@
     </header>
 
     <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm"></div>
+
+    <!-- ====== 登录提示弹窗 ====== -->
+    <div id="loginPromptOverlay" class="login-prompt-overlay">
+        <div class="login-prompt-box">
+            <div class="icon"><i class="fas fa-lock"></i></div>
+            <h3>Login Required</h3>
+            <p>Please login to use the "Export to Word" feature. Free users get 5 conversions per day.</p>
+            <div class="btn-group">
+                <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
+                <button id="loginPromptClose" class="btn-close">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
         <div class="text-center mb-6">
@@ -358,6 +451,23 @@
             }
         });
         
+        // ========== 登录提示弹窗 ==========
+        const loginPromptOverlay = document.getElementById('loginPromptOverlay');
+        const loginPromptClose = document.getElementById('loginPromptClose');
+        
+        function showLoginPrompt() {
+            loginPromptOverlay.classList.add('active');
+        }
+        
+        function hideLoginPrompt() {
+            loginPromptOverlay.classList.remove('active');
+        }
+        
+        loginPromptClose?.addEventListener('click', hideLoginPrompt);
+        loginPromptOverlay?.addEventListener('click', (e) => {
+            if (e.target === loginPromptOverlay) hideLoginPrompt();
+        });
+        
         // ========== Backend usage tracking ==========
         async function checkUsage() {
             const token = localStorage.getItem('authToken');
@@ -376,6 +486,7 @@
                 const convertBtn = document.getElementById('convertWordBtn');
                 const isLoggedIn = !!localStorage.getItem('authToken');
                 
+                // Extract Text 按钮：根据使用次数控制
                 if (ocrBtn) {
                     if (!data.allowed) {
                         ocrBtn.disabled = true;
@@ -384,18 +495,16 @@
                         ocrBtn.disabled = false;
                     }
                 }
+                
+                // Export to Word 按钮：有文件就启用，点击时再检查登录
                 if (convertBtn) {
-                    if (!isLoggedIn) {
-                        // 未登录：禁用按钮，提示需要登录
-                        convertBtn.disabled = true;
-                        convertBtn.title = 'Please login to use this feature.';
-                    } else if (!data.allowed) {
-                        convertBtn.disabled = true;
-                        convertBtn.title = `Daily limit reached (${data.used}/${data.limit}).`;
-                    } else {
+                    if (selectedFile) {
                         convertBtn.disabled = false;
+                    } else {
+                        convertBtn.disabled = true;
                     }
                 }
+                
                 updateUsageDisplay(data);
                 return data.allowed;
             } catch (error) {
@@ -775,7 +884,7 @@
             // ===== 检查是否已登录 =====
             const token = localStorage.getItem('authToken');
             if (!token) {
-                alert('Please login to use this feature. Free users get 5 conversions per day.');
+                showLoginPrompt();
                 isConverting = false;
                 return;
             }
@@ -885,7 +994,6 @@
                 pendingDownloadBlob = downloadBlob;
 
                 // VPS 后端已记录使用次数，前端不需要再记录
-                // 只需刷新显示
                 await checkUsage();
 
                 loadingIcon.className = 'fas fa-check-circle text-4xl text-green-500 mb-4';
@@ -1036,7 +1144,10 @@
                 isCancelled = false;
                 checkUsage().then(canUse => { 
                     if (canUse) ocrBtn.disabled = false; 
-                    // convertWordBtn 由 checkUsage 控制
+                    // Export to Word 按钮：有文件就启用，点击时再检查登录
+                    if (selectedFile) {
+                        convertWordBtn.disabled = false;
+                    }
                 });
             } else { 
                 alert('Please select a valid PDF file'); 
