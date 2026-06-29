@@ -362,7 +362,11 @@
                 const pdfBytes = await mergedPdf.save(); 
                 const blob = new Blob([pdfBytes], { type: 'application/pdf' }); 
                 const url = URL.createObjectURL(blob); 
-                downloadBtn.onclick = () => { const a = document.createElement('a'); a.href = url; a.download = `merged_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url); }; 
+                downloadBtn.onclick = () => { const a = document.createElement('a'); a.href = url; 
+				//a.download = `merged_${Date.now()}.pdf`; 
+				const originalName = selectedFiles.length > 0 ? selectedFiles[0].name.replace(/\.[^.]+$/, '') : 'merged';
+				a.download = `${originalName}_merged_${Date.now()}.pdf`;  // ← 使用源文件名
+				a.click(); URL.revokeObjectURL(url); }; 
                 resultSection.classList.remove('hidden'); 
                 await recordUsage();
             } catch(e) { alert('Error merging PDFs'); } 

@@ -812,7 +812,9 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `ocr_result_${Date.now()}.txt`;
+            //a.download = `ocr_result_${Date.now()}.txt`;
+			const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
+			a.download = `${originalName}_extracted_${Date.now()}.txt`;  // ← 使用源文件名
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -829,7 +831,9 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `ocr_result_${Date.now()}.doc`;
+            //a.download = `ocr_result_${Date.now()}.doc`;
+			const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
+			a.download = `${originalName}_extracted_${Date.now()}.txt`;  // ← 使用源文件名
             a.click();
             URL.revokeObjectURL(url);
         }

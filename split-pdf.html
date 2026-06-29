@@ -370,7 +370,11 @@
                 const bytes=await newPdf.save(); 
                 const blob=new Blob([bytes],{type:'application/pdf'}); 
                 const url=URL.createObjectURL(blob); 
-                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`extracted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; 
+                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; 
+				//a.download=`extracted_${Date.now()}.pdf`; 
+				const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'extracted';
+				a.download = `${originalName}_extracted_${Date.now()}.pdf`;
+				a.click(); URL.revokeObjectURL(url);}; 
                 resultSection.classList.remove('hidden'); 
                 await recordUsage();
             } catch(e){alert('Error splitting PDF');} 

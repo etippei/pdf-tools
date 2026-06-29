@@ -385,7 +385,11 @@
                 const url=URL.createObjectURL(blob); 
                 convertedCountSpan.textContent=images.length; 
                 resultSection.classList.remove('hidden'); 
-                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`converted_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; 
+                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; 
+				//a.download=`converted_${Date.now()}.pdf`; 
+				const originalName = images.length > 0 ? images[0].name.replace(/\.[^.]+$/, '') : 'converted';
+				a.download = `${originalName}_to_pdf_${Date.now()}.pdf`;
+				a.click(); URL.revokeObjectURL(url);}; 
                 await recordUsage();
             } catch(e){alert('Error converting images');} 
             finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } 

@@ -378,7 +378,11 @@
                 progressText.textContent='Creating ZIP...'; 
                 convertedPagesSpan.textContent=pages; 
                 resultSection.classList.remove('hidden'); 
-                downloadZipBtn.onclick=async()=>{const zip=new JSZip(); for(const img of convertedImages) zip.file(img.filename,img.blob); const zipBlob=await zip.generateAsync({type:'blob'}); const url=URL.createObjectURL(zipBlob); const a=document.createElement('a'); a.href=url; a.download=`${selectedFile.name.replace('.pdf','')}_images.zip`; a.click(); URL.revokeObjectURL(url);}; 
+                downloadZipBtn.onclick=async()=>{const zip=new JSZip(); for(const img of convertedImages) zip.file(img.filename,img.blob); const zipBlob=await zip.generateAsync({type:'blob'}); const url=URL.createObjectURL(zipBlob); const a=document.createElement('a'); a.href=url; 
+				//a.download=`${selectedFile.name.replace('.pdf','')}_images.zip`; 
+				const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'pdf';
+				a.download = `${originalName}_images_${Date.now()}.zip`;
+				a.click(); URL.revokeObjectURL(url);}; 
                 await recordUsage();
             } catch(e){alert('Error converting PDF');} 
             finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } 
