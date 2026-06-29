@@ -489,7 +489,9 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `ai_summary_${Date.now()}.txt`;
+            //a.download = `ai_summary_${Date.now()}.txt`;
+			const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ai_summary';
+			a.download = `${originalName}_summary_${Date.now()}.txt`;  // ← 使用源文件名
             a.click();
             URL.revokeObjectURL(url);
         }
