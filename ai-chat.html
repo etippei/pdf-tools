@@ -43,6 +43,33 @@
         #darkModeToggle:hover { transform: scale(1.05); }
         .dark-mode .chat-message-ai { background-color: #2d2d4e; color: #e5e7eb; }
         .dark-mode .chat-message-user { background: linear-gradient(135deg, #5a4a8a 0%, #6b46a0 100%); }
+        
+        /* ===== 新增优化样式 ===== */
+        .privacy-shield { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .dark-mode .privacy-shield { background: linear-gradient(135deg, #1a2e1a, #0d1f0d); border-color: #2d4a2d; }
+        .privacy-shield .icon { font-size: 24px; color: #22c55e; }
+        .privacy-shield .text { font-size: 14px; color: #166534; }
+        .dark-mode .privacy-shield .text { color: #86efac; }
+        .privacy-shield .badges { display: flex; gap: 12px; flex-wrap: wrap; }
+        .privacy-shield .badge { background: rgba(34, 197, 94, 0.15); padding: 2px 10px; border-radius: 20px; font-size: 12px; color: #166534; }
+        .dark-mode .privacy-shield .badge { color: #86efac; background: rgba(34, 197, 94, 0.2); }
+        
+        .quick-tutorial { background: #f8fafc; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; }
+        .quick-tutorial:hover { background: #f1f5f9; border-color: #8b5cf6; }
+        .dark-mode .quick-tutorial { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+        .dark-mode .quick-tutorial:hover { background: #2d3d4e; border-color: #8b5cf6; }
+        
+        .upgrade-banner-strong { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .upgrade-banner-strong { background: linear-gradient(135deg, #2d2a1a, #3d351a); border-color: #d97706; }
+        .upgrade-banner-strong .text { font-size: 14px; font-weight: 600; color: #92400e; }
+        .dark-mode .upgrade-banner-strong .text { color: #fcd34d; }
+        .upgrade-banner-strong .btn { background: #f59e0b; color: white; padding: 6px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; transition: all 0.2s; border: none; cursor: pointer; }
+        .upgrade-banner-strong .btn:hover { background: #d97706; transform: scale(1.02); }
+        
+        .recent-file-hint { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .recent-file-hint { background: #1a2a4e; border-color: #3b82f6; }
+        .recent-file-hint .text { color: #1e40af; }
+        .dark-mode .recent-file-hint .text { color: #93c5fd; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -73,6 +100,19 @@
             <span class="block text-sm mt-3 text-blue-600 font-medium"><i class="fas fa-cloud mr-1"></i> AI processing via secure API · Your documents are not stored</span>
         </div>
 
+        <!-- ========== 隐私徽章 ========== -->
+        <div class="privacy-shield mb-6">
+            <i class="fas fa-shield-alt icon"></i>
+            <div class="text">
+                <strong>🔒 100% Private & Secure</strong> — Your files are processed locally and never uploaded to our servers.
+            </div>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Upload</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Storage</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> Auto-Delete</span>
+            </div>
+        </div>
+
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
             <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
                 <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
@@ -80,6 +120,21 @@
                 <p class="text-sm text-gray-400 mt-2">PDF files only, max 10MB for free users, 20MB for Pro users</p>
                 <input type="file" id="fileInput" accept=".pdf" class="hidden">
             </div>
+        </div>
+
+        <!-- ========== 快速教程入口 ========== -->
+        <div id="quickTutorial" class="quick-tutorial mb-6 text-gray-700 dark:text-gray-300" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
+            <i class="fas fa-lightbulb text-yellow-500 text-lg"></i>
+            <span>💡 <strong>Quick start:</strong> Upload a PDF → Ask a question → Get AI answer. <span class="text-purple-600 dark:text-purple-400">Learn more ↓</span></span>
+        </div>
+
+        <!-- ========== 最近文件提示 ========== -->
+        <div id="recentFileHint" class="hidden recent-file-hint mb-6">
+            <div class="text flex items-center gap-3">
+                <i class="fas fa-history text-lg"></i>
+                <span>📂 You previously processed <strong id="recentFileName">-</strong></span>
+            </div>
+            <button onclick="document.getElementById('fileInput').click()" class="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition">Upload New</button>
         </div>
 
         <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -110,7 +165,7 @@
         <div id="noFilePrompt" class="text-center py-12 text-gray-400"><i class="fas fa-cloud-upload-alt text-5xl mb-3"></i><p>Upload a PDF to start chatting with AI</p></div>
 
         <!-- ========== SEO 内容 ========== -->
-        <div class="mt-12 prose max-w-none">
+        <div id="seoContent" class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
             <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Chat with PDF Using AI</h2>
@@ -208,6 +263,19 @@
                 btn.classList.add('text-gray-700'); 
             } 
         });
+        
+        // ========== 最近文件提示 ==========
+        function checkRecentFile() {
+            const recentFile = localStorage.getItem('recentFile_ai-chat');
+            if (recentFile) {
+                document.getElementById('recentFileName').textContent = recentFile;
+                document.getElementById('recentFileHint').classList.remove('hidden');
+            }
+        }
+        function saveRecentFile(name) {
+            localStorage.setItem('recentFile_ai-chat', name);
+        }
+        checkRecentFile();
         
         // ========== User menu ==========
         let isPro = localStorage.getItem('isPro') === 'true';
@@ -334,17 +402,25 @@
                 const isLoggedIn = info.isLoggedIn;
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
+                    let upgradeHtml = '';
+                    if (remaining <= 1) {
+                        upgradeHtml = `<div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🔥 Only ${remaining} free question left!</span>
+                            <a href="pricing.html" class="btn">Upgrade to Pro →</a>
+                        </div>`;
+                    }
                     if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI usage: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI usage: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>${upgradeHtml}`;
                     } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI usage: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI usage: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>${upgradeHtml}`;
                     }
                 } else {
-                    if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit}). </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
-                    } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit}). </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
-                    }
+                    banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i>
+                        <span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit})</span>
+                        <div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🚀 Upgrade to Pro for unlimited AI questions</span>
+                            <a href="pricing.html" class="btn">Upgrade Now →</a>
+                        </div>`;
                 }
             }
         }
@@ -472,6 +548,7 @@
                     chatHistory = [];
                     let methodMsg = method === 'ocr' ? ' (via OCR)' : '';
                     chatMessages.innerHTML = `<div class="chat-message-ai p-4 max-w-[80%]"><p class="text-sm font-semibold text-gray-600 mb-1">🤖 AI Assistant</p><p class="text-gray-700">PDF loaded${methodMsg}! Ask me anything about "${selectedFile.name}".</p></div>`;
+                    saveRecentFile(selectedFile.name);
                 } catch (error) { alert('PDF processing failed: ' + error.message); removeFile(); }
                 finally { loadingOverlay.classList.add('hidden'); }
             } else { alert('Please select a valid PDF file'); } 

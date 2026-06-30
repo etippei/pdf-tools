@@ -45,6 +45,36 @@
         .btn-download-txt:hover { background-color: #2563eb; }
         .btn-download-docx { background-color: #10b981; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; border: none; cursor: pointer; transition: all 0.2s; margin-left: 8px; }
         .btn-download-docx:hover { background-color: #059669; }
+        
+        /* ===== 新增优化样式 ===== */
+        .privacy-shield { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .dark-mode .privacy-shield { background: linear-gradient(135deg, #1a2e1a, #0d1f0d); border-color: #2d4a2d; }
+        .privacy-shield .icon { font-size: 24px; color: #22c55e; }
+        .privacy-shield .text { font-size: 14px; color: #166534; }
+        .dark-mode .privacy-shield .text { color: #86efac; }
+        .privacy-shield .badges { display: flex; gap: 12px; flex-wrap: wrap; }
+        .privacy-shield .badge { background: rgba(34, 197, 94, 0.15); padding: 2px 10px; border-radius: 20px; font-size: 12px; color: #166534; }
+        .dark-mode .privacy-shield .badge { color: #86efac; background: rgba(34, 197, 94, 0.2); }
+        
+        .quick-tutorial { background: #f8fafc; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; color: #6b7280 !important;}
+        .quick-tutorial:hover { background: #f1f5f9; border-color: #8b5cf6; }
+        .dark-mode .quick-tutorial { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+        .dark-mode .quick-tutorial:hover { background: #2d3d4e; border-color: #8b5cf6; }
+        
+        .upgrade-banner-strong { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .upgrade-banner-strong { background: linear-gradient(135deg, #2d2a1a, #3d351a); border-color: #d97706; }
+        .upgrade-banner-strong .text { font-size: 14px; font-weight: 600; color: #92400e; }
+        .dark-mode .upgrade-banner-strong .text { color: #fcd34d; }
+        .upgrade-banner-strong .btn { background: #f59e0b; color: white; padding: 6px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; transition: all 0.2s; border: none; cursor: pointer; }
+        .upgrade-banner-strong .btn:hover { background: #d97706; transform: scale(1.02); }
+        
+        .recent-file-hint { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .recent-file-hint { background: #1a2a4e; border-color: #3b82f6; }
+        .recent-file-hint .text { color: #1e40af; }
+        .dark-mode .recent-file-hint .text { color: #93c5fd; }
+        
+        .progress-detail { font-size: 13px; color: #6b7280; margin-top: 4px; }
+        .dark-mode .progress-detail { color: #9ca3af; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -75,6 +105,19 @@
             <span class="block text-sm mt-3 text-blue-600 font-medium"><i class="fas fa-cloud mr-1"></i> AI processing via secure API · Your documents are not stored</span>
         </div>
 
+        <!-- ========== 隐私徽章 ========== -->
+        <div class="privacy-shield mb-6">
+            <i class="fas fa-shield-alt icon"></i>
+            <div class="text">
+                <strong>🔒 100% Private & Secure</strong> — Your files are processed locally and never uploaded to our servers.
+            </div>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Upload</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Storage</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> Auto-Delete</span>
+            </div>
+        </div>
+
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
             <div id="dropZone" class="drop-zone rounded-xl p-8 text-center cursor-pointer">
                 <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
@@ -82,6 +125,21 @@
                 <p class="text-sm text-gray-400 mt-2">PDF files only, max 10MB for free users, 20MB for Pro users</p>
                 <input type="file" id="fileInput" accept=".pdf" class="hidden">
             </div>
+        </div>
+
+        <!-- ========== 快速教程入口 ========== -->
+        <div id="quickTutorial" class="quick-tutorial mb-6 text-gray-700 dark:text-gray-300" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
+            <i class="fas fa-lightbulb text-yellow-500 text-lg"></i>
+            <span>💡 <strong>Quick start:</strong> Upload a PDF → Choose summary length → Generate. <span class="text-purple-600 dark:text-purple-400">Learn more ↓</span></span>
+        </div>
+
+        <!-- ========== 最近文件提示 ========== -->
+        <div id="recentFileHint" class="hidden recent-file-hint mb-6">
+            <div class="text flex items-center gap-3">
+                <i class="fas fa-history text-lg"></i>
+                <span>📂 You previously processed <strong id="recentFileName">-</strong></span>
+            </div>
+            <button onclick="document.getElementById('fileInput').click()" class="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition">Upload New</button>
         </div>
 
         <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -103,6 +161,7 @@
         <div id="progressContainer" class="hidden mb-6">
             <div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div>
             <p id="progressText" class="text-sm text-gray-500 text-center mt-2">Processing...</p>
+            <p id="progressDetail" class="progress-detail text-center hidden">Loading...</p>
         </div>
 
         <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
@@ -134,7 +193,7 @@
         <div id="errorSection" class="hidden mt-8"><div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><p id="errorMsg" class="text-red-700"></p></div></div>
 
         <!-- ========== SEO 内容 ========== -->
-        <div class="mt-12 prose max-w-none">
+        <div id="seoContent" class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
             <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Generate AI Summaries from PDF</h2>
@@ -227,6 +286,19 @@
                 btn.classList.add('text-gray-700'); 
             } 
         });
+        
+        // ========== 最近文件提示 ==========
+        function checkRecentFile() {
+            const recentFile = localStorage.getItem('recentFile_ai-summary');
+            if (recentFile) {
+                document.getElementById('recentFileName').textContent = recentFile;
+                document.getElementById('recentFileHint').classList.remove('hidden');
+            }
+        }
+        function saveRecentFile(name) {
+            localStorage.setItem('recentFile_ai-summary', name);
+        }
+        checkRecentFile();
         
         // ========== User menu ==========
         let isPro = localStorage.getItem('isPro') === 'true';
@@ -353,17 +425,25 @@
                 const isLoggedIn = info.isLoggedIn;
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
+                    let upgradeHtml = '';
+                    if (remaining <= 1) {
+                        upgradeHtml = `<div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🔥 Only ${remaining} free summary left!</span>
+                            <a href="pricing.html" class="btn">Upgrade to Pro →</a>
+                        </div>`;
+                    }
                     if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI summary: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI summary: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>${upgradeHtml}`;
                     } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI summary: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Today's AI summary: ${used}/${limit}. ${remaining} free uses remaining. </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>${upgradeHtml}`;
                     }
                 } else {
-                    if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit}). </span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
-                    } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit}). </span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>`;
-                    }
+                    banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i>
+                        <span id="usageText" style="color: #dc2626;">⚠️ Daily limit reached (${limit}/${limit})</span>
+                        <div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🚀 Upgrade to Pro for unlimited AI summaries</span>
+                            <a href="pricing.html" class="btn">Upgrade Now →</a>
+                        </div>`;
                 }
             }
         }
@@ -393,6 +473,7 @@
         const progressContainer = document.getElementById('progressContainer');
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
+        const progressDetail = document.getElementById('progressDetail');
         
         document.querySelectorAll('.summary-length-btn').forEach(btn => { 
             btn.addEventListener('click', () => { 
@@ -489,9 +570,8 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            //a.download = `ai_summary_${Date.now()}.txt`;
-			const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ai_summary';
-			a.download = `${originalName}_summary_${Date.now()}.txt`;  // ← 使用源文件名
+            const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ai_summary';
+            a.download = `${originalName}_summary_${Date.now()}.txt`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -504,7 +584,8 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `ai_summary_${Date.now()}.doc`;
+            const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ai_summary';
+            a.download = `${originalName}_summary_${Date.now()}.doc`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -528,16 +609,27 @@
             loadingText.textContent = 'Extracting text from PDF...';
             progressContainer.classList.remove('hidden');
             progressBar.style.width = '0%';
+            progressDetail.classList.remove('hidden');
             try {
-                const updateProgress = (percent, message) => { progressBar.style.width = `${percent}%`; progressText.textContent = message; loadingText.textContent = message; };
+                const updateProgress = (percent, message, detail) => { 
+                    progressBar.style.width = `${percent}%`; 
+                    progressText.textContent = message; 
+                    loadingText.textContent = message;
+                    if (detail) progressDetail.textContent = detail;
+                    else progressDetail.textContent = message;
+                };
                 const { text } = await extractText(file, updateProgress);
                 extractedText = text;
+                saveRecentFile(file.name);
             } catch (error) {
                 alert(`Failed to extract text: ${error.message}`);
                 removeFile();
             } finally {
                 loadingOverlay.classList.add('hidden');
-                setTimeout(() => progressContainer.classList.add('hidden'), 1000);
+                setTimeout(() => {
+                    progressContainer.classList.add('hidden');
+                    progressDetail.classList.add('hidden');
+                }, 1000);
             }
         }
         

@@ -40,177 +40,50 @@
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
         
-        .btn-download-txt {
-            background-color: #3b82f6;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .btn-download-txt { background-color: #3b82f6; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; border: none; cursor: pointer; transition: all 0.2s; }
         .btn-download-txt:hover { background-color: #2563eb; }
-        .btn-download-docx {
-            background-color: #10b981;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .btn-download-docx { background-color: #10b981; color: white; padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; }
         .btn-download-docx:hover { background-color: #059669; }
-        .btn-retry {
-            background-color: #f59e0b;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-left: 8px;
-        }
+        .btn-retry { background-color: #f59e0b; color: white; padding: 6px 16px; border-radius: 6px; font-size: 13px; border: none; cursor: pointer; transition: all 0.2s; margin-left: 8px; }
         .btn-retry:hover { background-color: #d97706; }
-        .btn-cancel {
-            background-color: #ef4444;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 12px;
-        }
+        .btn-cancel { background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
         .btn-cancel:hover { background-color: #dc2626; }
-        .btn-done {
-            background-color: #10b981;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 12px;
-        }
+        .btn-done { background-color: #10b981; color: white; padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
         .btn-done:hover { background-color: #059669; }
-        .processing-message {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         
-        .modal-download-btn {
-            background-color: #10b981;
-            color: white;
-            padding: 10px 32px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .modal-download-btn { background-color: #10b981; color: white; padding: 10px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; }
         .modal-download-btn:hover { background-color: #059669; transform: scale(1.02); }
         .modal-download-btn i { font-size: 18px; }
         
-        /* 登录提示弹窗样式 */
-        .login-prompt-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-prompt-overlay.active {
-            display: flex;
-        }
-        .login-prompt-box {
-            background: white;
-            border-radius: 16px;
-            padding: 32px 40px;
-            max-width: 420px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .login-prompt-box .icon {
-            font-size: 48px;
-            color: #8b5cf6;
-            margin-bottom: 16px;
-        }
-        .login-prompt-box h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 8px;
-        }
-        .login-prompt-box p {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .login-prompt-box .btn-group {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .login-prompt-box .btn-login {
-            background: #8b5cf6;
-            color: white;
-            padding: 10px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-        }
-        .login-prompt-box .btn-login:hover { background: #7c3aed; }
-        .login-prompt-box .btn-close {
-            background: #e5e7eb;
-            color: #374151;
-            padding: 10px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-        }
-        .login-prompt-box .btn-close:hover { background: #d1d5db; }
-        .dark-mode .login-prompt-box { background: #1e293b; }
-        .dark-mode .login-prompt-box h3 { color: #f1f5f9; }
-        .dark-mode .login-prompt-box p { color: #94a3b8; }
-        .dark-mode .login-prompt-box .btn-close { background: #334155; color: #e2e8f0; }
-        .dark-mode .login-prompt-box .btn-close:hover { background: #475569; }
+        /* ===== 新增优化样式 ===== */
+        .privacy-shield { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .dark-mode .privacy-shield { background: linear-gradient(135deg, #1a2e1a, #0d1f0d); border-color: #2d4a2d; }
+        .privacy-shield .icon { font-size: 24px; color: #22c55e; }
+        .privacy-shield .text { font-size: 14px; color: #166534; }
+        .dark-mode .privacy-shield .text { color: #86efac; }
+        .privacy-shield .badges { display: flex; gap: 12px; flex-wrap: wrap; }
+        .privacy-shield .badge { background: rgba(34, 197, 94, 0.15); padding: 2px 10px; border-radius: 20px; font-size: 12px; color: #166534; }
+        .dark-mode .privacy-shield .badge { color: #86efac; background: rgba(34, 197, 94, 0.2); }
+        
+        .quick-tutorial { background: #f8fafc; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; color: #6b7280 !important;}
+        .quick-tutorial:hover { background: #f1f5f9; border-color: #8b5cf6; }
+        .dark-mode .quick-tutorial { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+        .dark-mode .quick-tutorial:hover { background: #2d3d4e; border-color: #8b5cf6; }
+        
+        .upgrade-banner-strong { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .upgrade-banner-strong { background: linear-gradient(135deg, #2d2a1a, #3d351a); border-color: #d97706; }
+        .upgrade-banner-strong .text { font-size: 14px; font-weight: 600; color: #92400e; }
+        .dark-mode .upgrade-banner-strong .text { color: #fcd34d; }
+        .upgrade-banner-strong .btn { background: #f59e0b; color: white; padding: 6px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; transition: all 0.2s; border: none; cursor: pointer; }
+        .upgrade-banner-strong .btn:hover { background: #d97706; transform: scale(1.02); }
+        
+        .progress-detail { font-size: 13px; color: #6b7280; margin-top: 4px; }
+        .dark-mode .progress-detail { color: #9ca3af; }
+        
+        .recent-file-hint { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .recent-file-hint { background: #1a2a4e; border-color: #3b82f6; }
+        .recent-file-hint .text { color: #1e40af; }
+        .dark-mode .recent-file-hint .text { color: #93c5fd; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -234,24 +107,24 @@
 
     <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm"></div>
 
-    <!-- ====== 登录提示弹窗 ====== -->
-    <div id="loginPromptOverlay" class="login-prompt-overlay">
-        <div class="login-prompt-box">
-            <div class="icon"><i class="fas fa-lock"></i></div>
-            <h3>Login Required</h3>
-            <p>Please login to use the "Export to Word" feature. Free users get 5 conversions per day.</p>
-            <div class="btn-group">
-                <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
-                <button id="loginPromptClose" class="btn-close">Cancel</button>
-            </div>
-        </div>
-    </div>
-
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
         <div class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">OCR - Extract Text from PDF</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert scanned PDFs and images into editable text using AI-powered OCR.</p>
             <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> OCR processing uses secure API · Your files are not stored</span>
+        </div>
+
+        <!-- ========== 隐私徽章 ========== -->
+        <div class="privacy-shield mb-6">
+            <i class="fas fa-shield-alt icon"></i>
+            <div class="text">
+                <strong>🔒 100% Private & Secure</strong> — Your files are processed locally and never uploaded to our servers.
+            </div>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Upload</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Storage</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> Auto-Delete</span>
+            </div>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -261,6 +134,23 @@
                 <p class="text-sm text-gray-400 mt-2">For scanned PDFs or images. Extracts all text from the document.</p>
                 <input type="file" id="fileInput" accept=".pdf" class="hidden">
             </div>
+        </div>
+
+        <!-- ========== 快速教程入口 ========== -->
+        <div id="quickTutorial" class="quick-tutorial mb-6" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
+            <div class="flex items-start gap-2">
+                <i class="fas fa-lightbulb text-yellow-500 text-lg mt-0.5 flex-shrink-0"></i>
+                <span class="quick-tutorial-text"><strong>Quick start:</strong> Upload a PDF → Click <strong>"Extract Text"</strong> for plain text extraction, or <strong>"Export to Word"</strong> to download a fully formatted DOCX file (preserves fonts, layout, and structure). <span class="text-purple-600 dark:text-purple-400 font-medium">Learn more ↓</span></span>
+            </div>
+        </div>
+
+        <!-- ========== 最近文件提示 ========== -->
+        <div id="recentFileHint" class="hidden recent-file-hint mb-6">
+            <div class="text flex items-center gap-3">
+                <i class="fas fa-history text-lg"></i>
+                <span>📂 You previously processed <strong id="recentFileName">-</strong></span>
+            </div>
+            <button onclick="document.getElementById('fileInput').click()" class="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition">Upload New</button>
         </div>
 
         <div id="fileInfo" class="hidden bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -273,6 +163,7 @@
         <div id="progressContainer" class="hidden mb-6">
             <div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div>
             <p id="progressText" class="text-sm text-gray-500 text-center mt-2">Processing OCR...</p>
+            <p id="progressDetail" class="progress-detail text-center hidden">Loading...</p>
         </div>
 
         <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
@@ -312,7 +203,7 @@
         <div id="errorSection" class="hidden mt-8"><div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><p id="errorMsg" class="text-red-700"></p></div></div>
 
         <!-- ========== SEO 内容 ========== -->
-        <div class="mt-12 prose max-w-none">
+        <div id="seoContent" class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
             <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Use OCR to Extract Text from PDF</h2>
@@ -413,6 +304,19 @@
             } 
         });
         
+        // ========== 最近文件提示 ==========
+        function checkRecentFile() {
+            const recentFile = localStorage.getItem('recentFile_ocr');
+            if (recentFile) {
+                document.getElementById('recentFileName').textContent = recentFile;
+                document.getElementById('recentFileHint').classList.remove('hidden');
+            }
+        }
+        function saveRecentFile(name) {
+            localStorage.setItem('recentFile_ocr', name);
+        }
+        checkRecentFile();
+        
         // ========== User menu ==========
         let isPro = localStorage.getItem('isPro') === 'true';
         let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
@@ -451,23 +355,6 @@
             }
         });
         
-        // ========== 登录提示弹窗 ==========
-        const loginPromptOverlay = document.getElementById('loginPromptOverlay');
-        const loginPromptClose = document.getElementById('loginPromptClose');
-        
-        function showLoginPrompt() {
-            loginPromptOverlay.classList.add('active');
-        }
-        
-        function hideLoginPrompt() {
-            loginPromptOverlay.classList.remove('active');
-        }
-        
-        loginPromptClose?.addEventListener('click', hideLoginPrompt);
-        loginPromptOverlay?.addEventListener('click', (e) => {
-            if (e.target === loginPromptOverlay) hideLoginPrompt();
-        });
-        
         // ========== Backend usage tracking ==========
         async function checkUsage() {
             const token = localStorage.getItem('authToken');
@@ -486,7 +373,6 @@
                 const convertBtn = document.getElementById('convertWordBtn');
                 const isLoggedIn = !!localStorage.getItem('authToken');
                 
-                // Extract Text 按钮：根据使用次数控制
                 if (ocrBtn) {
                     if (!data.allowed) {
                         ocrBtn.disabled = true;
@@ -495,8 +381,6 @@
                         ocrBtn.disabled = false;
                     }
                 }
-                
-                // Export to Word 按钮：有文件就启用，点击时再检查登录
                 if (convertBtn) {
                     if (selectedFile) {
                         convertBtn.disabled = false;
@@ -504,7 +388,6 @@
                         convertBtn.disabled = true;
                     }
                 }
-                
                 updateUsageDisplay(data);
                 return data.allowed;
             } catch (error) {
@@ -570,13 +453,25 @@
                 const isLoggedIn = info.isLoggedIn;
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
+                    let upgradeHtml = '';
+                    if (remaining <= 1) {
+                        upgradeHtml = `<div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🔥 Only ${remaining} free use left!</span>
+                            <a href="pricing.html" class="btn">Upgrade to Pro →</a>
+                        </div>`;
+                    }
                     if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for Extra Quota</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for Extra Quota</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>${upgradeHtml}`;
                     } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>`;
+                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>${upgradeHtml}`;
                     }
                 } else {
-                    banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #dc2626;">⚠️ Daily Quota Exhausted</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Unlock Unlimited Pro</a>`;
+                    banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i>
+                        <span id="usageText" style="color: #dc2626;">⚠️ Daily Quota Exhausted (${limit}/${limit})</span>
+                        <div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🚀 Upgrade to Pro for unlimited access + Word export + priority support</span>
+                            <a href="pricing.html" class="btn">Upgrade Now →</a>
+                        </div>`;
                 }
             }
         }
@@ -619,6 +514,7 @@
         const progressContainer = document.getElementById('progressContainer');
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
+        const progressDetail = document.getElementById('progressDetail');
         
         async function getPdfPageCount(file) {
             try {
@@ -697,12 +593,12 @@
                 let pagesPerGroup = Math.max(1, Math.floor(MAX_API_FILE_SIZE / avgPageSize));
                 pagesPerGroup = Math.min(pagesPerGroup, 5);
                 console.log(`Avg page size: ${(avgPageSize/1024).toFixed(1)}KB, Pages per group: ${pagesPerGroup}`);
-                if (progressCallback) progressCallback(10, `Optimizing: ${pagesPerGroup} pages per batch...`);
+                if (progressCallback) progressCallback(10, `Optimizing: ${pagesPerGroup} pages per batch...`, 'Analyzing document structure...');
                 for (let i = 0; i < pageCount; i += pagesPerGroup) {
                     const endIdx = Math.min(i + pagesPerGroup - 1, pageCount - 1);
                     const groupSize = endIdx - i + 1;
                     const percent = 10 + ((i / pageCount) * 90);
-                    if (progressCallback) progressCallback(percent, `Processing batch ${Math.floor(i/pagesPerGroup)+1}/${Math.ceil(pageCount/pagesPerGroup)} (${groupSize} pages)...`);
+                    if (progressCallback) progressCallback(percent, `Processing batch ${Math.floor(i/pagesPerGroup)+1}/${Math.ceil(pageCount/pagesPerGroup)} (${groupSize} pages)...`, `Processing pages ${i+1} to ${endIdx+1}...`);
                     try {
                         let groupFile = await mergePages(pdfDoc, i, endIdx);
                         if (groupFile.size > MAX_API_FILE_SIZE) groupFile = await compressPDF(groupFile, 0.8);
@@ -780,7 +676,7 @@
                     }
                 }
                 console.log(`Total API calls: ${totalApiCalls}`);
-                if (progressCallback) progressCallback(100, `Completed! Processed ${pageCount} pages`);
+                if (progressCallback) progressCallback(100, `Completed! Processed ${pageCount} pages`, 'Done!');
                 return allText;
             } catch (error) {
                 console.error('Grouped OCR failed:', error);
@@ -790,7 +686,7 @@
         
         async function directOCR(file, progressCallback) {
             try {
-                if (progressCallback) progressCallback(30, 'Uploading file to OCR service...');
+                if (progressCallback) progressCallback(30, 'Uploading file to OCR service...', 'Sending file to secure OCR service...');
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('apikey', OCR_SPACE_API_KEY);
@@ -798,7 +694,7 @@
                 formData.append('OCREngine', '2');
                 formData.append('scale', 'true');
                 const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
-                if (progressCallback) progressCallback(80, 'Recognizing text...');
+                if (progressCallback) progressCallback(80, 'Recognizing text...', 'AI is reading your document...');
                 const resJson = await res.json();
                 if (resJson.IsErroredOnProcessing) throw new Error(resJson.ErrorMessage || 'OCR failed');
                 if (resJson.ParsedResults && resJson.ParsedResults[0]) return resJson.ParsedResults[0].ParsedText || '';
@@ -812,9 +708,8 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            //a.download = `ocr_result_${Date.now()}.txt`;
-			const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
-			a.download = `${originalName}_extracted_${Date.now()}.txt`;  // ← 使用源文件名
+            const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
+            a.download = `${originalName}_extracted_${Date.now()}.txt`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -831,9 +726,8 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            //a.download = `ocr_result_${Date.now()}.doc`;
-			const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
-			a.download = `${originalName}_extracted_${Date.now()}.txt`;  // ← 使用源文件名
+            const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
+            a.download = `${originalName}_converted_${Date.now()}.doc`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -877,7 +771,7 @@
             }
         }
         
-        // ========== PDF转Word（直连VPS） ==========
+        // ========== PDF转Word ==========
         async function convertToWord() {
             if (isConverting) {
                 console.log('Conversion already in progress');
@@ -885,7 +779,6 @@
             }
             isConverting = true;
             
-            // ===== 检查是否已登录 =====
             const token = localStorage.getItem('authToken');
             if (!token) {
                 showLoginPrompt();
@@ -997,7 +890,6 @@
                 pendingFileName = `${nameWithoutExt}_converted.docx`;
                 pendingDownloadBlob = downloadBlob;
 
-                // VPS 后端已记录使用次数，前端不需要再记录
                 await checkUsage();
 
                 loadingIcon.className = 'fas fa-check-circle text-4xl text-green-500 mb-4';
@@ -1088,22 +980,28 @@
             loadingIcon.className = 'fas fa-spinner fa-spin text-4xl text-purple-600 mb-4';
             progressContainer.classList.remove('hidden');
             progressBar.style.width = '0%';
+            progressDetail.classList.remove('hidden');
             resultSection.classList.add('hidden');
             errorSection.classList.add('hidden');
             let allText = '';
             try {
-                const updateProgress = (percent, message) => {
+                const updateProgress = (percent, message, detail) => {
                     progressBar.style.width = `${percent}%`;
                     progressText.textContent = message;
                     loadingText.textContent = message;
+                    if (detail) {
+                        progressDetail.textContent = detail;
+                    } else {
+                        progressDetail.textContent = message;
+                    }
                 };
-                updateProgress(10, 'Analyzing PDF structure...');
+                updateProgress(10, 'Analyzing PDF structure...', 'Checking document format...');
                 try {
-                    updateProgress(20, 'Extracting text locally...');
+                    updateProgress(20, 'Extracting text locally...', 'Reading text from PDF...');
                     allText = await extractTextDirectly(selectedFile);
-                    updateProgress(100, 'Local text extraction completed!');
+                    updateProgress(100, 'Local text extraction completed!', 'Done!');
                 } catch (directError) {
-                    updateProgress(30, 'Scanned PDF detected, starting cloud OCR...');
+                    updateProgress(30, 'Scanned PDF detected, starting cloud OCR...', 'Sending to secure OCR service...');
                     const pageCount = await getPdfPageCount(selectedFile);
                     const fileSizeKB = selectedFile.size / 1024;
                     if (fileSizeKB <= MAX_API_FILE_SIZE || pageCount <= 3) {
@@ -1112,10 +1010,11 @@
                         allText = await groupedOCR(selectedFile, updateProgress);
                     }
                 }
-                updateProgress(100, 'Recognition finished successfully!');
+                updateProgress(100, 'Recognition finished successfully!', 'Your text is ready!');
                 if (allText && allText.trim().length > 0) {
                     extractedText.textContent = allText;
                     resultSection.classList.remove('hidden');
+                    saveRecentFile(selectedFile.name);
                     await recordUsage();
                 } else throw new Error('No text extracted. Ensure PDF contains readable content.');
             } catch (error) {
@@ -1123,7 +1022,10 @@
                 errorSection.classList.remove('hidden');
             } finally {
                 loadingOverlay.classList.add('hidden');
-                setTimeout(() => progressContainer.classList.add('hidden'), 1000);
+                setTimeout(() => {
+                    progressContainer.classList.add('hidden');
+                    progressDetail.classList.add('hidden');
+                }, 1000);
                 ocrBtn.disabled = false;
             }
         }
@@ -1148,7 +1050,6 @@
                 isCancelled = false;
                 checkUsage().then(canUse => { 
                     if (canUse) ocrBtn.disabled = false; 
-                    // Export to Word 按钮：有文件就启用，点击时再检查登录
                     if (selectedFile) {
                         convertWordBtn.disabled = false;
                     }
@@ -1174,6 +1075,24 @@
             pendingFileName = '';
         }
         
+        // ========== Login prompt ==========
+        const loginPromptOverlay = document.getElementById('loginPromptOverlay');
+        const loginPromptClose = document.getElementById('loginPromptClose');
+        
+        function showLoginPrompt() {
+            loginPromptOverlay?.classList.add('active');
+        }
+        
+        function hideLoginPrompt() {
+            loginPromptOverlay?.classList.remove('active');
+        }
+        
+        loginPromptClose?.addEventListener('click', hideLoginPrompt);
+        loginPromptOverlay?.addEventListener('click', (e) => {
+            if (e.target === loginPromptOverlay) hideLoginPrompt();
+        });
+        
+        // ========== Event Listeners ==========
         cancelBtn?.addEventListener('click', cancelConversion);
         
         copyBtn?.addEventListener('click', () => { 

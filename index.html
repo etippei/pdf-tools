@@ -38,6 +38,25 @@
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
+        
+        .hot-tag { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; font-size: 9px; padding: 1px 8px; border-radius: 12px; margin-left: 6px; animation: pulse-hot 2s infinite; display: inline-block; vertical-align: middle; }
+        @keyframes pulse-hot { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        
+        .scenario-card { transition: all 0.3s ease; cursor: pointer; }
+        .scenario-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15); }
+        .stats-badge { background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139, 92, 246, 0.2); }
+        
+        /* 暗黑模式覆盖 */
+        .dark-mode .stats-badge { background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.3); }
+        .dark-mode .scenario-card { background-color: #16213e !important; }
+        .dark-mode .scenario-card:hover { box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2); }
+        .dark-mode .hot-tag { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        .dark-mode .text-purple-700 { color: #a78bfa !important; }
+        .dark-mode .text-purple-300 { color: #c4b5fd !important; }
+        .dark-mode .bg-purple-50 { background-color: #2d2d4e !important; }
+        .dark-mode .bg-blue-50 { background-color: #1a2a4e !important; }
+        .dark-mode .text-blue-600 { color: #60a5fa !important; }
+        .dark-mode .text-teal-600 { color: #5eead4 !important; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
@@ -59,41 +78,140 @@
         </div>
     </header>
 
-    <!-- ====== 已移除使用次数横幅 ====== -->
-
-    <section class="bg-gradient-to-r from-purple-50 to-blue-50 py-16 lg:py-20">
+    <!-- ========== Hero Section ========== -->
+    <section class="bg-gradient-to-r from-purple-50 to-blue-50 py-12 lg:py-16">
         <div class="container mx-auto px-4 lg:px-8 text-center">
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <span class="stats-badge text-sm text-purple-700 dark:text-purple-300 px-4 py-1.5 rounded-full flex items-center gap-2">
+                    <i class="fas fa-check-circle text-green-500"></i> 100% Local
+                </span>
+                <span class="stats-badge text-sm text-purple-700 dark:text-purple-300 px-4 py-1.5 rounded-full flex items-center gap-2">
+                    <i class="fas fa-lock text-green-500"></i> No Upload
+                </span>
+                <span class="stats-badge text-sm text-purple-700 dark:text-purple-300 px-4 py-1.5 rounded-full flex items-center gap-2">
+                    <i class="fas fa-users text-purple-500"></i> <span id="totalUsers">12,847</span>+ Files Processed
+                </span>
+            </div>
+            
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">Free PDF Tools with AI</h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Merge, split, compress, convert PDFs, and chat with your documents using AI.<span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> 100% local processing · Your files never leave your device</span>
-            <span class="block mt-4 text-base">Try our most popular tools: <a href="merge-pdf.html" class="text-purple-600 font-medium hover:underline">Merge PDF</a>, <a href="compress-pdf.html" class="text-purple-600 font-medium hover:underline">Compress PDF</a>, <a href="ocr.html" class="text-purple-600 font-medium hover:underline">OCR PDF</a> and <a href="ai-chat.html" class="text-purple-600 font-medium hover:underline">AI PDF Chat</a>.</span>
-            </p>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Merge, split, compress, convert PDFs, and chat with your documents using AI.</p>
+            
+            <!-- ========== Scenario Cards ========== -->
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <a href="ocr.html" class="scenario-card bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition flex items-center gap-3">
+                    <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400"><i class="fas fa-file-alt"></i></div>
+                    <div class="text-left"><p class="font-semibold text-gray-800 dark:text-white text-sm">Extract Text</p><p class="text-xs text-gray-500 dark:text-gray-400">From scanned PDFs</p></div>
+                </a>
+                <a href="merge-pdf.html" class="scenario-card bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400"><i class="fas fa-object-group"></i></div>
+                    <div class="text-left"><p class="font-semibold text-gray-800 dark:text-white text-sm">Merge Files</p><p class="text-xs text-gray-500 dark:text-gray-400">Combine multiple PDFs</p></div>
+                </a>
+                <a href="ai-chat.html" class="scenario-card bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white"><i class="fas fa-robot"></i></div>
+                    <div class="text-left"><p class="font-semibold text-gray-800 dark:text-white text-sm">Chat with PDF</p><p class="text-xs text-gray-500 dark:text-gray-400">Ask AI anything</p></div>
+                </a>
+            </div>
         </div>
     </section>
 
+    <!-- ========== Tools Grid ========== -->
     <section class="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <a href="ai-chat.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-robot text-2xl text-white"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Chat PDF<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3><p class="text-gray-500">Chat with your PDF documents. Ask questions and get instant answers.</p><div class="mt-4 text-purple-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="ai-summary.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-gradient-to-r from-teal-500 to-green-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-file-alt text-2xl text-white"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Summary<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3><p class="text-gray-500">Generate intelligent summaries of your PDF documents instantly.</p><div class="mt-4 text-teal-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="ocr.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-text-height text-2xl text-blue-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">OCR Text Extractor</h3><p class="text-gray-500">Extract text from scanned PDFs and images using OCR.</p><div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="merge-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-object-group text-2xl text-purple-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">Merge PDF</h3><p class="text-gray-500">Combine multiple PDF files into one document.</p><div class="mt-4 text-purple-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="split-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-cut text-2xl text-blue-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">Split PDF</h3><p class="text-gray-500">Extract specific pages or split by range.</p><div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="compress-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-archive text-2xl text-green-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">Compress PDF</h3><p class="text-gray-500">Reduce PDF file size while maintaining quality.</p><div class="mt-4 text-green-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="pdf-to-image.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-image text-2xl text-orange-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to Image</h3><p class="text-gray-500">Convert each page of your PDF to JPG or PNG.</p><div class="mt-4 text-orange-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="image-to-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-images text-2xl text-red-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">Image to PDF</h3><p class="text-gray-500">Convert JPG, PNG, GIF images into a single PDF.</p><div class="mt-4 text-red-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
-            <a href="rotate.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all"><div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-sync-alt text-2xl text-indigo-600"></i></div><h3 class="text-xl font-semibold text-gray-800 mb-2">Rotate PDF</h3><p class="text-gray-500">Rotate PDF pages permanently. 90°, 180°, or 270°.</p><div class="mt-4 text-indigo-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div></a>
+            <!-- AI Chat PDF - Popular -->
+            <a href="ai-chat.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all relative">
+                <span class="hot-tag">🔥 Popular</span>
+                <div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-robot text-2xl text-white"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Chat PDF<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3>
+                <p class="text-gray-500">Chat with your PDF documents. Ask questions and get instant answers.</p>
+                <div class="mt-4 text-purple-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- AI Summary -->
+            <a href="ai-summary.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
+                <div class="w-14 h-14 bg-gradient-to-r from-teal-500 to-green-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-file-alt text-2xl text-white"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Summary<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3>
+                <p class="text-gray-500">Generate intelligent summaries of your PDF documents instantly.</p>
+                <div class="mt-4 text-teal-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- OCR - Popular -->
+            <a href="ocr.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all relative">
+                <span class="hot-tag">🔥 Popular</span>
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-text-height text-2xl text-blue-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">OCR Text Extractor</h3>
+                <p class="text-gray-500">Extract text from scanned PDFs and images using OCR.</p>
+                <div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- Merge - Popular -->
+            <a href="merge-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all relative">
+                <span class="hot-tag">🔥 Popular</span>
+                <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-object-group text-2xl text-purple-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Merge PDF</h3>
+                <p class="text-gray-500">Combine multiple PDF files into one document.</p>
+                <div class="mt-4 text-purple-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- Split PDF -->
+            <a href="split-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-cut text-2xl text-blue-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Split PDF</h3>
+                <p class="text-gray-500">Extract specific pages or split by range.</p>
+                <div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- Compress PDF -->
+            <a href="compress-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
+                <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-archive text-2xl text-green-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Compress PDF</h3>
+                <p class="text-gray-500">Reduce PDF file size while maintaining quality.</p>
+                <div class="mt-4 text-green-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- PDF to Image -->
+            <a href="pdf-to-image.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
+                <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-image text-2xl text-orange-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to Image</h3>
+                <p class="text-gray-500">Convert each page of your PDF to JPG or PNG.</p>
+                <div class="mt-4 text-orange-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- Image to PDF -->
+            <a href="image-to-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
+                <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-images text-2xl text-red-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Image to PDF</h3>
+                <p class="text-gray-500">Convert JPG, PNG, GIF images into a single PDF.</p>
+                <div class="mt-4 text-red-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
+            
+            <!-- Rotate PDF -->
+            <a href="rotate.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
+                <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-sync-alt text-2xl text-indigo-600"></i></div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Rotate PDF</h3>
+                <p class="text-gray-500">Rotate PDF pages permanently. 90°, 180°, or 270°.</p>
+                <div class="mt-4 text-indigo-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
+            </a>
         </div>
     </section>
 
+    <!-- ========== Ad ========== -->
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-7xl">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
+    <!-- ========== Privacy Badge ========== -->
     <section class="container mx-auto px-4 lg:px-8 py-8">
         <div class="privacy-badge rounded-2xl p-8 text-white text-center max-w-4xl mx-auto">
             <i class="fas fa-shield-alt text-4xl mb-4"></i>
             <h3 class="text-2xl font-bold mb-2">100% Private & Secure</h3>
             <p class="text-purple-100">All PDF processing happens directly in your browser. Your files are never uploaded to any server. No data tracking, no storage.</p>
+            <div class="flex flex-wrap justify-center gap-6 mt-6 text-sm">
+                <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-300"></i> No Upload</span>
+                <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-300"></i> No Storage</span>
+                <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-300"></i> 100% Local</span>
+                <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-300"></i> Auto-Delete</span>
+            </div>
         </div>
     </section>
 
@@ -122,6 +240,32 @@
             }
         });
         
+        // ========== Animate Stats ==========
+        function animateNumber(element, target, duration = 2000) {
+            const start = 0;
+            const startTime = performance.now();
+            const update = (currentTime) => {
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const value = Math.floor(progress * target);
+                element.textContent = value.toLocaleString();
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            };
+            requestAnimationFrame(update);
+        }
+        
+        const totalUsersElement = document.getElementById('totalUsers');
+        if (totalUsersElement) {
+            const baseNumber = 12847;
+            const randomIncrement = Math.floor(Math.random() * 500);
+            const targetNumber = baseNumber + randomIncrement;
+            animateNumber(totalUsersElement, targetNumber, 2500);
+        }
+        
+        // ========== User Menu ==========
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';

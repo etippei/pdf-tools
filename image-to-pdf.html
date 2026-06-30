@@ -39,6 +39,36 @@
         
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
+        
+        /* ===== 新增优化样式 ===== */
+        .privacy-shield { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .dark-mode .privacy-shield { background: linear-gradient(135deg, #1a2e1a, #0d1f0d); border-color: #2d4a2d; }
+        .privacy-shield .icon { font-size: 24px; color: #22c55e; }
+        .privacy-shield .text { font-size: 14px; color: #166534; }
+        .dark-mode .privacy-shield .text { color: #86efac; }
+        .privacy-shield .badges { display: flex; gap: 12px; flex-wrap: wrap; }
+        .privacy-shield .badge { background: rgba(34, 197, 94, 0.15); padding: 2px 10px; border-radius: 20px; font-size: 12px; color: #166534; }
+        .dark-mode .privacy-shield .badge { color: #86efac; background: rgba(34, 197, 94, 0.2); }
+        
+        .quick-tutorial { background: #f8fafc; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; color: #6b7280 !important;}
+        .quick-tutorial:hover { background: #f1f5f9; border-color: #8b5cf6; }
+        .dark-mode .quick-tutorial { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+        .dark-mode .quick-tutorial:hover { background: #2d3d4e; border-color: #8b5cf6; }
+        
+        .upgrade-banner-strong { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .upgrade-banner-strong { background: linear-gradient(135deg, #2d2a1a, #3d351a); border-color: #d97706; }
+        .upgrade-banner-strong .text { font-size: 14px; font-weight: 600; color: #92400e; }
+        .dark-mode .upgrade-banner-strong .text { color: #fcd34d; }
+        .upgrade-banner-strong .btn { background: #f59e0b; color: white; padding: 6px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; transition: all 0.2s; border: none; cursor: pointer; }
+        .upgrade-banner-strong .btn:hover { background: #d97706; transform: scale(1.02); }
+        
+        .recent-file-hint { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .dark-mode .recent-file-hint { background: #1a2a4e; border-color: #3b82f6; }
+        .recent-file-hint .text { color: #1e40af; }
+        .dark-mode .recent-file-hint .text { color: #93c5fd; }
+        
+        .progress-detail { font-size: 13px; color: #6b7280; margin-top: 4px; }
+        .dark-mode .progress-detail { color: #9ca3af; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -60,17 +90,26 @@
         </div>
     </header>
 
-    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm">
-        <i class="fas fa-chart-line text-purple-600 mr-1"></i>
-        <span id="usageText"></span>
-        <a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade to Pro →</a>
-    </div>
+    <div id="usageBanner" class="hidden bg-purple-50 border-b border-purple-200 py-2 text-center text-sm"></div>
 
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
         <div class="text-center mb-6">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Image to PDF</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Convert JPG, PNG, GIF images into a single PDF document. Drag to reorder.</p>
             <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> All processing happens locally in your browser. Your files never leave your device.</span>
+        </div>
+
+        <!-- ========== 隐私徽章 ========== -->
+        <div class="privacy-shield mb-6">
+            <i class="fas fa-shield-alt icon"></i>
+            <div class="text">
+                <strong>🔒 100% Private & Secure</strong> — Your files are processed locally and never uploaded to our servers.
+            </div>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Upload</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Storage</span>
+                <span class="badge"><i class="fas fa-check-circle mr-1"></i> Auto-Delete</span>
+            </div>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
@@ -82,6 +121,21 @@
             </div>
         </div>
 
+        <!-- ========== 快速教程入口 ========== -->
+        <div id="quickTutorial" class="quick-tutorial mb-6 text-gray-700 dark:text-gray-300" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
+            <i class="fas fa-lightbulb text-yellow-500 text-lg"></i>
+            <span>💡 <strong>Quick start:</strong> Upload images → Drag to reorder → Convert to PDF. <span class="text-purple-600 dark:text-purple-400">Learn more ↓</span></span>
+        </div>
+
+        <!-- ========== 最近文件提示 ========== -->
+        <div id="recentFileHint" class="hidden recent-file-hint mb-6">
+            <div class="text flex items-center gap-3">
+                <i class="fas fa-history text-lg"></i>
+                <span>📂 You previously processed <strong id="recentFileName">-</strong></span>
+            </div>
+            <button onclick="document.getElementById('fileInput').click()" class="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition">Upload New</button>
+        </div>
+
         <div id="previewSection" class="hidden mb-6">
             <div class="bg-white rounded-2xl shadow-md p-6"><div class="flex justify-between items-center mb-4"><h3 class="font-semibold"><i class="fas fa-images mr-2"></i>Images (<span id="imageCount">0</span>)</h3><button id="clearImagesBtn" class="text-sm text-red-500 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i>Clear all</button></div><div id="imageGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-h-96 overflow-y-auto p-2"></div></div>
         </div>
@@ -90,7 +144,7 @@
             <h3 class="font-semibold text-gray-800 mb-4">PDF Settings</h3><div><label class="block text-sm text-gray-600 mb-2">Page Size</label><select id="pageSizeSelect" class="border rounded-lg px-3 py-2 w-full max-w-xs"><option value="fit">Fit to image size (recommended)</option><option value="a4">A4 (210 x 297 mm)</option><option value="letter">Letter (8.5 x 11 in)</option></select></div>
         </div>
 
-        <div id="progressContainer" class="hidden mb-6"><div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div><p id="progressText" class="text-sm text-gray-500 text-center mt-2">Converting...</p></div>
+        <div id="progressContainer" class="hidden mb-6"><div class="bg-gray-200 rounded-full h-2"><div id="progressBar" class="bg-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div><p id="progressText" class="text-sm text-gray-500 text-center mt-2">Converting...</p><p id="progressDetail" class="progress-detail text-center hidden">Loading...</p></div>
 
         <div class="my-6"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
@@ -101,7 +155,7 @@
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p>Converting images to PDF...</p><p class="text-sm text-gray-500 mt-2">This may take a few seconds</p></div></div>
 
         <!-- ========== SEO 内容 ========== -->
-        <div class="mt-12 prose max-w-none">
+        <div id="seoContent" class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
             <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Convert Images to PDF Online</h2>
@@ -183,6 +237,19 @@
         
         const currentPage = window.location.pathname.split('/').pop() || 'image-to-pdf.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
+        
+        // ========== 最近文件提示 ==========
+        function checkRecentFile() {
+            const recentFile = localStorage.getItem('recentFile_image-to-pdf');
+            if (recentFile) {
+                document.getElementById('recentFileName').textContent = recentFile;
+                document.getElementById('recentFileHint').classList.remove('hidden');
+            }
+        }
+        function saveRecentFile(name) {
+            localStorage.setItem('recentFile_image-to-pdf', name);
+        }
+        checkRecentFile();
         
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
@@ -299,21 +366,28 @@
                 const isLoggedIn = info.isLoggedIn;
                 banner.classList.remove('hidden');
                 if (remaining > 0) {
+                    let upgradeHtml = '';
+                    if (remaining <= 1) {
+                        upgradeHtml = `<div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
+                            <span class="text">🔥 Only ${remaining} free conversion left!</span>
+                            <a href="pricing.html" class="btn">Upgrade to Pro →</a>
+                        </div>`;
+                    }
                     if (!isLoggedIn) {
-                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>`;
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>${upgradeHtml}`;
                     } else {
-                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.`;
+                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.${upgradeHtml}`;
                     }
                     text.style.color = '#374151';
                 } else {
-                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). Upgrade to Pro for unlimited!`;
+                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <div class="upgrade-banner-strong mt-2 max-w-xl mx-auto"><span class="text">🚀 Upgrade to Pro for unlimited conversions</span><a href="pricing.html" class="btn">Upgrade Now →</a></div>`;
                     text.style.color = '#dc2626';
                 }
             }
         }
         
         let images = [];
-        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), previewSection = document.getElementById('previewSection'), imageGrid = document.getElementById('imageGrid'), imageCountSpan = document.getElementById('imageCount'), clearImagesBtn = document.getElementById('clearImagesBtn'), pdfOptions = document.getElementById('pdfOptions'), convertBtn = document.getElementById('convertBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), convertedCountSpan = document.getElementById('convertedCount'), pageSizeSelect = document.getElementById('pageSizeSelect'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText');
+        const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), previewSection = document.getElementById('previewSection'), imageGrid = document.getElementById('imageGrid'), imageCountSpan = document.getElementById('imageCount'), clearImagesBtn = document.getElementById('clearImagesBtn'), pdfOptions = document.getElementById('pdfOptions'), convertBtn = document.getElementById('convertBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), convertedCountSpan = document.getElementById('convertedCount'), pageSizeSelect = document.getElementById('pageSizeSelect'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText'), progressDetail = document.getElementById('progressDetail');
         
         function handleFiles(files) { 
             const imgFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
@@ -324,14 +398,19 @@
                 alert(`Total file size too large! ${isPro ? 'Pro users max 20MB' : 'Free users max 10MB'}.`);
                 return;
             }
+            let uploadedNames = [];
             for(const f of imgFiles){ 
+                uploadedNames.push(f.name);
                 const reader=new FileReader(); 
                 reader.onload=(e)=>{ 
                     images.push({file:f,url:e.target.result,name:f.name}); 
                     updatePreview(); 
                 }; 
                 reader.readAsDataURL(f); 
-            } 
+            }
+            if (uploadedNames.length > 0) {
+                saveRecentFile(uploadedNames.join(', '));
+            }
         }
         
         function updatePreview() { if(images.length===0){ previewSection.classList.add('hidden'); pdfOptions.classList.add('hidden'); convertBtn.disabled=true; resultSection.classList.add('hidden'); return; } previewSection.classList.remove('hidden'); pdfOptions.classList.remove('hidden'); checkUsage().then(canUse => { if(canUse) convertBtn.disabled=false; }); imageCountSpan.textContent=images.length; imageGrid.innerHTML=''; images.forEach((img,idx)=>{ const div=document.createElement('div'); div.className='image-preview relative group cursor-move'; div.setAttribute('data-index',idx); div.draggable=true; div.innerHTML=`<img src="${img.url}" class="w-full h-32 object-cover rounded-lg border"><div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100"><button class="remove-img bg-red-500 text-white rounded-full w-6 h-6 text-xs" data-index="${idx}"><i class="fas fa-times"></i></button></div><div class="text-xs text-gray-500 mt-1 truncate">${img.name.substring(0,20)}</div>`; imageGrid.appendChild(div); }); document.querySelectorAll('.remove-img').forEach(btn=>btn.addEventListener('click',(e)=>{const idx=parseInt(btn.dataset.index); removeImage(idx);})); let dragIndex=null; const items=document.querySelectorAll('.image-preview'); items.forEach(item=>{ item.addEventListener('dragstart',(e)=>{dragIndex=parseInt(item.dataset.index); e.dataTransfer.effectAllowed='move';}); item.addEventListener('dragover',(e)=>{e.preventDefault(); e.dataTransfer.dropEffect='move';}); item.addEventListener('drop',(e)=>{e.preventDefault(); const target=e.target.closest('.image-preview'); if(!target) return; const targetIndex=parseInt(target.dataset.index); if(dragIndex!==null && dragIndex!==targetIndex){ const moved=images[dragIndex]; images.splice(dragIndex,1); images.splice(targetIndex,0,moved); updatePreview(); } dragIndex=null;}); }); }
@@ -354,7 +433,9 @@
             loadingOverlay.classList.remove('hidden'); 
             progressContainer.classList.remove('hidden'); 
             progressBar.style.width='0%'; 
-            progressText.textContent='Loading images...'; 
+            progressText.textContent='Loading images...';
+            progressDetail.classList.remove('hidden');
+            progressDetail.textContent='Preparing images...';
             try { 
                 const {PDFDocument}=PDFLib; 
                 const pdfDoc=await PDFDocument.create(); 
@@ -362,7 +443,8 @@
                 for(let i=0;i<images.length;i++){ 
                     const percent=((i/images.length)*100); 
                     progressBar.style.width=`${percent}%`; 
-                    progressText.textContent=`Processing image ${i+1} of ${images.length}...`; 
+                    progressText.textContent=`Processing image ${i+1} of ${images.length}...`;
+                    progressDetail.textContent=`Embedding ${images[i].name}...`;
                     const img=images[i]; 
                     const imgBytes=await img.file.arrayBuffer(); 
                     let image; 
@@ -379,20 +461,18 @@
                     page.drawImage(image,{x,y,width:scaledWidth,height:scaledHeight}); 
                 } 
                 progressBar.style.width='100%'; 
-                progressText.textContent='Finalizing PDF...'; 
+                progressText.textContent='Finalizing PDF...';
+                progressDetail.textContent='Creating PDF...';
                 const bytes=await pdfDoc.save(); 
                 const blob=new Blob([bytes],{type:'application/pdf'}); 
                 const url=URL.createObjectURL(blob); 
                 convertedCountSpan.textContent=images.length; 
                 resultSection.classList.remove('hidden'); 
-                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; 
-				//a.download=`converted_${Date.now()}.pdf`; 
-				const originalName = images.length > 0 ? images[0].name.replace(/\.[^.]+$/, '') : 'converted';
-				a.download = `${originalName}_to_pdf_${Date.now()}.pdf`;
-				a.click(); URL.revokeObjectURL(url);}; 
+                const originalName = images.length > 0 ? images[0].name.replace(/\.[^.]+$/, '') : 'converted';
+                downloadBtn.onclick=()=>{const a=document.createElement('a'); a.href=url; a.download=`${originalName}_to_pdf_${Date.now()}.pdf`; a.click(); URL.revokeObjectURL(url);}; 
                 await recordUsage();
             } catch(e){alert('Error converting images');} 
-            finally{loadingOverlay.classList.add('hidden'); setTimeout(()=>progressContainer.classList.add('hidden'),1000); convertBtn.disabled=false; } 
+            finally{loadingOverlay.classList.add('hidden'); setTimeout(() => { progressContainer.classList.add('hidden'); progressDetail.classList.add('hidden'); }, 1000); convertBtn.disabled=false; } 
         }
         
         dropZone?.addEventListener('click', () => fileInput.click());
