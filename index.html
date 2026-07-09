@@ -57,6 +57,15 @@
         .dark-mode .bg-blue-50 { background-color: #1a2a4e !important; }
         .dark-mode .text-blue-600 { color: #60a5fa !important; }
         .dark-mode .text-teal-600 { color: #5eead4 !important; }
+        
+        /* ========== Cookie 横幅样式 ========== */
+        #cookieConsent {
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+        #cookieConsent.show {
+            transform: translateY(0%);
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
@@ -219,13 +228,83 @@
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
             <p class="mt-2">
-                <a href="privacy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
-                <a href="terms.html" class="hover:text-white mx-2 transition">Terms of Service</a>
+                <a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
             </p>
         </div>
     </footer>
 
+    <!-- ========== Cookie Consent Banner ========== -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700 p-4">
+        <div class="container mx-auto px-4 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-gray-700 dark:text-gray-300 text-center sm:text-left">
+                <span class="font-semibold">🍪 We use cookies</span>
+                <span class="mx-2">·</span>
+                <span>We use cookies to improve your experience, analyze traffic, and show relevant ads.</span>
+                <a href="cookie-policy.html" class="text-purple-600 dark:text-purple-400 hover:underline ml-1">Learn more</a>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <button id="cookieDecline" class="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
+                    Decline
+                </button>
+                <button id="cookieAccept" class="px-6 py-2 text-sm text-white bg-purple-600 hover:bg-purple-700 transition rounded-lg font-medium">
+                    Accept All
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // ========== Cookie Consent ==========
+        (function() {
+            const CONSENT_KEY = 'cookie_consent';
+            const consent = localStorage.getItem(CONSENT_KEY);
+            const banner = document.getElementById('cookieConsent');
+            const acceptBtn = document.getElementById('cookieAccept');
+            const declineBtn = document.getElementById('cookieDecline');
+            
+            // 如果已有同意记录，隐藏横幅
+            if (consent) {
+                banner.style.display = 'none';
+                return;
+            }
+            
+            function setConsent(status) {
+                localStorage.setItem(CONSENT_KEY, status);
+                banner.style.display = 'none';
+                // 如果用户同意，加载第三方脚本
+                if (status === 'accepted') {
+                    loadAnalytics();
+                    loadAds();
+                }
+            }
+            
+            function loadAnalytics() {
+                // Google Analytics 已经通过页面头部的 gtag 加载
+                // 如果用户之前拒绝，这里可以重新初始化
+                if (typeof gtag !== 'undefined' && window.dataLayer) {
+                    gtag('consent', 'update', {
+                        'analytics_storage': 'granted',
+                        'ad_storage': 'granted'
+                    });
+                }
+            }
+            
+            function loadAds() {
+                // 刷新 AdSense 广告
+                if (typeof (adsbygoogle) !== 'undefined') {
+                    try {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    } catch(e) {}
+                }
+            }
+            
+            acceptBtn.addEventListener('click', () => setConsent('accepted'));
+            declineBtn.addEventListener('click', () => setConsent('declined'));
+        })();
+
+        // ========== 其他 JS 代码 ==========
         const API_BASE = 'https://api.aipdfly.com';
         
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
