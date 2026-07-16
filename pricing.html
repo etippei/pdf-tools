@@ -8,10 +8,6 @@
     <meta name="description" content="Choose the right plan for your PDF needs. Free users get 5 tasks/day. Pro users enjoy unlimited access, no ads, and priority support.">
     <meta name="keywords" content="pdf pricing, pro subscription, unlimited pdf tools, pdf software pricing, upgrade to pro">
     <link rel="canonical" href="https://aipdfly.com/pricing.html">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="dark-mode.css">
-    <script src="darkmode.js"></script>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWC5YTJ60S"></script>
@@ -21,6 +17,11 @@
       gtag('js', new Date());
       gtag('config', 'G-ZWC5YTJ60S');
     </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    <script src="darkmode.js"></script>
     
     <meta name="google-adsense-account" content="ca-pub-YOUR_PUBLISHER_ID">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
@@ -51,6 +52,10 @@
         .dark-mode .bg-purple-600 { background-color: #6b46a0 !important; color: #ffffff !important; }
         .dark-mode .border-purple-500 { border-color: #8b5cf6 !important; }
         .dark-mode .bg-gray-300 { background-color: #2d2d4e !important; color: #e5e7eb !important; }
+        
+        .day-pass-card { border: 2px solid #fbbf24; background: linear-gradient(145deg, #fffbeb, #fef3c7); }
+        .dark-mode .day-pass-card { background: linear-gradient(145deg, #2d2a1a, #3d351a); border-color: #d97706; }
+        .day-pass-badge { background: linear-gradient(135deg, #f59e0b, #d97706); }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -78,22 +83,48 @@
             <p class="text-xl text-gray-600">Choose the plan that works for you</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Free Plan -->
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            
+            <!-- ====== Free Plan ====== -->
             <div class="bg-white rounded-2xl shadow-md p-6 border-2 border-gray-200">
                 <div class="text-center"><h3 class="text-xl font-bold text-gray-800">Free</h3><div class="mt-4"><span class="text-4xl font-bold">$0</span><span class="text-gray-500">/forever</span></div><div class="mt-6 w-full bg-gray-300 text-white py-3 rounded-lg text-center">Current Plan</div></div>
                 <ul class="mt-6 space-y-3">
-                    <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>PDF tasks: <strong>3/day</strong> (guest) / <strong>5/day</strong> (registered)</span></li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>AI questions: <strong>3/day</strong> (guest) / <strong>5/day</strong> (registered)</span></li>
-                    <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>OCR pages: <strong>3/day</strong> (guest) / <strong>5/day</strong> (registered)</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>PDF tasks: <strong>5/day</strong></span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>AI questions: <strong>5/day</strong></span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>OCR pages: <strong>5/day</strong></span></li>
                     <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <span>Max 10MB per file</span></li>
                     <li class="flex items-center gap-2"><i class="fas fa-times text-red-400"></i> <span>No watermark</span></li>
                     <li class="flex items-center gap-2"><i class="fas fa-times text-red-400"></i> <span>Contains ads</span></li>
-                    <li class="flex items-center gap-2 text-sm text-purple-600 mt-3"><i class="fas fa-sign-in-alt"></i><a href="login.html" class="hover:underline">Login for higher limits (5/day) →</a></li>
                 </ul>
             </div>
 
-            <!-- Pro Plan -->
+            <!-- ====== Day Pass Plan ====== -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 day-pass-card relative">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 day-pass-badge text-white px-3 py-1 rounded-full text-xs font-bold">
+                    ⚡ Best for Quick Tasks
+                </div>
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-gray-800">24-Hour Day Pass</h3>
+                    <div class="mt-4">
+                        <span class="text-4xl font-bold text-yellow-600">$1.99</span>
+                        <span class="text-gray-500">/day</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Perfect for one-time use</p>
+                    <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" 
+                       class="mt-6 w-full bg-yellow-400 text-gray-800 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-center inline-block">
+                        Get Day Pass →
+                    </a>
+                </div>
+                <ul class="mt-6 space-y-3">
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-yellow-500"></i> <span><strong>10 uses</strong> per day</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-yellow-500"></i> <span><strong>24-hour</strong> access</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-yellow-500"></i> <span>All PDF tools</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-yellow-500"></i> <span>No ads</span></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-yellow-500"></i> <span>OCR + AI features</span></li>
+                </ul>
+            </div>
+
+            <!-- ====== Monthly Pro Plan ====== -->
             <div class="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-500 relative">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs">Most Popular</div>
                 <div class="text-center"><h3 class="text-xl font-bold text-gray-800">Pro Monthly</h3><div class="mt-4"><span class="text-4xl font-bold">$9.99</span><span class="text-gray-500">/month</span></div><a href="https://etiplpl.gumroad.com/l/hojbdj" target="_blank" class="mt-6 w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition text-center inline-block">Get Started →</a></div>
@@ -108,6 +139,7 @@
                 </ul>
                 <div class="mt-4 text-center"><a href="https://etiplpl.gumroad.com/l/cvzali" target="_blank" class="text-sm text-purple-600 hover:underline">Save 33% with yearly billing ($79.99/year)</a></div>
             </div>
+
         </div>
 
         <div class="my-6 max-w-4xl mx-auto">
@@ -118,10 +150,10 @@
         <div class="mt-16 max-w-3xl mx-auto">
             <h2 class="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
             <div class="space-y-4">
+                <div class="bg-white rounded-2xl p-5 shadow-sm"><h3 class="font-semibold">What's the Day Pass?</h3><p class="text-gray-600 mt-1">Get 10 uses across all tools for 24 hours. Perfect for one-time projects or urgent tasks. Only $1.99.</p></div>
                 <div class="bg-white rounded-2xl p-5 shadow-sm"><h3 class="font-semibold">What's included in the Pro plan?</h3><p class="text-gray-600 mt-1">Unlimited access to all PDF tools, AI chat, AI summary, and OCR features. No daily limits, no watermarks, no ads.</p></div>
                 <div class="bg-white rounded-2xl p-5 shadow-sm"><h3 class="font-semibold">Can I cancel anytime?</h3><p class="text-gray-600 mt-1">Yes, you can cancel your subscription at any time from your Gumroad library.</p></div>
                 <div class="bg-white rounded-2xl p-5 shadow-sm"><h3 class="font-semibold">What payment methods do you accept?</h3><p class="text-gray-600 mt-1">Gumroad accepts credit cards (Visa, MasterCard, American Express) and PayPal.</p></div>
-                <div class="bg-white rounded-2xl p-5 shadow-sm"><h3 class="font-semibold">What's the difference between guest and registered users?</h3><p class="text-gray-600 mt-1">Guest users get 3 free tasks per day. Registered free users get 5 free tasks per day. Pro users get unlimited access.</p></div>
             </div>
         </div>
     </div>
@@ -129,14 +161,15 @@
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
-            <p class="mt-2">"<a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
-    <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a></p>
+            <p class="mt-2">
+                <a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
         </div>
     </footer>
 
     <script>
-        const API_BASE = 'https://api.aipdfly.com';
-        
         const currentPage = window.location.pathname.split('/').pop() || 'pricing.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
         

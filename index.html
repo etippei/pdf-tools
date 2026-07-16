@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Smart PDF Tools — Free to Start, Pro to Master - Merge, Split, Compress, OCR | AIPDFLY</title>
-    <meta name="description" content="Free PDF tools that work 100% in your browser. No upload, no subscription. Merge, split, compress, OCR, and chat with PDFs using AI.">
+    <meta name="description" content="AI-powered PDF tools for everyone. Merge, split, compress, OCR, and chat with your documents. Free to start, Pro to master.">
     <meta name="keywords" content="free pdf tools, merge pdf, split pdf, compress pdf, pdf to image, image to pdf, ocr pdf, ai pdf chat">
     <link rel="canonical" href="https://aipdfly.com/">
     
@@ -46,7 +46,6 @@
         .scenario-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15); }
         .stats-badge { background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139, 92, 246, 0.2); }
         
-        /* 暗黑模式覆盖 */
         .dark-mode .stats-badge { background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.3); }
         .dark-mode .scenario-card { background-color: #16213e !important; }
         .dark-mode .scenario-card:hover { box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2); }
@@ -58,7 +57,6 @@
         .dark-mode .text-blue-600 { color: #60a5fa !important; }
         .dark-mode .text-teal-600 { color: #5eead4 !important; }
         
-        /* ========== Cookie 横幅样式 ========== */
         #cookieConsent {
             transform: translateY(100%);
             transition: transform 0.5s ease;
@@ -66,6 +64,9 @@
         #cookieConsent.show {
             transform: translateY(0%);
         }
+        
+        .btn-day-pass { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: all 0.2s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-day-pass:hover { transform: scale(1.02); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
@@ -87,7 +88,6 @@
         </div>
     </header>
 
-    <!-- ========== Hero Section ========== -->
     <section class="bg-gradient-to-r from-purple-50 to-blue-50 py-12 lg:py-16">
         <div class="container mx-auto px-4 lg:px-8 text-center">
             <div class="flex flex-wrap justify-center gap-4 mb-6">
@@ -105,7 +105,16 @@
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">Smart PDF Tools — Free to Start, Pro to Master</h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">Merge, split, compress, convert PDFs, and chat with your documents using AI.</p>
             
-            <!-- ========== Scenario Cards ========== -->
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <a href="pricing.html" class="bg-purple-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-purple-700 transition">
+                    View Plans →
+                </a>
+                <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" 
+                   class="btn-day-pass">
+                    ⚡ Try Day Pass — $1.99
+                </a>
+            </div>
+            
             <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 <a href="ocr.html" class="scenario-card bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition flex items-center gap-3">
                     <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400"><i class="fas fa-file-alt"></i></div>
@@ -123,10 +132,8 @@
         </div>
     </section>
 
-    <!-- ========== Tools Grid ========== -->
     <section class="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <!-- AI Chat PDF - Popular -->
             <a href="ai-chat.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all relative">
                 <span class="hot-tag">🔥 Popular</span>
                 <div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-robot text-2xl text-white"></i></div>
@@ -135,7 +142,6 @@
                 <div class="mt-4 text-purple-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- AI Summary -->
             <a href="ai-summary.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
                 <div class="w-14 h-14 bg-gradient-to-r from-teal-500 to-green-500 rounded-xl flex items-center justify-center mb-4 shadow-md"><i class="fas fa-file-alt text-2xl text-white"></i></div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">AI Summary<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">AI</span></h3>
@@ -143,7 +149,6 @@
                 <div class="mt-4 text-teal-600 font-medium flex items-center">Try AI <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- OCR - Popular -->
             <a href="ocr.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all relative">
                 <span class="hot-tag">🔥 Popular</span>
                 <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-text-height text-2xl text-blue-600"></i></div>
@@ -152,7 +157,6 @@
                 <div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- Merge - Popular -->
             <a href="merge-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all relative">
                 <span class="hot-tag">🔥 Popular</span>
                 <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-object-group text-2xl text-purple-600"></i></div>
@@ -161,7 +165,6 @@
                 <div class="mt-4 text-purple-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- Split PDF -->
             <a href="split-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
                 <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-cut text-2xl text-blue-600"></i></div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Split PDF</h3>
@@ -169,7 +172,6 @@
                 <div class="mt-4 text-blue-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- Compress PDF -->
             <a href="compress-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
                 <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-archive text-2xl text-green-600"></i></div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Compress PDF</h3>
@@ -177,7 +179,6 @@
                 <div class="mt-4 text-green-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- PDF to Image -->
             <a href="pdf-to-image.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
                 <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-image text-2xl text-orange-600"></i></div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to Image</h3>
@@ -185,7 +186,6 @@
                 <div class="mt-4 text-orange-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- Image to PDF -->
             <a href="image-to-pdf.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
                 <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-images text-2xl text-red-600"></i></div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Image to PDF</h3>
@@ -193,7 +193,6 @@
                 <div class="mt-4 text-red-600 font-medium flex items-center">Try it <i class="fas fa-arrow-right ml-2 text-sm"></i></div>
             </a>
             
-            <!-- Rotate PDF -->
             <a href="rotate.html" class="tool-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all">
                 <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-sync-alt text-2xl text-indigo-600"></i></div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Rotate PDF</h3>
@@ -203,13 +202,11 @@
         </div>
     </section>
 
-    <!-- ========== Ad ========== -->
     <div class="container mx-auto px-4 lg:px-8 py-8 max-w-7xl">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID" data-ad-slot="YOUR_AD_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <!-- ========== Privacy Badge ========== -->
     <section class="container mx-auto px-4 lg:px-8 py-8">
         <div class="privacy-badge rounded-2xl p-8 text-white text-center max-w-4xl mx-auto">
             <i class="fas fa-shield-alt text-4xl mb-4"></i>
@@ -235,8 +232,7 @@
         </div>
     </footer>
 
-    <!-- ========== Cookie Consent Banner ========== -->
-    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700 p-4">
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700 p-4" style="display: none;">
         <div class="container mx-auto px-4 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="text-sm text-gray-700 dark:text-gray-300 text-center sm:text-left">
                 <span class="font-semibold">🍪 We use cookies</span>
@@ -256,7 +252,6 @@
     </div>
 
     <script>
-        // ========== Cookie Consent ==========
         (function() {
             const CONSENT_KEY = 'cookie_consent';
             const consent = localStorage.getItem(CONSENT_KEY);
@@ -264,39 +259,29 @@
             const acceptBtn = document.getElementById('cookieAccept');
             const declineBtn = document.getElementById('cookieDecline');
             
-            // 如果已有同意记录，隐藏横幅
             if (consent) {
                 banner.style.display = 'none';
                 return;
             }
             
+            banner.style.display = 'block';
+            banner.style.transform = 'translateY(100%)';
+            setTimeout(() => { banner.style.transform = 'translateY(0%)'; }, 500);
+            
             function setConsent(status) {
                 localStorage.setItem(CONSENT_KEY, status);
-                banner.style.display = 'none';
-                // 如果用户同意，加载第三方脚本
+                banner.style.transform = 'translateY(100%)';
+                setTimeout(() => { banner.style.display = 'none'; }, 500);
                 if (status === 'accepted') {
-                    loadAnalytics();
-                    loadAds();
-                }
-            }
-            
-            function loadAnalytics() {
-                // Google Analytics 已经通过页面头部的 gtag 加载
-                // 如果用户之前拒绝，这里可以重新初始化
-                if (typeof gtag !== 'undefined' && window.dataLayer) {
-                    gtag('consent', 'update', {
-                        'analytics_storage': 'granted',
-                        'ad_storage': 'granted'
-                    });
-                }
-            }
-            
-            function loadAds() {
-                // 刷新 AdSense 广告
-                if (typeof (adsbygoogle) !== 'undefined') {
-                    try {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    } catch(e) {}
+                    if (typeof gtag !== 'undefined' && window.dataLayer) {
+                        gtag('consent', 'update', {
+                            'analytics_storage': 'granted',
+                            'ad_storage': 'granted'
+                        });
+                    }
+                    if (typeof (adsbygoogle) !== 'undefined') {
+                        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+                    }
                 }
             }
             
@@ -304,7 +289,6 @@
             declineBtn.addEventListener('click', () => setConsent('declined'));
         })();
 
-        // ========== 其他 JS 代码 ==========
         const API_BASE = 'https://api.aipdfly.com';
         
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -319,7 +303,6 @@
             }
         });
         
-        // ========== Animate Stats ==========
         function animateNumber(element, target, duration = 2000) {
             const start = 0;
             const startTime = performance.now();
@@ -344,7 +327,6 @@
             animateNumber(totalUsersElement, targetNumber, 2500);
         }
         
-        // ========== User Menu ==========
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';

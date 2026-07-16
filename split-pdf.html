@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Split PDF Pages Online - Extract & Split PDF Tool | AIPDFLY</title>
-    <meta name="description" content="Extract specific pages from any PDF file. Split PDF by page range or extract single pages. Fast, secure, and 100% private with AIPDFLY.">
-  
+    <title>Split PDF Pages - Extract PDF Pages | AIPDFLY</title>
+    <meta name="description" content="Extract specific pages from any PDF file. Split PDF by page range or extract single pages. Free, fast, and 100% private.">
+    <meta name="keywords" content="split pdf, extract pdf pages, pdf splitter, remove pdf pages, split pdf online free, pdf page extractor">
     <link rel="canonical" href="https://aipdfly.com/split-pdf.html">
     
     <!-- Google tag (gtag.js) -->
@@ -39,7 +39,6 @@
         #darkModeToggle { transition: all 0.2s ease; }
         #darkModeToggle:hover { transform: scale(1.05); }
         
-        /* ===== 新增优化样式 ===== */
         .privacy-shield { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
         .dark-mode .privacy-shield { background: linear-gradient(135deg, #1a2e1a, #0d1f0d); border-color: #2d4a2d; }
         .privacy-shield .icon { font-size: 24px; color: #22c55e; }
@@ -49,7 +48,7 @@
         .privacy-shield .badge { background: rgba(34, 197, 94, 0.15); padding: 2px 10px; border-radius: 20px; font-size: 12px; color: #166534; }
         .dark-mode .privacy-shield .badge { color: #86efac; background: rgba(34, 197, 94, 0.2); }
         
-        .quick-tutorial { background: #f8fafc; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; color: #6b7280 !important;}
+        .quick-tutorial { background: #f8fafc; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; color: #6b7280 !important; }
         .quick-tutorial:hover { background: #f1f5f9; border-color: #8b5cf6; }
         .dark-mode .quick-tutorial { background: #1e293b; border-color: #334155; color: #e2e8f0; }
         .dark-mode .quick-tutorial:hover { background: #2d3d4e; border-color: #8b5cf6; }
@@ -98,12 +97,9 @@
             <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> All processing happens locally in your browser. Your files never leave your device.</span>
         </div>
 
-        <!-- ========== 隐私徽章 ========== -->
         <div class="privacy-shield mb-6">
             <i class="fas fa-shield-alt icon"></i>
-            <div class="text">
-                <strong>🔒 100% Private & Secure</strong> — Your files are processed locally and never uploaded to our servers.
-            </div>
+            <div class="text"><strong>🔒 100% Private & Secure</strong> — Your files are processed locally and never uploaded to our servers.</div>
             <div class="badges">
                 <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Upload</span>
                 <span class="badge"><i class="fas fa-check-circle mr-1"></i> No Storage</span>
@@ -120,13 +116,13 @@
             </div>
         </div>
 
-        <!-- ========== 快速教程入口 ========== -->
-        <div id="quickTutorial" class="quick-tutorial mb-6 text-gray-700 dark:text-gray-300" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
-            <i class="fas fa-lightbulb text-yellow-500 text-lg"></i>
-            <span>💡 <strong>Quick start:</strong> Upload PDF → Select pages → Extract. <span class="text-purple-600 dark:text-purple-400">Learn more ↓</span></span>
+        <div id="quickTutorial" class="quick-tutorial mb-6" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
+            <div class="flex items-start gap-2">
+                <i class="fas fa-lightbulb text-yellow-500 text-lg mt-0.5 flex-shrink-0"></i>
+                <span class="quick-tutorial-text"><strong>Quick start:</strong> Upload PDF → Select pages → Extract. <span class="text-purple-600 dark:text-purple-400 font-medium">Learn more ↓</span></span>
+            </div>
         </div>
 
-        <!-- ========== 最近文件提示 ========== -->
         <div id="recentFileHint" class="hidden recent-file-hint mb-6">
             <div class="text flex items-center gap-3">
                 <i class="fas fa-history text-lg"></i>
@@ -154,7 +150,6 @@
 
         <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div class="bg-white rounded-2xl p-8 text-center"><i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-4"></i><p>Processing...</p><p class="text-sm text-gray-500 mt-2">This may take a few seconds</p></div></div>
 
-        <!-- ========== SEO 内容 ========== -->
         <div id="seoContent" class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
@@ -182,7 +177,7 @@
                 <div class="space-y-3">
                     <div>
                         <p class="font-medium text-gray-700">Is splitting PDFs free?</p>
-                        <p class="text-gray-600 text-sm">Yes! Free users can split up to 5 PDFs per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited splits.</p>
+                        <p class="text-gray-600 text-sm">Yes! Free users can split up to 5 PDFs per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" class="text-yellow-600 hover:underline">⚡ Day Pass $1.99</a> for 10 uses, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited splits.</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-700">Can I extract multiple page ranges?</p>
@@ -217,9 +212,9 @@
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
             <p class="mt-2">
-                "<a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
                 <a href="terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
-    <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+                <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
             </p>
         </div>
     </footer>
@@ -230,7 +225,6 @@
         const currentPage = window.location.pathname.split('/').pop() || 'split-pdf.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { const href = btn.getAttribute('href'); if (href === currentPage) { btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.remove('text-gray-700'); } else { btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm'); btn.classList.add('text-gray-700'); } });
         
-        // ========== 最近文件提示 ==========
         function checkRecentFile() {
             const recentFile = localStorage.getItem('recentFile_split');
             if (recentFile) {
@@ -243,13 +237,13 @@
         }
         checkRecentFile();
         
-        const userEmail = localStorage.getItem('userEmail');
-        const authToken = localStorage.getItem('authToken');
-        const isPro = localStorage.getItem('isPro') === 'true';
-        const userSection = document.getElementById('userSection');
+        let isPro = localStorage.getItem('isPro') === 'true';
         let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
         
         function initUserMenu() {
+            const userEmail = localStorage.getItem('userEmail');
+            const authToken = localStorage.getItem('authToken');
+            const userSection = document.getElementById('userSection');
             if (!userSection) return;
             if (userEmail && authToken) {
                 userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
@@ -328,6 +322,7 @@
                     usageInfo.used = data.used;
                     usageInfo.limit = data.limit;
                     usageInfo.isPro = data.isPro || false;
+                    usageInfo.planType = data.planType || 'free';
                     updateUsageDisplay(usageInfo);
                     return true;
                 } else {
@@ -347,37 +342,91 @@
             const text = document.getElementById('usageText');
             if (!banner) return;
             const info = data || usageInfo;
+            
             if (info.isPro) {
-                banner.classList.remove('hidden');
-                text.innerHTML = `✨ Pro Member · Unlimited PDF splits ✨`;
-                text.style.color = '#16a34a';
-            } else {
-                const remaining = info.remaining;
-                const limit = info.limit;
-                const used = info.used;
-                const isLoggedIn = info.isLoggedIn;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    let upgradeHtml = '';
-                    if (remaining <= 1) {
-                        upgradeHtml = `<div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
-                            <span class="text">🔥 Only ${remaining} free split left!</span>
-                            <a href="pricing.html" class="btn">Upgrade to Pro →</a>
-                        </div>`;
-                    }
-                    if (!isLoggedIn) {
-                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining. <a href="login.html" class="text-purple-600 font-medium hover:underline">Login for 5/day</a>${upgradeHtml}`;
-                    } else {
-                        text.innerHTML = `📊 Today's usage: ${used}/${limit}. ${remaining} free uses remaining.${upgradeHtml}`;
-                    }
-                    text.style.color = '#374151';
-                } else {
-                    text.innerHTML = `⚠️ Daily limit reached (${limit}/${limit}). <div class="upgrade-banner-strong mt-2 max-w-xl mx-auto"><span class="text">🚀 Upgrade to Pro for unlimited splits</span><a href="pricing.html" class="btn">Upgrade Now →</a></div>`;
-                    text.style.color = '#dc2626';
+                if (info.planType === 'day_pass') {
+                    const remaining = info.remaining || 0;
+                    const limit = info.limit || 10;
+                    const used = info.used || 0;
+                    const hoursLeft = info.hoursLeft || 0;
+                    banner.classList.remove('hidden');
+                    text.innerHTML = `
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 py-1 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="text-yellow-500 text-lg">⚡</span>
+                                <span style="color: #d97706; font-weight: 600;">Day Pass Active</span>
+                                <span style="color: #6b7280; font-size: 13px;">— ${remaining} uses left today (${used}/${limit})</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span style="color: #6b7280; font-size: 13px;">⏱️ ${hoursLeft}h remaining</span>
+                                <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Upgrade →</a>
+                            </div>
+                        </div>
+                    `;
+                    return;
                 }
+                banner.classList.remove('hidden');
+                text.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 py-1 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-crown text-purple-600"></i>
+                            <span style="color: #16a34a; font-weight: 600;">✨ Pro Member</span>
+                            <span style="color: #6b7280; font-size: 13px;">· Unlimited access</span>
+                        </div>
+                        <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Manage Plan →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const remaining = info.remaining || 0;
+            const limit = info.limit || 5;
+            const used = info.used || 0;
+            const isLoggedIn = info.isLoggedIn || false;
+            banner.classList.remove('hidden');
+            
+            if (remaining <= 1) {
+                const msg = remaining === 0 ? '⚠️ Daily limit reached' : `⚠️ Only ${remaining} free use left today`;
+                text.innerHTML = `
+                    <div class="flex flex-col items-center gap-2 py-1 max-w-2xl mx-auto">
+                        <div style="color: #dc2626; font-size: 14px; font-weight: 500;">${msg}</div>
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-xl px-4 py-2 flex flex-wrap items-center justify-center gap-3">
+                            <span style="font-size: 14px; color: #92400e; dark: #fcd34d;">
+                                ⚡ Get <strong>10 uses</strong> with <strong>24-Hour Day Pass</strong> — only $1.99
+                            </span>
+                            <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" 
+                               style="background: #f59e0b; color: white; padding: 4px 18px; border-radius: 6px; font-weight: 600; font-size: 13px; text-decoration: none; transition: background 0.2s;"
+                               onmouseover="this.style.background='#d97706'" 
+                               onmouseout="this.style.background='#f59e0b'">
+                                Buy Now →
+                            </a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            if (!isLoggedIn) {
+                text.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-center gap-2 py-1">
+                        <span style="color: #374151; font-size: 14px;">📊 Today's usage: ${used}/${limit} · ${remaining} free uses remaining</span>
+                        <a href="login.html" class="text-purple-600 font-medium hover:underline text-sm">Login for more</a>
+                        <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Upgrade Pro</a>
+                        <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" class="text-yellow-500 font-medium hover:underline text-sm">⚡ Day Pass $1.99</a>
+                    </div>
+                `;
+            } else {
+                text.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-center gap-2 py-1">
+                        <span style="color: #374151; font-size: 14px;">📊 Today's usage: ${used}/${limit} · ${remaining} free uses remaining</span>
+                        <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Upgrade Pro</a>
+                        <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" class="text-yellow-500 font-medium hover:underline text-sm">⚡ Day Pass $1.99</a>
+                    </div>
+                `;
             }
         }
         
+        // ========== 原有功能代码 ==========
         let selectedFile = null, totalPages = 0;
         const dropZone = document.getElementById('dropZone'), fileInput = document.getElementById('fileInput'), fileInfo = document.getElementById('fileInfo'), fileName = document.getElementById('fileName'), pageCountSpan = document.getElementById('pageCount'), removeFileBtn = document.getElementById('removeFileBtn'), splitOptions = document.getElementById('splitOptions'), splitBtn = document.getElementById('splitBtn'), resetBtn = document.getElementById('resetBtn'), resultSection = document.getElementById('resultSection'), downloadBtn = document.getElementById('downloadBtn'), loadingOverlay = document.getElementById('loadingOverlay'), progressContainer = document.getElementById('progressContainer'), progressBar = document.getElementById('progressBar'), progressText = document.getElementById('progressText'), progressDetail = document.getElementById('progressDetail');
         const rangeMode = document.querySelector('input[value="range"]'), singleMode = document.querySelector('input[value="single"]'), rangeInputs = document.getElementById('rangeInputs'), singleInputs = document.getElementById('singleInputs'), startPageInput = document.getElementById('startPage'), endPageInput = document.getElementById('endPage'), singlePagesInput = document.getElementById('singlePages');

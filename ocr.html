@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> OCR - Extract Text from PDF and Images | AIPDFLY</title>
-    <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Smart, secure, and private.">
- 
+    <title>OCR - Extract Text from PDF and Images | AIPDFLY</title>
+    <meta name="description" content="Extract text from scanned PDFs and images using OCR technology. Convert non-editable PDFs to text. Free and private.">
+    <meta name="keywords" content="ocr pdf, extract text from pdf, scanned pdf to text, pdf ocr online free, image to text, pdf text extractor">
     <link rel="canonical" href="https://aipdfly.com/ocr.html">
     
     <!-- Google tag (gtag.js) -->
@@ -55,7 +55,6 @@
         .modal-download-btn:hover { background-color: #059669; transform: scale(1.02); }
         .modal-download-btn i { font-size: 18px; }
         
-        /* ===== 新增优化样式 ===== */
         .privacy-shield { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
         .dark-mode .privacy-shield { background: linear-gradient(135deg, #1a2e1a, #0d1f0d); border-color: #2d4a2d; }
         .privacy-shield .icon { font-size: 24px; color: #22c55e; }
@@ -114,7 +113,6 @@
             <span class="block text-sm mt-3 text-green-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> OCR processing uses secure API · Your files are not stored</span>
         </div>
 
-        <!-- ========== 隐私徽章 ========== -->
         <div class="privacy-shield mb-6">
             <i class="fas fa-shield-alt icon"></i>
             <div class="text">
@@ -136,7 +134,6 @@
             </div>
         </div>
 
-        <!-- ========== 快速教程入口 ========== -->
         <div id="quickTutorial" class="quick-tutorial mb-6" onclick="document.getElementById('seoContent').scrollIntoView({ behavior: 'smooth' })">
             <div class="flex items-start gap-2">
                 <i class="fas fa-lightbulb text-yellow-500 text-lg mt-0.5 flex-shrink-0"></i>
@@ -144,7 +141,6 @@
             </div>
         </div>
 
-        <!-- ========== 最近文件提示 ========== -->
         <div id="recentFileHint" class="hidden recent-file-hint mb-6">
             <div class="text flex items-center gap-3">
                 <i class="fas fa-history text-lg"></i>
@@ -202,7 +198,6 @@
 
         <div id="errorSection" class="hidden mt-8"><div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><p id="errorMsg" class="text-red-700"></p></div></div>
 
-        <!-- ========== SEO 内容 ========== -->
         <div id="seoContent" class="mt-12 prose max-w-none">
             <hr class="my-8 border-gray-200">
             
@@ -237,7 +232,7 @@
                 <div class="space-y-3">
                     <div>
                         <p class="font-medium text-gray-700">Is OCR free to use?</p>
-                        <p class="text-gray-600 text-sm">Yes! Free users get 5 OCR conversions per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited OCR conversions.</p>
+                        <p class="text-gray-600 text-sm">Yes! Free users get 5 OCR conversions per day. <a href="register.html" class="text-purple-600 hover:underline">Create a free account</a> to track your usage, or <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" class="text-yellow-600 hover:underline">⚡ Day Pass $1.99</a> for 10 uses, or <a href="pricing.html" class="text-purple-600 hover:underline">upgrade to Pro</a> for unlimited OCR conversions.</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-700">Is my data secure?</p>
@@ -281,8 +276,7 @@
     <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
         <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
             <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
-            <p class="mt-2">"<a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
-    <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a></p>
+            <p class="mt-2"><a href="privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> | <a href="terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> | <a href="cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a></p>
         </div>
     </footer>
 
@@ -292,7 +286,6 @@
         const OCR_SPACE_API_KEY = 'K86198983388957';
         const MAX_API_FILE_SIZE = 950 * 1024;
         
-        // ========== Page initialization ==========
         const currentPage = window.location.pathname.split('/').pop() || 'ocr.html';
         document.querySelectorAll('.tab-btn').forEach(btn => { 
             const href = btn.getAttribute('href'); 
@@ -305,7 +298,6 @@
             } 
         });
         
-        // ========== 最近文件提示 ==========
         function checkRecentFile() {
             const recentFile = localStorage.getItem('recentFile_ocr');
             if (recentFile) {
@@ -318,7 +310,6 @@
         }
         checkRecentFile();
         
-        // ========== User menu ==========
         let isPro = localStorage.getItem('isPro') === 'true';
         let usageInfo = { allowed: true, remaining: 999, used: 0, limit: 999, isPro: false, isLoggedIn: false };
         
@@ -356,7 +347,6 @@
             }
         });
         
-        // ========== Backend usage tracking ==========
         async function checkUsage() {
             const token = localStorage.getItem('authToken');
             const headers = {};
@@ -422,6 +412,7 @@
                     usageInfo.used = data.used;
                     usageInfo.limit = data.limit;
                     usageInfo.isPro = data.isPro || false;
+                    usageInfo.planType = data.planType || 'free';
                     updateUsageDisplay(usageInfo);
                     return true;
                 } else {
@@ -440,40 +431,104 @@
             }
         }
         
+        // ========== 核心：updateUsageDisplay 支持单日套餐 ==========
         function updateUsageDisplay(data) {
             const banner = document.getElementById('usageBanner');
             if (!banner) return;
             const info = data || usageInfo;
+            
+            // ===== Pro 用户 =====
             if (info.isPro) {
-                banner.classList.remove('hidden');
-                banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText" style="color: #16a34a;">✨ Pro Member · Unlimited OCR & Word Conversion ✨</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Manage Plan</a>`;
-            } else {
-                const remaining = info.remaining;
-                const limit = info.limit;
-                const used = info.used;
-                const isLoggedIn = info.isLoggedIn;
-                banner.classList.remove('hidden');
-                if (remaining > 0) {
-                    let upgradeHtml = '';
-                    if (remaining <= 1) {
-                        upgradeHtml = `<div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
-                            <span class="text">🔥 Only ${remaining} free use left!</span>
-                            <a href="pricing.html" class="btn">Upgrade to Pro →</a>
-                        </div>`;
-                    }
-                    if (!isLoggedIn) {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="login.html" class="text-purple-600 font-medium hover:underline">Login for Extra Quota</a><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>${upgradeHtml}`;
-                    } else {
-                        banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i><span id="usageText">📊 Daily Quota: ${used}/${limit} | Remaining: ${remaining}</span><a href="pricing.html" class="text-purple-600 font-medium hover:underline ml-2">Upgrade Pro</a>${upgradeHtml}`;
-                    }
-                } else {
-                    banner.innerHTML = `<i class="fas fa-chart-line text-purple-600 mr-1"></i>
-                        <span id="usageText" style="color: #dc2626;">⚠️ Daily Quota Exhausted (${limit}/${limit})</span>
-                        <div class="upgrade-banner-strong mt-2 max-w-xl mx-auto">
-                            <span class="text">🚀 Upgrade to Pro for unlimited access + Word export + priority support</span>
-                            <a href="pricing.html" class="btn">Upgrade Now →</a>
-                        </div>`;
+                // 检查是否为单日套餐
+                if (info.planType === 'day_pass') {
+                    const remaining = info.remaining || 0;
+                    const limit = info.limit || 10;
+                    const used = info.used || 0;
+                    const hoursLeft = info.hoursLeft || 0;
+                    
+                    banner.classList.remove('hidden');
+                    banner.innerHTML = `
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 py-1 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="text-yellow-500 text-lg">⚡</span>
+                                <span style="color: #d97706; font-weight: 600;">Day Pass Active</span>
+                                <span style="color: #6b7280; font-size: 13px;">— ${remaining} uses left today (${used}/${limit})</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span style="color: #6b7280; font-size: 13px;">⏱️ ${hoursLeft}h remaining</span>
+                                <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Upgrade →</a>
+                            </div>
+                        </div>
+                    `;
+                    return;
                 }
+                
+                // 月付/年付用户
+                banner.classList.remove('hidden');
+                banner.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 py-1 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-crown text-purple-600"></i>
+                            <span style="color: #16a34a; font-weight: 600;">✨ Pro Member</span>
+                            <span style="color: #6b7280; font-size: 13px;">· Unlimited access</span>
+                        </div>
+                        <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Manage Plan →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // ===== 免费用户 =====
+            const remaining = info.remaining || 0;
+            const limit = info.limit || 5;
+            const used = info.used || 0;
+            const isLoggedIn = info.isLoggedIn || false;
+            
+            banner.classList.remove('hidden');
+            
+            // 剩余 1 次或 0 次时，突出显示单日套餐
+            if (remaining <= 1) {
+                const msg = remaining === 0 
+                    ? '⚠️ Daily limit reached' 
+                    : `⚠️ Only ${remaining} free use left today`;
+                
+                banner.innerHTML = `
+                    <div class="flex flex-col items-center gap-2 py-1 max-w-2xl mx-auto">
+                        <div style="color: #dc2626; font-size: 14px; font-weight: 500;">${msg}</div>
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-xl px-4 py-2 flex flex-wrap items-center justify-center gap-3">
+                            <span style="font-size: 14px; color: #92400e; dark: #fcd34d;">
+                                ⚡ Get <strong>10 uses</strong> with <strong>24-Hour Day Pass</strong> — only $1.99
+                            </span>
+                            <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" 
+                               style="background: #f59e0b; color: white; padding: 4px 18px; border-radius: 6px; font-weight: 600; font-size: 13px; text-decoration: none; transition: background 0.2s;"
+                               onmouseover="this.style.background='#d97706'" 
+                               onmouseout="this.style.background='#f59e0b'">
+                                Buy Now →
+                            </a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 剩余次数 > 1
+            if (!isLoggedIn) {
+                banner.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-center gap-2 py-1">
+                        <span style="color: #374151; font-size: 14px;">📊 Today's usage: ${used}/${limit} · ${remaining} free uses remaining</span>
+                        <a href="login.html" class="text-purple-600 font-medium hover:underline text-sm">Login for more</a>
+                        <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Upgrade Pro</a>
+                        <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" class="text-yellow-500 font-medium hover:underline text-sm">⚡ Day Pass $1.99</a>
+                    </div>
+                `;
+            } else {
+                banner.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-center gap-2 py-1">
+                        <span style="color: #374151; font-size: 14px;">📊 Today's usage: ${used}/${limit} · ${remaining} free uses remaining</span>
+                        <a href="pricing.html" class="text-purple-600 font-medium hover:underline text-sm">Upgrade Pro</a>
+                        <a href="https://etiplpl.gumroad.com/l/ijalux" target="_blank" class="text-yellow-500 font-medium hover:underline text-sm">⚡ Day Pass $1.99</a>
+                    </div>
+                `;
             }
         }
         
@@ -484,7 +539,6 @@
         let isRetrying = false;
         let isCancelled = false;
         let isConverting = false;
-        
         let pendingDownloadBlob = null;
         let pendingFileName = '';
         
@@ -726,7 +780,6 @@
             const blob = new Blob([htmlContent], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
             const originalName = selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'ocr_result';
             a.download = `${originalName}_converted_${Date.now()}.doc`;
             a.click();
@@ -772,7 +825,6 @@
             }
         }
         
-        // ========== PDF转Word ==========
         async function convertToWord() {
             if (isConverting) {
                 console.log('Conversion already in progress');
@@ -1076,7 +1128,6 @@
             pendingFileName = '';
         }
         
-        // ========== Login prompt ==========
         const loginPromptOverlay = document.getElementById('loginPromptOverlay');
         const loginPromptClose = document.getElementById('loginPromptClose');
         
@@ -1093,7 +1144,6 @@
             if (e.target === loginPromptOverlay) hideLoginPrompt();
         });
         
-        // ========== Event Listeners ==========
         cancelBtn?.addEventListener('click', cancelConversion);
         
         copyBtn?.addEventListener('click', () => { 
