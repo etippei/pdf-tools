@@ -1,0 +1,12 @@
+{
+  "name": "pdf-tools-blog",
+  "version": "1.0.0",
+  "description": "Blog generator from GitHub Issues",
+  "main": "index.js",
+  "scripts": {
+    "build": "node .github/scripts/generate-blog.js"
+  },
+  "dependencies": {
+    "marked": "^12.0.0"
+  }
+}
