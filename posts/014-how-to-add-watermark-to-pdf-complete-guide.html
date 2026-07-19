@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Add Watermark to PDF - Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="Learn how to add watermark to PDF documents for branding and copyright protection. Add text or image watermarks in seconds. No signup required.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/undefined">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How to Add Watermark to PDF - Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>June 28, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>How to Add Watermark to PDF - Complete Guide</h1>
+<p>Watermarks protect your documents from unauthorized use and reinforce your brand identity. Whether you need to mark documents as &quot;Confidential,&quot; add your company logo, or prevent content theft, adding watermarks is essential for professional document management.</p>
+<h2>Why Add Watermarks to PDF?</h2>
+<ul>
+<li><strong>Copyright protection</strong> - Deters unauthorized copying and distribution</li>
+<li><strong>Brand visibility</strong> - Promotes your company on every page</li>
+<li><strong>Document status</strong> - Mark as &quot;Draft,&quot; &quot;Confidential,&quot; or &quot;Final&quot;</li>
+<li><strong>Professional identity</strong> - Reinforces your brand with logos and text</li>
+<li><strong>Prevent misuse</strong> - Discourages screenshot theft</li>
+</ul>
+<h2>Text Watermark vs Image Watermark</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Text Watermark</th>
+<th>Image Watermark</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Example</strong></td>
+<td>&quot;CONFIDENTIAL&quot;</td>
+<td>Company logo</td>
+</tr>
+<tr>
+<td><strong>Best For</strong></td>
+<td>Status labels, disclaimers</td>
+<td>Branding, logos</td>
+</tr>
+<tr>
+<td><strong>Customization</strong></td>
+<td>Font, size, color, opacity</td>
+<td>Transparency, sizing</td>
+</tr>
+<tr>
+<td><strong>Ease of use</strong></td>
+<td>Very easy</td>
+<td>Easy</td>
+</tr>
+</tbody></table>
+<h2>Step-by-Step Guide</h2>
+<h3>Step 1: Access the PDF Watermark Tool</h3>
+<p>Visit the <a href="https://aipdfly.com/add-watermark">PDF watermark tool</a> on PDFHub.AI. All processing happens locally in your browser - your files never leave your device.</p>
+<h3>Step 2: Upload Your PDF</h3>
+<p>Click the upload area or drag and drop your PDF file. The tool supports files up to 50MB.</p>
+<h3>Step 3: Choose Watermark Type</h3>
+<p>Select either <strong>Text Watermark</strong> or <strong>Image Watermark</strong>:</p>
+<p><strong>Text Watermark Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Text</td>
+<td>Enter any text (e.g., &quot;CONFIDENTIAL&quot;, &quot;DRAFT&quot;)</td>
+</tr>
+<tr>
+<td>Font</td>
+<td>Arial, Times New Roman, Verdana, Custom</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>Small / Medium / Large / Custom</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>Choose any color</td>
+</tr>
+<tr>
+<td>Opacity</td>
+<td>10% to 100%</td>
+</tr>
+</tbody></table>
+<p><strong>Image Watermark Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Image</td>
+<td>Upload PNG, JPG, or GIF</td>
+</tr>
+<tr>
+<td>Opacity</td>
+<td>10% to 100%</td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>Fit to page / Custom size</td>
+</tr>
+</tbody></table>
+<h3>Step 4: Position Your Watermark</h3>
+<p>Choose where to place your watermark:</p>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Center</strong></td>
+<td>Diagonal across the page</td>
+<td>Maximum visibility</td>
+</tr>
+<tr>
+<td><strong>Top Left</strong></td>
+<td>Corner placement</td>
+<td>Subtle branding</td>
+</tr>
+<tr>
+<td><strong>Top Right</strong></td>
+<td>Corner placement</td>
+<td>Subtle branding</td>
+</tr>
+<tr>
+<td><strong>Bottom Left</strong></td>
+<td>Corner placement</td>
+<td>Subtle branding</td>
+</tr>
+<tr>
+<td><strong>Bottom Right</strong></td>
+<td>Corner placement</td>
+<td>Subtle branding</td>
+</tr>
+<tr>
+<td><strong>Tile</strong></td>
+<td>Repeating pattern</td>
+<td>Maximum protection</td>
+</tr>
+<tr>
+<td><strong>Custom</strong></td>
+<td>Manual placement</td>
+<td>Precise positioning</td>
+</tr>
+</tbody></table>
+<h3>Step 5: Choose Page Application</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>All Pages</strong></td>
+<td>Watermark appears on every page</td>
+</tr>
+<tr>
+<td><strong>First Page Only</strong></td>
+<td>Watermark on the cover page only</td>
+</tr>
+<tr>
+<td><strong>Page Range</strong></td>
+<td>Add to specific pages (e.g., 1-10)</td>
+</tr>
+<tr>
+<td><strong>Every X Pages</strong></td>
+<td>Add every 2, 3, or 5 pages</td>
+</tr>
+</tbody></table>
+<h3>Step 6: Apply and Download</h3>
+<p>Click <strong>Add Watermark</strong> to process your document. Once complete, click <strong>Download</strong> to save your watermarked PDF.</p>
+<h2>Pro Tips for Best Results</h2>
+<ul>
+<li><strong>Use subtle opacity</strong> - 15-30% opacity provides protection without distracting from content</li>
+<li><strong>Choose contrasting colors</strong> - Make sure watermark is visible on both light and dark pages</li>
+<li><strong>Consider the purpose</strong> - &quot;Confidential&quot; should be prominent; branding should be subtle</li>
+<li><strong>Test one page</strong> - Preview on a single page before applying to all pages</li>
+<li><strong>Use diagonal placement</strong> - Covers more area and is harder to crop out</li>
+</ul>
+<h2>Common Use Cases</h2>
+<p><strong>Case 1: Protecting Confidential Documents</strong></p>
+<blockquote>
+<p>Add &quot;CONFIDENTIAL&quot; in red, 25% opacity, diagonally across every page.</p>
+</blockquote>
+<p><strong>Case 2: Company Branding</strong></p>
+<blockquote>
+<p>Add your company logo in 15% opacity at the bottom-right of every page.</p>
+</blockquote>
+<p><strong>Case 3: Draft Documents</strong></p>
+<blockquote>
+<p>Mark draft versions with &quot;DRAFT - NOT FOR DISTRIBUTION&quot; in bold, 20% opacity.</p>
+</blockquote>
+<p><strong>Case 4: Copyright Protection</strong></p>
+<blockquote>
+<p>Add &quot;© 2026 Your Company&quot; at the bottom of every page.</p>
+</blockquote>
+<p><strong>Case 5: Client Review</strong></p>
+<blockquote>
+<p>Add &quot;CLIENT REVIEW COPY&quot; to documents sent for approval.</p>
+</blockquote>
+<h2>Watermark Placement Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Placement</th>
+<th>Visibility</th>
+<th>Protection</th>
+<th>Professionalism</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Diagonal</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Center</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Corner</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Tile</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+</tbody></table>
+<h2>Frequently Asked Questions</h2>
+<p><strong>Is adding watermarks really free?</strong> Yes! Free users get 5 watermarked documents per day. Pro users get unlimited processing.</p>
+<p><strong>Does the watermark affect the original content?</strong> No. Watermarks are overlaid on top of the content. The underlying text and images remain unchanged.</p>
+<p><strong>Can I add both text and image watermarks?</strong> Yes, you can add multiple watermarks to the same document.</p>
+<p><strong>Do you store my PDF files?</strong> Never. All processing happens locally in your browser. Your files never leave your device.</p>
+<p><strong>Can I remove a watermark later?</strong> Watermarks can be removed using a PDF editor, but this is difficult. For full removal, use the original file.</p>
+<p><strong>What opacity is best?</strong> 20-30% for readability, 40-50% for strong protection, 70%+ for urgent documents.</p>
+<h2>Try It Now</h2>
+<p>Ready to protect your PDF with watermarks? Visit <a href="https://aipdfly.com/add-watermark">PDFHub.AI Watermark Tool</a> and add watermarks in seconds - no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="/index.html">PDF Protector</a> | <a href="/index.html">PDF Editor</a> | <a href="/index.html">PDF Compressor</a> | <a href="/index.html">PDF Merger</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // Dark mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>
