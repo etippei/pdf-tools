@@ -49,7 +49,7 @@
             <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
             <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
                 <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
-                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-newspaper mr-2"></i> Blog</a>
                 <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
             </div>
             <div class="flex items-center gap-4">
@@ -220,7 +220,6 @@
         </div>
     </footer>
     <script>
-        // 用户菜单
         const userEmail = localStorage.getItem('userEmail');
         const authToken = localStorage.getItem('authToken');
         const isPro = localStorage.getItem('isPro') === 'true';
@@ -245,7 +244,6 @@
             }
         }
         initUserMenu();
-        // Dark mode
         const darkModeToggle = document.getElementById('darkModeToggle');
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.documentElement.classList.add('dark-mode');
@@ -256,11 +254,10 @@
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
             darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
         });
-        // 高亮当前标签
         const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
         document.querySelectorAll('.tab-btn').forEach(btn => {
             const href = btn.getAttribute('href').replace('/', '');
-            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+            if (href === currentPage) {
                 btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
                 btn.classList.remove('text-gray-700');
             } else {
