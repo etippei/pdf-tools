@@ -63,7 +63,7 @@
         <div class="max-w-xl mx-auto mb-8">
             <div class="relative">
                 <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="searchInput" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                <input type="text" id="searchInput" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-800 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
             </div>
         </div>
 
@@ -150,16 +150,12 @@
         });
 
         // ========== 博客数据 ==========
-        // 这些数据由 GitHub Actions 在构建时注入
-        // 对于静态页面，直接写在 JS 中，或者从 posts 目录读取
         const postsData = [];
         let allCategories = [];
 
         // ========== 获取文章列表 ==========
         async function fetchPosts() {
             try {
-                // 尝试从 posts 目录获取文章列表
-                // 由于是静态页面，我们可以通过一个 JSON 文件来获取文章列表
                 const response = await fetch('/posts/index.json');
                 if (response.ok) {
                     const data = await response.json();
@@ -168,9 +164,6 @@
             } catch (e) {
                 console.log('Using fallback post data');
             }
-            
-            // 如果无法获取 JSON，使用默认数据
-            // 注意：实际使用时，应该由 GitHub Actions 生成 posts/index.json
             return [];
         }
 
@@ -179,17 +172,14 @@
             const grid = document.getElementById('postsGrid');
             const noResults = document.getElementById('noResults');
             
-            // 计算所有分类
             const categories = new Set();
             posts.forEach(p => {
                 if (p.category) categories.add(p.category);
             });
             allCategories = Array.from(categories);
             
-            // 生成分类按钮
             renderCategoryButtons(allCategories, category);
             
-            // 过滤文章
             let filtered = posts;
             if (category !== 'all') {
                 filtered = filtered.filter(p => p.category === category);
@@ -202,10 +192,8 @@
                 );
             }
             
-            // 按日期排序（最新的在前）
             filtered.sort((a, b) => new Date(b.created_at || b.date) - new Date(a.created_at || a.date));
             
-            // 渲染
             if (filtered.length === 0) {
                 grid.innerHTML = '';
                 noResults.classList.remove('hidden');
@@ -231,7 +219,6 @@
         // ========== 渲染分类按钮 ==========
         function renderCategoryButtons(categories, activeCategory) {
             const container = document.getElementById('categoryFilters');
-            // 保留 All 按钮
             let html = `<button data-category="all" class="category-btn ${activeCategory === 'all' ? 'active' : ''} px-4 py-2 rounded-full text-sm font-medium ${activeCategory === 'all' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition">All</button>`;
             
             categories.forEach(cat => {
@@ -241,12 +228,10 @@
             
             container.innerHTML = html;
             
-            // 绑定分类按钮事件
             container.querySelectorAll('.category-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const cat = btn.dataset.category;
                     const search = document.getElementById('searchInput').value;
-                    // 更新所有按钮状态
                     container.querySelectorAll('.category-btn').forEach(b => {
                         b.classList.remove('active', 'bg-purple-600', 'text-white');
                         b.classList.add('bg-gray-200', 'text-gray-700');
@@ -258,7 +243,6 @@
             });
         }
 
-        // ========== 工具函数 ==========
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -268,8 +252,6 @@
 
         // ========== 初始化 ==========
         async function init() {
-            // 从页面中提取文章数据（由构建脚本生成）
-            // 这里可以从 posts/index.json 加载
             try {
                 const response = await fetch('/posts/index.json');
                 if (response.ok) {
@@ -277,21 +259,12 @@
                     postsData.push(...(data.posts || []));
                 }
             } catch (e) {
-                console.log('Using embedded post data');
+                console.log('No posts loaded.');
             }
             
-            // 如果还没有数据，使用嵌入的示例数据
-            if (postsData.length === 0) {
-                // 这里的数据应该由构建脚本生成
-                // 目前为空，等待 Actions 生成
-                console.log('No posts loaded. Run build script to generate posts.');
-            }
-            
-            // 渲染
             const search = document.getElementById('searchInput').value;
             renderPosts(postsData, 'all', search);
             
-            // 搜索框事件
             document.getElementById('searchInput').addEventListener('input', (e) => {
                 const search = e.target.value;
                 const activeCategory = document.querySelector('.category-btn.active')?.dataset.category || 'all';
