@@ -1,514 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>if(localStorage.getItem('darkMode')==='enabled'){document.documentElement.classList.add('dark-mode');}</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - CloakImg AI | AI Image Tips & Tutorials</title>
-    <meta name="description" content="Latest articles about AI image upscaling, background removal, compression, and editing tips from CloakImg AI.">
-    <link rel="canonical" href="https://cloakimg.com/blog.html">
-    <link rel="stylesheet" href="common.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-05YWCDS3ND"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-05YWCDS3ND');
-    </script>
-
-    <!-- 结构化数据 - Blog -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Blog",
-        "name": "CloakImg AI Blog",
-        "description": "Latest articles about AI image upscaling, background removal, compression, and editing tips.",
-        "url": "https://cloakimg.com/blog.html"
-    }
-    </script>
-
+    <title>PDF Tips & Tutorials - AIPDFLY Blog</title>
+    <meta name="description" content="Learn how to work with PDF files efficiently. Tips, tutorials, and guides about PDF editing, conversion, and optimization.">
+    <meta name="keywords" content="pdf blog, pdf tips, pdf tutorial, how to edit pdf, pdf guide, document tips">
+    <link rel="canonical" href="https://aipdfly.com/blog.html">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
     <style>
-        .nav-link {
-            font-size: 1.15rem !important;
-            font-weight: 600 !important;
-            padding: 0.7rem 1.4rem !important;
-        }
-        @media (max-width: 768px) {
-            .nav-link { font-size: 0.95rem !important; padding: 0.4rem 0.8rem !important; }
-        }
-        @media (max-width: 480px) {
-            .nav-link { font-size: 0.8rem !important; padding: 0.3rem 0.6rem !important; }
-        }
-
-        .blog-hero {
-            background: linear-gradient(135deg, #f0fdf4, #d1fae5, #a7f3d0) !important;
-            border-radius: 2rem;
-            padding: 2.5rem 2rem;
-            margin-bottom: 2.5rem;
-            text-align: center;
-        }
-        .blog-hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-        .blog-hero p {
-            font-size: 1.1rem;
-            color: #475569;
-        }
-
-        .blog-filter-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-        .filter-btn {
-            padding: 0.5rem 1.2rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 40px;
-            background: white;
-            color: #475569;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-        .filter-btn:hover {
-            border-color: #2563eb;
-            color: #2563eb;
-        }
-        .filter-btn.active {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            border-color: #7c3aed;
-        }
-
-        .blog-grid-full {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.8rem;
-            margin: 1.5rem 0;
-        }
-        .blog-card-full {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.8rem;
-            border: 1px solid #eef2f6;
-            border-left: 4px solid #2563eb;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        .blog-card-full:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-        }
-        .blog-card-full:nth-child(2) { border-left-color: #8b5cf6; }
-        .blog-card-full:nth-child(3) { border-left-color: #059669; }
-        .blog-card-full:nth-child(4) { border-left-color: #d97706; }
-        .blog-card-full:nth-child(5) { border-left-color: #dc2626; }
-        .blog-card-full:nth-child(6) { border-left-color: #7c3aed; }
-
-        .blog-image-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #2563eb15, #7c3aed15);
-            border-radius: 14px;
-            margin-bottom: 1rem;
-            font-size: 1.6rem;
-            color: #2563eb;
-        }
-        .blog-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .blog-category {
-            display: inline-block;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #2563eb;
-            background: #eef2ff;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-            align-self: flex-start;
-            margin-bottom: 0.6rem;
-        }
-        .blog-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.6rem;
-            line-height: 1.4;
-        }
-        .blog-title a {
-            color: #0f172a;
-            text-decoration: none;
-        }
-        .blog-title a:hover {
-            color: #2563eb;
-        }
-        .blog-excerpt {
-            color: #475569;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            flex: 1;
-            margin-bottom: 1rem;
-        }
-        .blog-meta {
-            display: flex;
-            gap: 1.2rem;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-bottom: 0.8rem;
-        }
-        .blog-meta i { margin-right: 4px; }
-        .blog-read-more {
-            color: #2563eb;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            align-self: flex-start;
-        }
-        .blog-read-more:hover {
-            color: #1d4ed8;
-            transform: translateX(4px);
-        }
-
-        .blog-empty {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem 1rem;
-            background: #f8fafc;
-            border-radius: 2rem;
-        }
-        .blog-empty i {
-            color: #94a3b8;
-        }
-        .blog-empty p {
-            color: #64748b;
-        }
-
-        .blog-loading {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-        .blog-loading i {
-            color: #2563eb;
-        }
-        .blog-loading p {
-            color: #94a3b8;
-            margin-top: 1rem;
-        }
-
-        .related-tools {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: #f8fafc;
-            border-radius: 1.5rem;
-            border: 1px solid #e2e8f0;
-        }
-        .related-tools h3 {
-            text-align: center;
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
-        }
-        .related-tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.8rem;
-            text-align: center;
-        }
-        .related-tools-grid a {
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 0.85rem;
-            padding: 0.5rem;
-            border-radius: 8px;
-            background: white;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
-        }
-        .related-tools-grid a:hover {
-            background: #2563eb;
-            color: white;
-            border-color: #2563eb;
-            transform: translateY(-2px);
-        }
-
-        footer {
-            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
-            border-top: 1px solid #e2e8f0;
-            margin-top: 2rem;
-            padding: 1.5rem 0;
-        }
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 0.5rem;
-        }
-        .footer-right { display: flex; gap: 1.5rem; }
-        .footer-right a { color: #475569; text-decoration: none; font-size: 0.85rem; }
-        .footer-right a:hover { color: #2563eb; }
-        .footer-bottom {
-            text-align: center;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            padding-top: 1rem;
-            margin-top: 1rem;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        @media (max-width: 768px) {
-            .blog-hero h1 { font-size: 1.8rem; }
-            .blog-grid-full { grid-template-columns: 1fr; }
-            .related-tools-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-content { flex-direction: column; text-align: center; }
-            .footer-right { flex-wrap: wrap; justify-content: center; }
-        }
+        .blog-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+        
+        .category-btn { transition: all 0.2s ease; }
+        .category-btn.active { background-color: #7c3aed; color: white; }
+        .category-btn:not(.active):hover { background-color: #e5e7eb; }
+        .dark-mode .category-btn:not(.active) { color: #e5e7eb; }
+        .dark-mode .category-btn:not(.active):hover { background-color: #374151; }
+        
+        .blog-card.hidden-card { display: none; }
     </style>
 </head>
-<body>
-<div class="app-container">
-    <header class="site-header">
-        <div class="logo">
-            <h1>CloakImg <span>AI</span></h1>
-            <span>Professional AI Image Toolkit</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">🏠 Home</a>
-            <a href="blog.html" class="nav-link active">📝 Blog</a>
-            <a href="tools.html" class="nav-link">🛠️ Tools</a>
-            <a href="help.html" class="nav-link">❓ Help</a>
-            <a href="pricing.html" class="nav-link">💰 Pricing</a>
-            <a href="account.html" class="nav-link">👤 Account</a>
-        </div>
-        <div class="auth-area" id="authWidget"></div>
-    </header>
+<body class="bg-gray-50">
 
-    <div class="blog-hero">
-        <h1>📝 CloakImg AI Blog</h1>
-        <p>Tips, tutorials & news about AI image processing — updated weekly</p>
-    </div>
-
-    <!-- ===== FILTER BAR ===== -->
-    <div class="blog-filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="Tutorial">Tutorials</button>
-        <button class="filter-btn" data-filter="Tips">Tips</button>
-        <button class="filter-btn" data-filter="Guide">Guides</button>
-        <button class="filter-btn" data-filter="Performance">Performance</button>
-        <button class="filter-btn" data-filter="Trends">Trends</button>
-    </div>
-
-    <!-- ===== BLOG GRID ===== -->
-    <div class="blog-grid-full" id="blogGrid">
-        <!-- 加载中占位 -->
-        <div class="blog-loading">
-            <i class="fas fa-spinner fa-pulse fa-3x"></i>
-            <p>Loading articles...</p>
-        </div>
-    </div>
-
-    <!-- ===== RELATED TOOLS ===== -->
-    <div class="related-tools">
-        <h3><i class="fas fa-link" style="color:#2563eb;"></i> Try Our AI Tools</h3>
-        <div class="related-tools-grid">
-            <a href="tools/id-photo.html">🪪 ID Photo Maker</a>
-            <a href="tools/upscaler.html">✨ AI Upscaler</a>
-            <a href="tools/bg-remover.html">🎨 BG Remover</a>
-            <a href="tools/compressor.html">🗜️ Compressor</a>
-            <a href="tools/convert.html">🔄 PNG to JPG</a>
-            <a href="pricing.html">💰 Upgrade to Pro</a>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-left"><i class="fas fa-microchip"></i> CloakImg AI — 100% Local Processing</div>
-            <div class="footer-right">
-                <a href="pricing.html">Pricing</a>
-                <a href="privacy-policy.html">Privacy</a>
-                <a href="terms-of-service.html">Terms</a>
-                <a href="cookie-policy.html">Cookies</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="blog.html">Blog</a>
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
             </div>
         </div>
-        <div class="footer-bottom">© 2026 CloakImg AI. All rights reserved.</div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-6xl">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">PDF Tips & Tutorials</h1>
+            <p class="text-xl text-gray-600">Learn how to work with PDF files like a pro.</p>
+        </div>
+
+        <!-- ========== 搜索框 ========== -->
+        <div class="max-w-xl mx-auto mb-8">
+            <div class="relative">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+            </div>
+        </div>
+
+        <!-- ========== 分类标签 ========== -->
+        <div id="categoryFilters" class="flex flex-wrap justify-center gap-2 mb-8">
+            <button data-category="all" class="category-btn active px-4 py-2 rounded-full text-sm font-medium bg-purple-600 text-white">All</button>
+            <!-- 分类按钮由 JavaScript 动态生成 -->
+        </div>
+
+        <!-- ========== 文章列表 ========== -->
+        <div id="postsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 文章由 JavaScript 动态渲染 -->
+        </div>
+
+        <!-- ========== 无结果提示 ========== -->
+        <div id="noResults" class="text-center py-12 hidden">
+            <i class="fas fa-newspaper text-5xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500">No articles found.</p>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
     </footer>
-</div>
 
-<script src="common.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 渲染认证组件
-        if (typeof window.ForgeAuth !== 'undefined' && window.ForgeAuth.renderAuthWidget) {
-            window.ForgeAuth.renderAuthWidget();
-        }
-
-        // ============================================================
-        // 动态加载博客文章
-        // ============================================================
-        const grid = document.getElementById('blogGrid');
-
-        // 检查是否已有文章卡片（由 Actions 脚本生成）
-        function hasArticles() {
-            const cards = grid.querySelectorAll('.blog-card-full');
-            return cards.length > 0;
-        }
-
-        // 从文件名推断分类
-        function inferCategory(filename) {
-            const lower = filename.toLowerCase();
-            if (lower.includes('tutorial')) return 'Tutorial';
-            if (lower.includes('guide')) return 'Guide';
-            if (lower.includes('tip')) return 'Tips';
-            if (lower.includes('performance')) return 'Performance';
-            if (lower.includes('trend')) return 'Trends';
-            return 'Article';
-        }
-
-        // 解析日期从文件名或内容
-        function parseDate(filename) {
-            const match = filename.match(/(\d{4}-\d{2}-\d{2})/);
-            if (match) {
-                const d = new Date(match[1]);
-                if (!isNaN(d)) {
-                    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                }
+    <script>
+        // ========== 用户菜单 ==========
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
             }
-            return new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        initUserMenu();
+
+        // ========== 暗黑模式 ==========
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // ========== 高亮当前标签 ==========
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+
+        // ========== 博客数据 ==========
+        // 这些数据由 GitHub Actions 在构建时注入
+        // 对于静态页面，直接写在 JS 中，或者从 posts 目录读取
+        const postsData = [];
+        let allCategories = [];
+
+        // ========== 获取文章列表 ==========
+        async function fetchPosts() {
+            try {
+                // 尝试从 posts 目录获取文章列表
+                // 由于是静态页面，我们可以通过一个 JSON 文件来获取文章列表
+                const response = await fetch('/posts/index.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.posts || [];
+                }
+            } catch (e) {
+                console.log('Using fallback post data');
+            }
+            
+            // 如果无法获取 JSON，使用默认数据
+            // 注意：实际使用时，应该由 GitHub Actions 生成 posts/index.json
+            return [];
         }
 
-        // 加载文章列表
-        async function loadArticles() {
-            if (hasArticles()) {
+        // ========== 渲染文章 ==========
+        function renderPosts(posts, category = 'all', search = '') {
+            const grid = document.getElementById('postsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            // 计算所有分类
+            const categories = new Set();
+            posts.forEach(p => {
+                if (p.category) categories.add(p.category);
+            });
+            allCategories = Array.from(categories);
+            
+            // 生成分类按钮
+            renderCategoryButtons(allCategories, category);
+            
+            // 过滤文章
+            let filtered = posts;
+            if (category !== 'all') {
+                filtered = filtered.filter(p => p.category === category);
+            }
+            if (search.trim()) {
+                const s = search.toLowerCase().trim();
+                filtered = filtered.filter(p => 
+                    p.title.toLowerCase().includes(s) || 
+                    p.excerpt.toLowerCase().includes(s)
+                );
+            }
+            
+            // 按日期排序（最新的在前）
+            filtered.sort((a, b) => new Date(b.created_at || b.date) - new Date(a.created_at || a.date));
+            
+            // 渲染
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
                 return;
             }
-
-            try {
-                // 尝试获取 blog/posts/ 目录下的文件列表
-                const knownPosts = [
-                    'how-to-upscale-images-without-losing-quality-a-complete-guide'
-                ];
-
-                let articles = [];
-                for (const slug of knownPosts) {
-                    try {
-                        const check = await fetch(`blog/posts/${slug}.html`, { method: 'HEAD' });
-                        if (check.ok) {
-                            const title = slug
-                                .replace(/-/g, ' ')
-                                .replace(/\b\w/g, l => l.toUpperCase());
-                            articles.push({
-                                slug: slug,
-                                title: title,
-                                category: inferCategory(slug),
-                                date: parseDate(slug)
-                            });
-                        }
-                    } catch (e) {
-                        // 忽略
-                    }
-                }
-
-                if (articles.length === 0) {
-                    grid.innerHTML = `
-                        <div class="blog-empty">
-                            <i class="fas fa-newspaper fa-3x"></i>
-                            <p style="margin-top:1rem;">No articles published yet.</p>
-                            <p style="color:#94a3b8; font-size:0.85rem;">Check back soon for AI image editing tips!</p>
+            noResults.classList.add('hidden');
+            
+            grid.innerHTML = filtered.map(post => `
+                <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">${escapeHtml(post.category || 'Tips')}</span>
+                            <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>${post.date || 'Recent'}</span>
                         </div>
-                    `;
-                    return;
-                }
-
-                let cards = '';
-                articles.forEach(p => {
-                    const readTime = Math.max(1, Math.round(p.title.length / 30));
-                    cards += `
-                        <div class="blog-card-full">
-                            <div class="blog-image-icon"><i class="fas fa-file-alt"></i></div>
-                            <div class="blog-content">
-                                <div class="blog-category">${p.category}</div>
-                                <h3 class="blog-title"><a href="blog/posts/${p.slug}.html">${p.title}</a></h3>
-                                <p class="blog-excerpt">Read this article to learn more about AI image processing.</p>
-                                <div class="blog-meta">
-                                    <span><i class="far fa-calendar"></i> ${p.date}</span>
-                                    <span><i class="far fa-clock"></i> ${readTime} min read</span>
-                                </div>
-                                <a href="blog/posts/${p.slug}.html" class="blog-read-more">Read Full Article →</a>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                grid.innerHTML = cards;
-
-            } catch (error) {
-                console.log('Error loading articles:', error);
-                grid.innerHTML = `
-                    <div class="blog-empty">
-                        <i class="fas fa-newspaper fa-3x"></i>
-                        <p style="margin-top:1rem;">No articles published yet.</p>
-                        <p style="color:#94a3b8; font-size:0.85rem;">Check back soon for AI image editing tips!</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">${escapeHtml(post.title)}</h3>
+                        <p class="text-gray-500 mb-4">${escapeHtml(post.excerpt || post.title)}</p>
+                        <a href="${post.url || '/posts/' + post.file}" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
                     </div>
-                `;
-            }
+                </div>
+            `).join('');
         }
 
-        // ===== 分类筛选功能 =====
-        function initFilters() {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.dataset.filter;
-
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const cards = document.querySelectorAll('.blog-card-full');
-                    cards.forEach(card => {
-                        if (filter === 'all') {
-                            card.style.display = 'flex';
-                        } else {
-                            const category = card.querySelector('.blog-category');
-                            if (category) {
-                                card.style.display = category.textContent === filter ? 'flex' : 'none';
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        }
+        // ========== 渲染分类按钮 ==========
+        function renderCategoryButtons(categories, activeCategory) {
+            const container = document.getElementById('categoryFilters');
+            // 保留 All 按钮
+            let html = `<button data-category="all" class="category-btn ${activeCategory === 'all' ? 'active' : ''} px-4 py-2 rounded-full text-sm font-medium ${activeCategory === 'all' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition">All</button>`;
+            
+            categories.forEach(cat => {
+                const isActive = activeCategory === cat;
+                html += `<button data-category="${escapeHtml(cat)}" class="category-btn ${isActive ? 'active' : ''} px-4 py-2 rounded-full text-sm font-medium ${isActive ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition">${escapeHtml(cat)}</button>`;
+            });
+            
+            container.innerHTML = html;
+            
+            // 绑定分类按钮事件
+            container.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const cat = btn.dataset.category;
+                    const search = document.getElementById('searchInput').value;
+                    // 更新所有按钮状态
+                    container.querySelectorAll('.category-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-purple-600', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-700');
                     });
+                    btn.classList.add('active', 'bg-purple-600', 'text-white');
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                    renderPosts(postsData, cat, search);
                 });
             });
         }
 
-        // ===== 执行加载 =====
-        setTimeout(() => {
-            loadArticles();
-            initFilters();
-        }, 500);
-    });
-</script>
+        // ========== 工具函数 ==========
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ========== 初始化 ==========
+        async function init() {
+            // 从页面中提取文章数据（由构建脚本生成）
+            // 这里可以从 posts/index.json 加载
+            try {
+                const response = await fetch('/posts/index.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    postsData.push(...(data.posts || []));
+                }
+            } catch (e) {
+                console.log('Using embedded post data');
+            }
+            
+            // 如果还没有数据，使用嵌入的示例数据
+            if (postsData.length === 0) {
+                // 这里的数据应该由构建脚本生成
+                // 目前为空，等待 Actions 生成
+                console.log('No posts loaded. Run build script to generate posts.');
+            }
+            
+            // 渲染
+            const search = document.getElementById('searchInput').value;
+            renderPosts(postsData, 'all', search);
+            
+            // 搜索框事件
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                const search = e.target.value;
+                const activeCategory = document.querySelector('.category-btn.active')?.dataset.category || 'all';
+                renderPosts(postsData, activeCategory, search);
+            });
+        }
+
+        init();
+    </script>
 </body>
 </html>
