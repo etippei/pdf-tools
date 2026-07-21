@@ -1,607 +1,514 @@
 <!DOCTYPE html>
 <html lang="en">
-<script>if(localStorage.getItem('darkMode')==='enabled'){document.documentElement.classList.add('dark-mode');}</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Tips & Tutorials - AIPDFLY Blog</title>
-    <meta name="description" content="Learn how to work with PDF files efficiently. Tips, tutorials, and guides about PDF editing, conversion, and optimization.">
-    <meta name="keywords" content="pdf blog, pdf tips, pdf tutorial, how to edit pdf, pdf guide, document tips">
-    <link rel="canonical" href="https://aipdfly.com/blog.html">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/dark-mode.css">
-    <script src="/darkmode.js"></script>
-    
+    <title>Blog - CloakImg AI | AI Image Tips & Tutorials</title>
+    <meta name="description" content="Latest articles about AI image upscaling, background removal, compression, and editing tips from CloakImg AI.">
+    <link rel="canonical" href="https://cloakimg.com/blog.html">
+    <link rel="stylesheet" href="common.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-05YWCDS3ND"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-05YWCDS3ND');
+    </script>
+
+    <!-- 结构化数据 - Blog -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "CloakImg AI Blog",
+        "description": "Latest articles about AI image upscaling, background removal, compression, and editing tips.",
+        "url": "https://cloakimg.com/blog.html"
+    }
+    </script>
+
     <style>
-        .blog-card { transition: transform 0.2s, box-shadow 0.2s; }
-        .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
-        #darkModeToggle { transition: all 0.2s ease; }
-        #darkModeToggle:hover { transform: scale(1.05); }
+        .nav-link {
+            font-size: 1.15rem !important;
+            font-weight: 600 !important;
+            padding: 0.7rem 1.4rem !important;
+        }
+        @media (max-width: 768px) {
+            .nav-link { font-size: 0.95rem !important; padding: 0.4rem 0.8rem !important; }
+        }
+        @media (max-width: 480px) {
+            .nav-link { font-size: 0.8rem !important; padding: 0.3rem 0.6rem !important; }
+        }
+
+        .blog-hero {
+            background: linear-gradient(135deg, #f0fdf4, #d1fae5, #a7f3d0) !important;
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        .blog-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .blog-hero p {
+            font-size: 1.1rem;
+            color: #475569;
+        }
+
+        .blog-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .filter-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            border-color: #7c3aed;
+        }
+
+        .blog-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.8rem;
+            margin: 1.5rem 0;
+        }
+        .blog-card-full {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            border: 1px solid #eef2f6;
+            border-left: 4px solid #2563eb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card-full:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+        .blog-card-full:nth-child(2) { border-left-color: #8b5cf6; }
+        .blog-card-full:nth-child(3) { border-left-color: #059669; }
+        .blog-card-full:nth-child(4) { border-left-color: #d97706; }
+        .blog-card-full:nth-child(5) { border-left-color: #dc2626; }
+        .blog-card-full:nth-child(6) { border-left-color: #7c3aed; }
+
+        .blog-image-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2563eb15, #7c3aed15);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            color: #2563eb;
+        }
+        .blog-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2563eb;
+            background: #eef2ff;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            align-self: flex-start;
+            margin-bottom: 0.6rem;
+        }
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+        .blog-title a {
+            color: #0f172a;
+            text-decoration: none;
+        }
+        .blog-title a:hover {
+            color: #2563eb;
+        }
+        .blog-excerpt {
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+        .blog-meta {
+            display: flex;
+            gap: 1.2rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.8rem;
+        }
+        .blog-meta i { margin-right: 4px; }
+        .blog-read-more {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            align-self: flex-start;
+        }
+        .blog-read-more:hover {
+            color: #1d4ed8;
+            transform: translateX(4px);
+        }
+
+        .blog-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 1rem;
+            background: #f8fafc;
+            border-radius: 2rem;
+        }
+        .blog-empty i {
+            color: #94a3b8;
+        }
+        .blog-empty p {
+            color: #64748b;
+        }
+
+        .blog-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        .blog-loading i {
+            color: #2563eb;
+        }
+        .blog-loading p {
+            color: #94a3b8;
+            margin-top: 1rem;
+        }
+
+        .related-tools {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .related-tools h3 {
+            text-align: center;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        .related-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.8rem;
+            text-align: center;
+        }
+        .related-tools-grid a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        .related-tools-grid a:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+            border-top: 1px solid #e2e8f0;
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+        }
+        .footer-right { display: flex; gap: 1.5rem; }
+        .footer-right a { color: #475569; text-decoration: none; font-size: 0.85rem; }
+        .footer-right a:hover { color: #2563eb; }
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        @media (max-width: 768px) {
+            .blog-hero h1 { font-size: 1.8rem; }
+            .blog-grid-full { grid-template-columns: 1fr; }
+            .related-tools-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-right { flex-wrap: wrap; justify-content: center; }
+        }
     </style>
 </head>
-<body class="bg-gray-50">
-
-    <header class="bg-white shadow-sm sticky top-0 z-10">
-        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
-            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
-            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
-                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
-                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
-                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
-            </div>
-            <div class="flex items-center gap-4">
-                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
-                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
-                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
-                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
-            </div>
+<body>
+<div class="app-container">
+    <header class="site-header">
+        <div class="logo">
+            <h1>CloakImg <span>AI</span></h1>
+            <span>Professional AI Image Toolkit</span>
         </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="blog.html" class="nav-link active">📝 Blog</a>
+            <a href="tools.html" class="nav-link">🛠️ Tools</a>
+            <a href="help.html" class="nav-link">❓ Help</a>
+            <a href="pricing.html" class="nav-link">💰 Pricing</a>
+            <a href="account.html" class="nav-link">👤 Account</a>
+        </div>
+        <div class="auth-area" id="authWidget"></div>
     </header>
 
-    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-6xl">
-        <div class="text-center mb-12"><h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">PDF Tips & Tutorials</h1><p class="text-xl text-gray-600">Learn how to work with PDF files like a pro.</p></div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 20, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to Word with WPS Office: The Complete Local Conversion Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert PDF to Word using WPS Office without uploading sensitive files to third-party servers. Complete guide with tips and troubleshooting.</p>
-                    <a href="/posts/041-how-to-convert-pdf-to-word-with-wps-office-the-complete-loca.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 18, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">PDF to Word Conversion: Which Method Works Best? — Complete Guide (2026)</h3>
-                    <p class="text-gray-500 mb-4">A comprehensive comparison of PDF to Word methods: Microsoft Word, online tools, desktop software, WPS Office, and more. Includes scanning-specific solutions, format preservation tips, and privacy considerations.</p>
-                    <a href="/posts/040-pdf-to-word-conversion-which-method-works-best-complete-guid.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 16, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to Word – The Complete Guide (2026)</h3>
-                    <p class="text-gray-500 mb-4">The complete guide to converting PDF to Word while preserving formatting, fonts, and layout. Covers digital PDFs, scanned documents, common problems, and solutions.</p>
-                    <a href="/posts/039-how-to-convert-pdf-to-word-the-complete-guide-2026.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 13, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to Word – The Complete Guide (2026)</h3>
-                    <p class="text-gray-500 mb-4">The complete guide to converting PDF to Word while preserving formatting, fonts, and layout. Covers digital PDFs, scanned documents, common problems, and solutions.</p>
-                    <a href="/posts/038-how-to-convert-pdf-to-word-the-complete-guide-2026.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 9, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to Word - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert PDF to Word while preserving formatting, fonts, and layout. Perfect for editing documents. No signup required.</p>
-                    <a href="/posts/037-how-to-convert-pdf-to-word-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 9, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Common PDF Myths Debunked - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover the truth behind 5 common PDF myths. Learn what&#39;s real and what&#39;s not about PDF files and online tools. No signup required.</p>
-                    <a href="/posts/036-5-common-pdf-myths-debunked-quick-tips.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 8, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Tips for Faster PDF Processing - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 tips to speed up your PDF processing. Save time and work more efficiently with these simple tricks. No signup required.</p>
-                    <a href="/posts/035-5-tips-for-faster-pdf-processing-quick-tips.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 8, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Reasons Why You Should Use Online PDF Tools Instead of Desktop Software - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 compelling reasons to switch from desktop PDF software to online tools. Save money, time, and hassle. No signup required.</p>
-                    <a href="/posts/034-5-reasons-why-you-should-use-online-pdf-tools-instead-of-des.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 7, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Common PDF Workflows Made Easy with Online Tools - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 common PDF workflows that used to be complicated. Learn how online tools can simplify document management. No signup required.</p>
-                    <a href="/posts/033-5-common-pdf-workflows-made-easy-with-online-tools-quick-tip.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 7, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Quick Ways to Reduce PDF File Size Without Losing Quality - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 quick ways to reduce PDF file size without losing quality. Perfect for email attachments and faster uploads. No signup required.</p>
-                    <a href="/posts/032-5-quick-ways-to-reduce-pdf-file-size-without-losing-quality-.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 5, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Ways to Reduce PDF File Size Without Losing Quality - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 effective ways to reduce PDF file size without sacrificing quality. Perfect for email, uploads, and storage. No signup required.</p>
-                    <a href="/posts/031-5-ways-to-reduce-pdf-file-size-without-losing-quality-quick-.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 4, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Ways to Make Your PDFs More Accessible - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Learn 5 simple ways to make your PDFs more accessible for everyone. Create documents that work for people with disabilities. No signup required.</p>
-                    <a href="/posts/030-5-ways-to-make-your-pdfs-more-accessible-quick-tips.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 4, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Edit PDF Text - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to edit PDF text easily without breaking formatting. Fix typos, update content, and modify text in any PDF. No signup required.</p>
-                    <a href="/posts/029-how-to-edit-pdf-text-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 4, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to PowerPoint - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert PDF to PowerPoint and turn static documents into editable presentations. Perfect for meetings and pitches. No signup required.</p>
-                    <a href="/posts/028-how-to-convert-pdf-to-powerpoint-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 3, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">PDF vs Word: Which Format Should You Use? - Quick Guide</h3>
-                    <p class="text-gray-500 mb-4">Not sure whether to use PDF or Word? This guide helps you choose the right format for every situation. Make better document decisions.</p>
-                    <a href="/posts/027-pdf-vs-word-which-format-should-you-use-quick-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 3, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Create a Fillable PDF Form - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to create fillable PDF forms that people can complete electronically. Perfect for applications, surveys, and registrations. No signup required.</p>
-                    <a href="/posts/026-how-to-create-a-fillable-pdf-form-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 2, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Add Hyperlinks to PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to add hyperlinks to PDF documents. Create clickable links for navigation, websites, and email. Perfect for interactive PDFs. No signup required.</p>
-                    <a href="/posts/025-how-to-add-hyperlinks-to-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 2, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to Excel - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert PDF to Excel and extract tables, numbers, and data for analysis. Perfect for financial reports and spreadsheets. No signup required.</p>
-                    <a href="/posts/024-how-to-convert-pdf-to-excel-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 1, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Delete Pages from PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to delete pages from PDF quickly and easily. Remove unwanted, blank, or duplicate pages from any document. No signup required.</p>
-                    <a href="/posts/023-how-to-delete-pages-from-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 1, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert Word to PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert Word to PDF while preserving formatting, fonts, and layout. Perfect for sharing professional documents. No signup required.</p>
-                    <a href="/posts/022-how-to-convert-word-to-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>July 1, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Reasons to Use Online PDF Tools Instead of Desktop Software - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 reasons why online PDF tools are better than desktop software. Save time, money, and hassle with browser-based solutions. No signup required.</p>
-                    <a href="/posts/021-5-reasons-to-use-online-pdf-tools-instead-of-desktop-softwar.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Guide</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 30, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Compare Two PDFs - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to compare two PDFs and spot differences instantly. Perfect for contracts, legal documents, and version control. No signup required.</p>
-                    <a href="/posts/020-how-to-compare-two-pdfs-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Guide</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 30, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Repair Corrupted PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to repair corrupted PDF files and recover your data. Fix damaged, unopenable, or error-prone PDFs. No signup required.</p>
-                    <a href="/posts/019-how-to-repair-corrupted-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 30, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Signs You Need a PDF Tool (And Don&#39;t Know It Yet) - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 signs that you need a PDF tool but don&#39;t realize it yet. Stop wasting time with manual workarounds. No signup required.</p>
-                    <a href="/posts/018-5-signs-you-need-a-pdf-tool-and-dont-know-it-yet-quick-tips.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 29, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to OCR a PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to OCR a PDF and make scanned documents searchable and editable. Turn image-based PDFs into text you can copy and search. No signup required.</p>
-                    <a href="/posts/017-how-to-ocr-a-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 29, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Flatten PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to flatten a PDF to prevent editing and ensure consistent display across all devices. Perfect for finalizing documents. No signup required.</p>
-                    <a href="/posts/016-how-to-flatten-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 29, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Common PDF Mistakes and How to Avoid Them - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 common PDF mistakes that waste your time and how to avoid them. Learn the right way to handle PDFs like a pro. No signup required.</p>
-                    <a href="/posts/015-5-common-pdf-mistakes-and-how-to-avoid-them-quick-tips.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 28, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Add Watermark to PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to add watermark to PDF documents for branding and copyright protection. Add text or image watermarks in seconds. No signup required.</p>
-                    <a href="/posts/014-how-to-add-watermark-to-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 28, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Add Image to PDF - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to insert images into PDF files easily. Add logos, photos, and graphics to any page. No signup required, 100% free.</p>
-                    <a href="/posts/013-how-to-add-image-to-pdf-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 27, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to JPG - Quick Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert PDF to JPG images quickly. Turn each page into a high-quality image for sharing or presentations. No signup required.</p>
-                    <a href="/posts/012-how-to-convert-pdf-to-jpg-quick-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Guide</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 27, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Sign PDF Documents - Digital Signature Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to sign PDF documents digitally without printing or scanning. Add electronic signatures quickly and securely. No signup required.</p>
-                    <a href="/posts/011-how-to-sign-pdf-documents-digital-signature-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tip</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 25, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">5 Tips to Edit PDF Files Like a Pro - Quick Tips</h3>
-                    <p class="text-gray-500 mb-4">Discover 5 pro tips to edit PDF files faster and smarter. Learn shortcuts, hidden features, and time-saving tricks. No signup required.</p>
-                    <a href="/posts/010-5-tips-to-edit-pdf-files-like-a-pro-quick-tips.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Guide</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 25, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Remove Password from PDF - Quick Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to remove password from PDF files when you have the password. Unlock protected PDFs for editing, printing, and sharing. No signup required.</p>
-                    <a href="/posts/009-how-to-remove-password-from-pdf-quick-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Guide</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 24, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Protect PDF with Password - Security Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to protect PDF with password and keep your documents secure. Add encryption to sensitive files in seconds. No signup required.</p>
-                    <a href="/posts/008-how-to-protect-pdf-with-password-security-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 24, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Split PDF into Multiple Files - Quick Tutorial</h3>
-                    <p class="text-gray-500 mb-4">Learn how to split PDF into multiple files quickly. Divide large PDFs by page ranges or extract chapters. No signup required, 100% free.</p>
-                    <a href="/posts/007-how-to-split-pdf-into-multiple-files-quick-tutorial.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 17, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Extract Pages from PDF - Quick Tutorial</h3>
-                    <p class="text-gray-500 mb-4">Learn how to extract pages from PDF documents quickly. Save specific pages as separate PDFs. No signup required, 100% free.</p>
-                    <a href="/posts/006-how-to-extract-pages-from-pdf-quick-tutorial.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 17, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Rotate PDF Pages Permanently - Quick Tutorial</h3>
-                    <p class="text-gray-500 mb-4">Learn how to rotate PDF pages permanently and save the changes. Fix upside-down or sideways pages in seconds. No signup required.</p>
-                    <a href="/posts/005-how-to-rotate-pdf-pages-permanently-quick-tutorial.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 12, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Add Page Numbers to PDF Documents - Quick Tutorial</h3>
-                    <p class="text-gray-500 mb-4">Learn how to add page numbers to PDF documents for free. Perfect for reports, ebooks, and presentations. No signup required.</p>
-                    <a href="/posts/004-how-to-add-page-numbers-to-pdf-documents-quick-tutorial.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 10, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Convert PDF to Word for Free - Complete Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to convert PDF to Word for free without losing formatting. No signup required, 100% secure local conversion.</p>
-                    <a href="/posts/003-how-to-convert-pdf-to-word-for-free-complete-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 9, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Merge PDF Files for Free - Step by Step Guide</h3>
-                    <p class="text-gray-500 mb-4">Learn how to merge multiple PDF files into one document for free. No signup required, 100% secure local processing.</p>
-                    <a href="/posts/002-how-to-merge-pdf-files-for-free-step-by-step-guide.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
-            <div class="blog-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-600 rounded-full">Tutorial</span>
-                        <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>June 5, 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Compress PDF Without Losing Quality</h3>
-                    <p class="text-gray-500 mb-4">Learn how to reduce PDF file size while keeping text sharp and images clear. Step-by-step guide with tips.</p>
-                    <a href="/posts/001-how-to-compress-pdf-without-losing-quality.html" class="text-purple-600 font-medium hover:text-purple-700 cursor-pointer">Read More <i class="fas fa-arrow-right text-sm"></i></a>
-                </div>
-            </div>
-            
+    <div class="blog-hero">
+        <h1>📝 CloakImg AI Blog</h1>
+        <p>Tips, tutorials & news about AI image processing — updated weekly</p>
+    </div>
+
+    <!-- ===== FILTER BAR ===== -->
+    <div class="blog-filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Tutorial">Tutorials</button>
+        <button class="filter-btn" data-filter="Tips">Tips</button>
+        <button class="filter-btn" data-filter="Guide">Guides</button>
+        <button class="filter-btn" data-filter="Performance">Performance</button>
+        <button class="filter-btn" data-filter="Trends">Trends</button>
+    </div>
+
+    <!-- ===== BLOG GRID ===== -->
+    <div class="blog-grid-full" id="blogGrid">
+        <!-- 加载中占位 -->
+        <div class="blog-loading">
+            <i class="fas fa-spinner fa-pulse fa-3x"></i>
+            <p>Loading articles...</p>
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
-        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
-            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
-            <p class="mt-2">
-                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
-                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
-                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
-            </p>
+    <!-- ===== RELATED TOOLS ===== -->
+    <div class="related-tools">
+        <h3><i class="fas fa-link" style="color:#2563eb;"></i> Try Our AI Tools</h3>
+        <div class="related-tools-grid">
+            <a href="tools/id-photo.html">🪪 ID Photo Maker</a>
+            <a href="tools/upscaler.html">✨ AI Upscaler</a>
+            <a href="tools/bg-remover.html">🎨 BG Remover</a>
+            <a href="tools/compressor.html">🗜️ Compressor</a>
+            <a href="tools/convert.html">🔄 PNG to JPG</a>
+            <a href="pricing.html">💰 Upgrade to Pro</a>
         </div>
-    </footer>
+    </div>
 
-    <script>
-        const userEmail = localStorage.getItem('userEmail');
-        const authToken = localStorage.getItem('authToken');
-        const isPro = localStorage.getItem('isPro') === 'true';
-        const userSection = document.getElementById('userSection');
-        function initUserMenu() {
-            if (!userSection) return;
-            if (userEmail && authToken) {
-                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
-                setTimeout(() => {
-                    const container = document.getElementById('userMenuContainer');
-                    const btn = document.getElementById('userMenuBtn');
-                    const dropdown = document.getElementById('userDropdown');
-                    if (btn && dropdown) {
-                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
-                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left"><i class="fas fa-microchip"></i> CloakImg AI — 100% Local Processing</div>
+            <div class="footer-right">
+                <a href="pricing.html">Pricing</a>
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms-of-service.html">Terms</a>
+                <a href="cookie-policy.html">Cookies</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 CloakImg AI. All rights reserved.</div>
+    </footer>
+</div>
+
+<script src="common.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 渲染认证组件
+        if (typeof window.ForgeAuth !== 'undefined' && window.ForgeAuth.renderAuthWidget) {
+            window.ForgeAuth.renderAuthWidget();
+        }
+
+        // ============================================================
+        // 动态加载博客文章
+        // ============================================================
+        const grid = document.getElementById('blogGrid');
+
+        // 检查是否已有文章卡片（由 Actions 脚本生成）
+        function hasArticles() {
+            const cards = grid.querySelectorAll('.blog-card-full');
+            return cards.length > 0;
+        }
+
+        // 从文件名推断分类
+        function inferCategory(filename) {
+            const lower = filename.toLowerCase();
+            if (lower.includes('tutorial')) return 'Tutorial';
+            if (lower.includes('guide')) return 'Guide';
+            if (lower.includes('tip')) return 'Tips';
+            if (lower.includes('performance')) return 'Performance';
+            if (lower.includes('trend')) return 'Trends';
+            return 'Article';
+        }
+
+        // 解析日期从文件名或内容
+        function parseDate(filename) {
+            const match = filename.match(/(\d{4}-\d{2}-\d{2})/);
+            if (match) {
+                const d = new Date(match[1]);
+                if (!isNaN(d)) {
+                    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                }
+            }
+            return new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // 加载文章列表
+        async function loadArticles() {
+            if (hasArticles()) {
+                return;
+            }
+
+            try {
+                // 尝试获取 blog/posts/ 目录下的文件列表
+                const knownPosts = [
+                    'how-to-upscale-images-without-losing-quality-a-complete-guide'
+                ];
+
+                let articles = [];
+                for (const slug of knownPosts) {
+                    try {
+                        const check = await fetch(`blog/posts/${slug}.html`, { method: 'HEAD' });
+                        if (check.ok) {
+                            const title = slug
+                                .replace(/-/g, ' ')
+                                .replace(/\b\w/g, l => l.toUpperCase());
+                            articles.push({
+                                slug: slug,
+                                title: title,
+                                category: inferCategory(slug),
+                                date: parseDate(slug)
+                            });
+                        }
+                    } catch (e) {
+                        // 忽略
                     }
-                    const logout = document.getElementById('logoutBtn');
-                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
-                }, 100);
-            } else {
-                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+                }
+
+                if (articles.length === 0) {
+                    grid.innerHTML = `
+                        <div class="blog-empty">
+                            <i class="fas fa-newspaper fa-3x"></i>
+                            <p style="margin-top:1rem;">No articles published yet.</p>
+                            <p style="color:#94a3b8; font-size:0.85rem;">Check back soon for AI image editing tips!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let cards = '';
+                articles.forEach(p => {
+                    const readTime = Math.max(1, Math.round(p.title.length / 30));
+                    cards += `
+                        <div class="blog-card-full">
+                            <div class="blog-image-icon"><i class="fas fa-file-alt"></i></div>
+                            <div class="blog-content">
+                                <div class="blog-category">${p.category}</div>
+                                <h3 class="blog-title"><a href="blog/posts/${p.slug}.html">${p.title}</a></h3>
+                                <p class="blog-excerpt">Read this article to learn more about AI image processing.</p>
+                                <div class="blog-meta">
+                                    <span><i class="far fa-calendar"></i> ${p.date}</span>
+                                    <span><i class="far fa-clock"></i> ${readTime} min read</span>
+                                </div>
+                                <a href="blog/posts/${p.slug}.html" class="blog-read-more">Read Full Article →</a>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = cards;
+
+            } catch (error) {
+                console.log('Error loading articles:', error);
+                grid.innerHTML = `
+                    <div class="blog-empty">
+                        <i class="fas fa-newspaper fa-3x"></i>
+                        <p style="margin-top:1rem;">No articles published yet.</p>
+                        <p style="color:#94a3b8; font-size:0.85rem;">Check back soon for AI image editing tips!</p>
+                    </div>
+                `;
             }
         }
-        initUserMenu();
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.documentElement.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+
+        // ===== 分类筛选功能 =====
+        function initFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const cards = document.querySelectorAll('.blog-card-full');
+                    cards.forEach(card => {
+                        if (filter === 'all') {
+                            card.style.display = 'flex';
+                        } else {
+                            const category = card.querySelector('.blog-category');
+                            if (category) {
+                                card.style.display = category.textContent === filter ? 'flex' : 'none';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
         }
-        darkModeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        });
-        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            const href = btn.getAttribute('href').replace('/', '');
-            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
-                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
-                btn.classList.remove('text-gray-700');
-            } else {
-                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
-                btn.classList.add('text-gray-700');
-            }
-        });
-    </script>
+
+        // ===== 执行加载 =====
+        setTimeout(() => {
+            loadArticles();
+            initFilters();
+        }, 500);
+    });
+</script>
 </body>
 </html>
