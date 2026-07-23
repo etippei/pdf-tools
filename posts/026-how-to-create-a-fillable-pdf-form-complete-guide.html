@@ -1,1 +1,465 @@
-<!DOCTYPE html>...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create a Fillable PDF Form - Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="Learn how to create fillable PDF forms that people can complete electronically. Perfect for applications, surveys, and registrations. No signup required.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How to Create a Fillable PDF Form - Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>July 3, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>How to Create a Fillable PDF Form - Complete Guide</h1>
+<p>Paper forms are outdated. They need to be printed, filled out by hand, scanned, and emailed back. Digital fillable forms are faster, easier, and more professional.</p>
+<p>This guide shows you how to create fillable PDF forms that anyone can complete on any device.</p>
+<h2>Why Create Fillable PDF Forms?</h2>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Save time</strong></td>
+<td>No printing, scanning, or mailing</td>
+</tr>
+<tr>
+<td><strong>Reduce errors</strong></td>
+<td>Clear fields and validation</td>
+</tr>
+<tr>
+<td><strong>Professional appearance</strong></td>
+<td>Branded, polished documents</td>
+</tr>
+<tr>
+<td><strong>Easy collection</strong></td>
+<td>Email or share forms instantly</td>
+</tr>
+<tr>
+<td><strong>Complete on any device</strong></td>
+<td>Works on computers, tablets, and phones</td>
+</tr>
+<tr>
+<td><strong>No coding required</strong></td>
+<td>Simple point-and-click creation</td>
+</tr>
+</tbody></table>
+<h2>Types of Form Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Text Field</strong></td>
+<td>Single line of text</td>
+<td>Name, Email, Phone</td>
+</tr>
+<tr>
+<td><strong>Text Area</strong></td>
+<td>Multiple lines of text</td>
+<td>Comments, Address</td>
+</tr>
+<tr>
+<td><strong>Checkbox</strong></td>
+<td>Select multiple options</td>
+<td>Interests, Preferences</td>
+</tr>
+<tr>
+<td><strong>Radio Button</strong></td>
+<td>Select one option</td>
+<td>Gender, Yes/No</td>
+</tr>
+<tr>
+<td><strong>Dropdown List</strong></td>
+<td>Select from a list</td>
+<td>Country, State</td>
+</tr>
+<tr>
+<td><strong>Date Picker</strong></td>
+<td>Select a date</td>
+<td>Birthdate, Appointment</td>
+</tr>
+<tr>
+<td><strong>Signature Field</strong></td>
+<td>Draw a signature</td>
+<td>Sign here</td>
+</tr>
+<tr>
+<td><strong>File Upload</strong></td>
+<td>Attach a file</td>
+<td>Upload photo</td>
+</tr>
+</tbody></table>
+<h2>Step-by-Step Guide</h2>
+<h3>Step 1: Access the PDF Form Creator Tool</h3>
+<p>Visit the <a href="https://aipdfly.com/create-form">PDF form creator tool</a> on PDFHub.AI. All processing happens locally in your browser - your files never leave your device.</p>
+<h3>Step 2: Choose How to Start</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Start from Scratch</strong></td>
+<td>Create a form from a blank page</td>
+<td>New forms</td>
+</tr>
+<tr>
+<td><strong>Upload PDF Template</strong></td>
+<td>Add fields to an existing document</td>
+<td>Converting paper forms</td>
+</tr>
+<tr>
+<td><strong>Use a Template</strong></td>
+<td>Start with a pre-made form</td>
+<td>Quick setup</td>
+</tr>
+</tbody></table>
+<h3>Step 3: Add Form Fields</h3>
+<p><strong>Text Fields:</strong></p>
+<ul>
+<li>Click &quot;Add Text Field&quot;</li>
+<li>Position it on the page</li>
+<li>Set field name (e.g., &quot;full_name&quot;)</li>
+<li>Choose text size and style</li>
+</ul>
+<p><strong>Checkboxes:</strong></p>
+<ul>
+<li>Click &quot;Add Checkbox&quot;</li>
+<li>Position it on the page</li>
+<li>Set field name (e.g., &quot;agree_terms&quot;)</li>
+<li>Add label text</li>
+</ul>
+<p><strong>Radio Buttons:</strong></p>
+<ul>
+<li>Click &quot;Add Radio Group&quot;</li>
+<li>Position the group</li>
+<li>Add options (e.g., &quot;Yes&quot;, &quot;No&quot;, &quot;Maybe&quot;)</li>
+<li>Group buttons together</li>
+</ul>
+<p><strong>Dropdown Lists:</strong></p>
+<ul>
+<li>Click &quot;Add Dropdown&quot;</li>
+<li>Position on the page</li>
+<li>Add list items (e.g., states, countries)</li>
+</ul>
+<h3>Step 4: Configure Field Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Required</strong></td>
+<td>Yes / No</td>
+<td>Makes the field mandatory</td>
+</tr>
+<tr>
+<td><strong>Default Value</strong></td>
+<td>Text</td>
+<td>Pre-fills the field</td>
+</tr>
+<tr>
+<td><strong>Max Characters</strong></td>
+<td>Number</td>
+<td>Limits text entry length</td>
+</tr>
+<tr>
+<td><strong>Format</strong></td>
+<td>Text / Number / Date / Email</td>
+<td>Validates input type</td>
+</tr>
+<tr>
+<td><strong>Tooltip</strong></td>
+<td>Text</td>
+<td>Help text on hover</td>
+</tr>
+<tr>
+<td><strong>Read Only</strong></td>
+<td>Yes / No</td>
+<td>Field cannot be edited</td>
+</tr>
+</tbody></table>
+<h3>Step 5: Arrange Fields</h3>
+<ul>
+<li><strong>Drag and drop</strong> - Move fields to the right position</li>
+<li><strong>Align</strong> - Keep fields neat and organized</li>
+<li><strong>Resize</strong> - Adjust field size as needed</li>
+<li><strong>Delete</strong> - Remove unwanted fields</li>
+</ul>
+<h3>Step 6: Save and Download</h3>
+<p>Click <strong>Create Form</strong> to generate your fillable PDF. Click <strong>Download</strong> to save your form.</p>
+<h2>Form Design Tips</h2>
+<table>
+<thead>
+<tr>
+<th>Tip</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Use clear labels</strong></td>
+<td>Users know exactly what to enter</td>
+</tr>
+<tr>
+<td><strong>Group related fields</strong></td>
+<td>Section breaks make forms easier to fill</td>
+</tr>
+<tr>
+<td><strong>Keep it simple</strong></td>
+<td>Only ask for what you need</td>
+</tr>
+<tr>
+<td><strong>Test the form</strong></td>
+<td>Fill it out yourself before sending</td>
+</tr>
+<tr>
+<td><strong>Add instructions</strong></td>
+<td>Help users understand what to do</td>
+</tr>
+<tr>
+<td><strong>Make it accessible</strong></td>
+<td>Use proper labels for screen readers</td>
+</tr>
+</tbody></table>
+<h2>Common Form Types</h2>
+<p><strong>Application Forms</strong></p>
+<blockquote>
+<p>Job applications, membership applications, school admissions.</p>
+</blockquote>
+<p><strong>Registration Forms</strong></p>
+<blockquote>
+<p>Event registration, class registration, account sign-up.</p>
+</blockquote>
+<p><strong>Feedback Forms</strong></p>
+<blockquote>
+<p>Customer satisfaction surveys, product reviews, suggestion forms.</p>
+</blockquote>
+<p><strong>Order Forms</strong></p>
+<blockquote>
+<p>Product orders, service requests, purchase orders.</p>
+</blockquote>
+<p><strong>Legal Forms</strong></p>
+<blockquote>
+<p>Consent forms, release forms, agreement forms.</p>
+</blockquote>
+<h2>Pro Tips for Best Results</h2>
+<ul>
+<li><strong>Use auto-tab</strong> - Fields automatically advance when filling</li>
+<li><strong>Set tab order</strong> - Logical progression from top to bottom</li>
+<li><strong>Make important fields required</strong> - Don&#39;t let users skip critical info</li>
+<li><strong>Use validation</strong> - Prevent invalid entries (e.g., email format)</li>
+<li><strong>Test on different devices</strong> - Ensure it works on mobile too</li>
+</ul>
+<h2>Common Form Mistakes</h2>
+<table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>How to Fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Too many fields</strong></td>
+<td>Only ask for essential information</td>
+</tr>
+<tr>
+<td><strong>Unclear labels</strong></td>
+<td>Use plain, descriptive text</td>
+</tr>
+<tr>
+<td><strong>No required indicator</strong></td>
+<td>Mark required fields with asterisk (*)</td>
+</tr>
+<tr>
+<td><strong>Poor alignment</strong></td>
+<td>Use grid layout for organization</td>
+</tr>
+<tr>
+<td><strong>No save option</strong></td>
+<td>Allow users to save and continue later</td>
+</tr>
+</tbody></table>
+<h2>Frequently Asked Questions</h2>
+<p><strong>Is creating fillable forms really free?</strong> Yes! Free users get 5 form creations per day. Pro users get unlimited processing.</p>
+<p><strong>What PDF readers support fillable forms?</strong> Adobe Acrobat Reader, Preview (macOS), and most modern browsers support fillable forms.</p>
+<p><strong>Do you store my PDF files?</strong> Never. All processing happens locally in your browser. Your files never leave your device.</p>
+<p><strong>Can users submit form data?</strong> Forms can be emailed, printed, or shared. Data is not automatically submitted to a server.</p>
+<p><strong>Can I edit a form after creating it?</strong> Yes. Upload the PDF again to add, modify, or remove fields.</p>
+<p><strong>Are fillable forms secure?</strong> You can password-protect your form to control access. Data is not sent to any server.</p>
+<h2>Quick Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Recommended Tool</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Create fillable form</td>
+<td>Form Creator</td>
+</tr>
+<tr>
+<td>Add form to existing PDF</td>
+<td>Form Creator (upload PDF)</td>
+</tr>
+<tr>
+<td>Edit form fields</td>
+<td>PDF Editor</td>
+</tr>
+<tr>
+<td>Protect form with password</td>
+<td>Protect PDF</td>
+</tr>
+<tr>
+<td>Share form</td>
+<td>Email or download</td>
+</tr>
+</tbody></table>
+<h2>Try It Now</h2>
+<p>Ready to create your own fillable PDF form? Visit <a href="https://aipdfly.com/create-form">PDFHub.AI Form Creator</a> and build professional forms in seconds - no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="/index.html">PDF Editor</a> | <a href="/index.html">PDF Protector</a> | <a href="/index.html">PDF Compressor</a> | <a href="/index.html">PDF Merger</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // 暗黑模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>
