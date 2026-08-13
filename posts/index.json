@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 51,
+      "title": "PDF to PowerPoint vs Recreating from Scratch: Which Is Better?",
+      "slug": "pdf-to-powerpoint-vs-recreating-from-scratch-which-is-better",
+      "date": "August 13, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare PDF to PowerPoint conversion versus recreating slides from scratch. Learn which approach saves time, preserves quality, and fits your workflow.",
+      "file": "051-pdf-to-powerpoint-vs-recreating-from-scratch-which-is-better.html",
+      "url": "/posts/051-pdf-to-powerpoint-vs-recreating-from-scratch-which-is-better.html",
+      "created_at": "2026-08-13T13:15:08Z"
+    },
+    {
       "id": 50,
       "title": "How to Convert PDF to PowerPoint: The Complete Guide",
       "slug": "how-to-convert-pdf-to-powerpoint-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "002-how-to-merge-pdf-files-for-free-step-by-step-guide.html",
       "url": "/posts/002-how-to-merge-pdf-files-for-free-step-by-step-guide.html",
       "created_at": "2026-06-09T15:08:17Z"
-    },
-    {
-      "id": 1,
-      "title": "How to Compress PDF Without Losing Quality",
-      "slug": "how-to-compress-pdf-without-losing-quality",
-      "date": "June 5, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to reduce PDF file size while keeping text sharp and images clear. Step-by-step guide with tips.",
-      "file": "001-how-to-compress-pdf-without-losing-quality.html",
-      "url": "/posts/001-how-to-compress-pdf-without-losing-quality.html",
-      "created_at": "2026-06-05T15:56:08Z"
     }
   ],
   "categories": [
