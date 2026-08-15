@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 52,
+      "title": "How to Convert PDF to JPG: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-pdf-to-jpg-which-method-works-best-complete-g",
+      "date": "August 15, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, and built-in methods for converting PDF to JPG. Learn which approach works best for quality, privacy, and speed.",
+      "file": "052-how-to-convert-pdf-to-jpg-which-method-works-best-complete-g.html",
+      "url": "/posts/052-how-to-convert-pdf-to-jpg-which-method-works-best-complete-g.html",
+      "created_at": "2026-08-15T13:51:33Z"
+    },
+    {
       "id": 51,
       "title": "How to Convert PDF to JPG: The Complete Guide",
       "slug": "how-to-convert-pdf-to-jpg-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "003-how-to-convert-pdf-to-word-for-free-complete-guide.html",
       "url": "/posts/003-how-to-convert-pdf-to-word-for-free-complete-guide.html",
       "created_at": "2026-06-10T13:47:40Z"
-    },
-    {
-      "id": 2,
-      "title": "How to Merge PDF Files for Free - Step by Step Guide",
-      "slug": "how-to-merge-pdf-files-for-free-step-by-step-guide",
-      "date": "June 9, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to merge multiple PDF files into one document for free. No signup required, 100% secure local processing.",
-      "file": "002-how-to-merge-pdf-files-for-free-step-by-step-guide.html",
-      "url": "/posts/002-how-to-merge-pdf-files-for-free-step-by-step-guide.html",
-      "created_at": "2026-06-09T15:08:17Z"
     }
   ],
   "categories": [
