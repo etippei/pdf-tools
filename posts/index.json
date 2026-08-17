@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 53,
+      "title": "How to Convert PDF to JPG: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-pdf-to-jpg-which-method-works-best-complete-g",
+      "date": "August 17, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, and built-in methods for converting PDF to JPG. Learn which approach works best for quality, privacy, and speed.",
+      "file": "053-how-to-convert-pdf-to-jpg-which-method-works-best-complete-g.html",
+      "url": "/posts/053-how-to-convert-pdf-to-jpg-which-method-works-best-complete-g.html",
+      "created_at": "2026-08-17T15:46:22Z"
+    },
+    {
       "id": 52,
       "title": "How to Convert PDF to JPG: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-pdf-to-jpg-which-method-works-best-complete-g",
@@ -538,17 +549,6 @@
       "file": "004-how-to-add-page-numbers-to-pdf-documents-quick-tutorial.html",
       "url": "/posts/004-how-to-add-page-numbers-to-pdf-documents-quick-tutorial.html",
       "created_at": "2026-06-12T15:24:19Z"
-    },
-    {
-      "id": 3,
-      "title": "How to Convert PDF to Word for Free - Complete Guide",
-      "slug": "how-to-convert-pdf-to-word-for-free-complete-guide",
-      "date": "June 10, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to convert PDF to Word for free without losing formatting. No signup required, 100% secure local conversion.",
-      "file": "003-how-to-convert-pdf-to-word-for-free-complete-guide.html",
-      "url": "/posts/003-how-to-convert-pdf-to-word-for-free-complete-guide.html",
-      "created_at": "2026-06-10T13:47:40Z"
     }
   ],
   "categories": [
