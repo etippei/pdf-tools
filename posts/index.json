@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 54,
+      "title": "How to Convert PDF to JPG: The Complete Guide",
+      "slug": "how-to-convert-pdf-to-jpg-the-complete-guide",
+      "date": "August 20, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to converting PDF to JPG images. Learn why, how, and which method works best for quality, privacy, and speed.",
+      "file": "054-how-to-convert-pdf-to-jpg-the-complete-guide.html",
+      "url": "/posts/054-how-to-convert-pdf-to-jpg-the-complete-guide.html",
+      "created_at": "2026-08-20T15:23:11Z"
+    },
+    {
       "id": 53,
       "title": "How to Convert PDF to JPG: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-pdf-to-jpg-which-method-works-best-complete-g",
@@ -538,17 +549,6 @@
       "file": "005-how-to-rotate-pdf-pages-permanently-quick-tutorial.html",
       "url": "/posts/005-how-to-rotate-pdf-pages-permanently-quick-tutorial.html",
       "created_at": "2026-06-17T16:01:09Z"
-    },
-    {
-      "id": 4,
-      "title": "How to Add Page Numbers to PDF Documents - Quick Tutorial",
-      "slug": "how-to-add-page-numbers-to-pdf-documents-quick-tutorial",
-      "date": "June 12, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to add page numbers to PDF documents for free. Perfect for reports, ebooks, and presentations. No signup required.",
-      "file": "004-how-to-add-page-numbers-to-pdf-documents-quick-tutorial.html",
-      "url": "/posts/004-how-to-add-page-numbers-to-pdf-documents-quick-tutorial.html",
-      "created_at": "2026-06-12T15:24:19Z"
     }
   ],
   "categories": [
