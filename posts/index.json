@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 55,
+      "title": "How to Convert Image to PDF: The Complete Guide",
+      "slug": "how-to-convert-image-to-pdf-the-complete-guide",
+      "date": "August 22, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to converting images to PDF. Learn why, how, and which method works best for quality, privacy, and speed.",
+      "file": "055-how-to-convert-image-to-pdf-the-complete-guide.html",
+      "url": "/posts/055-how-to-convert-image-to-pdf-the-complete-guide.html",
+      "created_at": "2026-08-22T12:51:17Z"
+    },
+    {
       "id": 54,
       "title": "How to Convert PDF to JPG: The Complete Guide",
       "slug": "how-to-convert-pdf-to-jpg-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "006-how-to-extract-pages-from-pdf-quick-tutorial.html",
       "url": "/posts/006-how-to-extract-pages-from-pdf-quick-tutorial.html",
       "created_at": "2026-06-17T16:08:55Z"
-    },
-    {
-      "id": 5,
-      "title": "How to Rotate PDF Pages Permanently - Quick Tutorial",
-      "slug": "how-to-rotate-pdf-pages-permanently-quick-tutorial",
-      "date": "June 17, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to rotate PDF pages permanently and save the changes. Fix upside-down or sideways pages in seconds. No signup required.",
-      "file": "005-how-to-rotate-pdf-pages-permanently-quick-tutorial.html",
-      "url": "/posts/005-how-to-rotate-pdf-pages-permanently-quick-tutorial.html",
-      "created_at": "2026-06-17T16:01:09Z"
     }
   ],
   "categories": [
