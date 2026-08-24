@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 56,
+      "title": "Image to PDF Conversion: Which Method Works Best? — Complete Guide",
+      "slug": "image-to-pdf-conversion-which-method-works-best-complete-gui",
+      "date": "August 24, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, and built-in methods for converting images to PDF. Learn which approach works best for quality, privacy, and speed.",
+      "file": "056-image-to-pdf-conversion-which-method-works-best-complete-gui.html",
+      "url": "/posts/056-image-to-pdf-conversion-which-method-works-best-complete-gui.html",
+      "created_at": "2026-08-24T15:16:43Z"
+    },
+    {
       "id": 55,
       "title": "How to Convert Image to PDF: The Complete Guide",
       "slug": "how-to-convert-image-to-pdf-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "007-how-to-split-pdf-into-multiple-files-quick-tutorial.html",
       "url": "/posts/007-how-to-split-pdf-into-multiple-files-quick-tutorial.html",
       "created_at": "2026-06-24T15:25:44Z"
-    },
-    {
-      "id": 6,
-      "title": "How to Extract Pages from PDF - Quick Tutorial",
-      "slug": "how-to-extract-pages-from-pdf-quick-tutorial",
-      "date": "June 17, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to extract pages from PDF documents quickly. Save specific pages as separate PDFs. No signup required, 100% free.",
-      "file": "006-how-to-extract-pages-from-pdf-quick-tutorial.html",
-      "url": "/posts/006-how-to-extract-pages-from-pdf-quick-tutorial.html",
-      "created_at": "2026-06-17T16:08:55Z"
     }
   ],
   "categories": [
