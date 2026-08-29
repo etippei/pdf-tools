@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 58,
+      "title": "How to Convert JPG to PDF: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-jpg-to-pdf-which-method-works-best-complete-g",
+      "date": "August 29, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, and built-in methods for converting JPG to PDF. Learn which approach works best for quality, privacy, and speed.",
+      "file": "058-how-to-convert-jpg-to-pdf-which-method-works-best-complete-g.html",
+      "url": "/posts/058-how-to-convert-jpg-to-pdf-which-method-works-best-complete-g.html",
+      "created_at": "2026-08-29T14:32:15Z"
+    },
+    {
       "id": 57,
       "title": "How to Convert JPG to PDF: The Complete Guide",
       "slug": "how-to-convert-jpg-to-pdf-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "009-how-to-remove-password-from-pdf-quick-guide.html",
       "url": "/posts/009-how-to-remove-password-from-pdf-quick-guide.html",
       "created_at": "2026-06-25T14:18:40Z"
-    },
-    {
-      "id": 8,
-      "title": "How to Protect PDF with Password - Security Guide",
-      "slug": "how-to-protect-pdf-with-password-security-guide",
-      "date": "June 24, 2026",
-      "category": "Guide",
-      "excerpt": "Learn how to protect PDF with password and keep your documents secure. Add encryption to sensitive files in seconds. No signup required.",
-      "file": "008-how-to-protect-pdf-with-password-security-guide.html",
-      "url": "/posts/008-how-to-protect-pdf-with-password-security-guide.html",
-      "created_at": "2026-06-24T15:38:25Z"
     }
   ],
   "categories": [
