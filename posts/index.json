@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 59,
+      "title": "How to Use OCR to Extract Text from PDF: The Complete Guide",
+      "slug": "how-to-use-ocr-to-extract-text-from-pdf-the-complete-guide",
+      "date": "August 31, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to using OCR to extract text from PDFs. Learn how to convert scanned documents into editable, searchable text.",
+      "file": "059-how-to-use-ocr-to-extract-text-from-pdf-the-complete-guide.html",
+      "url": "/posts/059-how-to-use-ocr-to-extract-text-from-pdf-the-complete-guide.html",
+      "created_at": "2026-08-31T12:28:49Z"
+    },
+    {
       "id": 58,
       "title": "How to Convert JPG to PDF: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-jpg-to-pdf-which-method-works-best-complete-g",
@@ -538,17 +549,6 @@
       "file": "010-5-tips-to-edit-pdf-files-like-a-pro-quick-tips.html",
       "url": "/posts/010-5-tips-to-edit-pdf-files-like-a-pro-quick-tips.html",
       "created_at": "2026-06-25T14:23:26Z"
-    },
-    {
-      "id": 9,
-      "title": "How to Remove Password from PDF - Quick Guide",
-      "slug": "how-to-remove-password-from-pdf-quick-guide",
-      "date": "June 25, 2026",
-      "category": "Guide",
-      "excerpt": "Learn how to remove password from PDF files when you have the password. Unlock protected PDFs for editing, printing, and sharing. No signup required.",
-      "file": "009-how-to-remove-password-from-pdf-quick-guide.html",
-      "url": "/posts/009-how-to-remove-password-from-pdf-quick-guide.html",
-      "created_at": "2026-06-25T14:18:40Z"
     }
   ],
   "categories": [

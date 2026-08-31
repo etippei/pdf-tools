@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use OCR to Extract Text from PDF: The Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="The complete guide to using OCR to extract text from PDFs. Learn how to convert scanned documents into editable, searchable text.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How to Use OCR to Extract Text from PDF: The Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>August 31, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>How to Use OCR to Extract Text from PDF: The Complete Guide</h1>
+<p>You have a scanned PDF—a contract, an invoice, or a book page. You can see the text, but you can&#39;t select it, copy it, or search it. It&#39;s just a picture of text.</p>
+<p>OCR (Optical Character Recognition) solves this problem. It &quot;reads&quot; the text in your scanned PDF and turns it into real, selectable, editable text.</p>
+<p>This complete guide covers everything: what OCR is, step-by-step methods, quality tips, troubleshooting, and privacy considerations.</p>
+<hr>
+<h2>What is OCR?</h2>
+<p>OCR stands for <strong>Optical Character Recognition</strong>. It&#39;s a technology that recognizes text in images and converts it into machine-readable text.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>The OCR software analyzes the image of your document</li>
+<li>It identifies shapes that look like letters and numbers</li>
+<li>It converts those shapes into actual text characters</li>
+<li>You get editable, searchable text</li>
+</ol>
+<p><strong>Think of it like this:</strong> A scanned PDF is like a photograph of a document. OCR is like having someone read that photograph and type out everything they see.</p>
+<hr>
+<h2>Why OCR a PDF?</h2>
+<p>Converting scanned PDFs to text has many benefits:</p>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Searchable</strong></td>
+<td>Find any word in seconds with Ctrl+F</td>
+</tr>
+<tr>
+<td><strong>Copy and paste</strong></td>
+<td>Extract quotes and information easily</td>
+</tr>
+<tr>
+<td><strong>Edit content</strong></td>
+<td>Modify text without retyping everything</td>
+</tr>
+<tr>
+<td><strong>Save time</strong></td>
+<td>No more manual transcription from scans</td>
+</tr>
+<tr>
+<td><strong>Improve accessibility</strong></td>
+<td>Screen readers can read the text aloud</td>
+</tr>
+<tr>
+<td><strong>Reduce errors</strong></td>
+<td>Avoid typos from manual data entry</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Scan vs OCR: What&#39;s the Difference?</h2>
+<p>Many people confuse a scanned PDF with an OCR&#39;d PDF:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Scanned PDF</th>
+<th>OCR&#39;d PDF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>File type</strong></td>
+<td>Image only</td>
+<td>Text + image</td>
+</tr>
+<tr>
+<td><strong>Searchable</strong></td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><strong>Copy/Paste</strong></td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><strong>Edit text</strong></td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><strong>File size</strong></td>
+<td>Often large</td>
+<td>Slightly larger</td>
+</tr>
+<tr>
+<td><strong>Accessibility</strong></td>
+<td>❌ Low</td>
+<td>✅ High</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>What Affects OCR Accuracy?</h2>
+<p>OCR accuracy depends on several factors. Here&#39;s what matters:</p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Image quality</strong></td>
+<td>High quality = High accuracy</td>
+</tr>
+<tr>
+<td><strong>Font type</strong></td>
+<td>Standard fonts = Better recognition</td>
+</tr>
+<tr>
+<td><strong>Language</strong></td>
+<td>Matching language = Better results</td>
+</tr>
+<tr>
+<td><strong>Text size</strong></td>
+<td>Larger text = Easier to read</td>
+</tr>
+<tr>
+<td><strong>Background</strong></td>
+<td>Clean background = Clear text</td>
+</tr>
+<tr>
+<td><strong>Skew/rotation</strong></td>
+<td>Straight pages = Accurate reading</td>
+</tr>
+</tbody></table>
+<p><strong>Pro tip:</strong> For best results, scan at 300 DPI or higher and keep pages straight.</p>
+<hr>
+<h2>Method 1: Online OCR Tool (Recommended)</h2>
+<p>Online tools like AIPDFLY require no installation and work on any device with a browser. The best ones process files locally, keeping your data private.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Visit <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR Tool</a></li>
+<li>Upload your scanned PDF</li>
+<li>Choose your document language</li>
+<li>Click &quot;Extract Text&quot; or &quot;Export to Word&quot;</li>
+<li>Download your extracted text</li>
+</ol>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>Supports files up to 10MB (free) or 20MB (Pro)</li>
+<li>Extract text as plain text or formatted Word document</li>
+<li>100% private — local processing, no server uploads</li>
+<li>Batch process multiple pages</li>
+</ul>
+<p><strong>When to use:</strong> Most OCR needs, quick results, all devices.</p>
+<p><strong>Try:</strong> <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR Tool</a></p>
+<hr>
+<h2>Method 2: Adobe Acrobat Pro (Desktop)</h2>
+<p>Adobe Acrobat Pro offers the highest quality OCR with full control over settings.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in Acrobat Pro</li>
+<li>Click <strong>Tools &gt; Scan &amp; OCR</strong></li>
+<li>Click <strong>Recognize Text &gt; In This File</strong></li>
+<li>Choose language and settings</li>
+<li>Click <strong>Recognize Text</strong></li>
+<li>Save the OCR&#39;d PDF or export to Word</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Highest accuracy</li>
+<li>Full control over settings</li>
+<li>Preserves original formatting</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Expensive (subscription required)</li>
+<li>Installation required</li>
+</ul>
+<p><strong>When to use:</strong> Professional use, complex documents, sensitive files.</p>
+<hr>
+<h2>Method 3: Google Drive (Free Cloud-Based)</h2>
+<p>Google Drive offers free OCR through Google Docs.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Upload your scanned PDF to Google Drive</li>
+<li>Right-click and select <strong>Open with &gt; Google Docs</strong></li>
+<li>Google Docs automatically runs OCR</li>
+<li>The text appears in a new document</li>
+<li>Copy the text or download as Word</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Completely free</li>
+<li>Works on any device with a browser</li>
+<li>No installation required</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Privacy concerns (files uploaded to Google servers)</li>
+<li>Limited control over settings</li>
+<li>Formatting may not preserve perfectly</li>
+</ul>
+<p><strong>When to use:</strong> Quick OCR, non-sensitive documents.</p>
+<hr>
+<h2>Method 4: Windows (PowerToys or Snipping Tool)</h2>
+<p>Windows users can use Microsoft PowerToys&#39; OCR feature or the Snipping Tool.</p>
+<p><strong>How it works (PowerToys):</strong></p>
+<ol>
+<li>Install Microsoft PowerToys</li>
+<li>Press <code>Win + Shift + T</code> to activate Text Extractor</li>
+<li>Select the text area in your PDF</li>
+<li>Copy the extracted text</li>
+</ol>
+<p><strong>How it works (Snipping Tool):</strong></p>
+<ol>
+<li>Open the scanned PDF in any viewer</li>
+<li>Open Snipping Tool and select <strong>Text action</strong></li>
+<li>Select the text area in your PDF</li>
+<li>Copy the extracted text</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Windows</li>
+<li>No additional software needed</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>One page/section at a time</li>
+<li>Limited accuracy</li>
+<li>No batch processing</li>
+</ul>
+<p><strong>When to use:</strong> Quick extraction of small text sections.</p>
+<hr>
+<h2>Method 5: macOS (Live Text)</h2>
+<p>Mac users can use Apple&#39;s Live Text feature for OCR.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the scanned PDF in Preview</li>
+<li>Select the text area with your mouse</li>
+<li>Right-click and select <strong>Copy Text</strong></li>
+<li>Paste the text into your document</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Mac</li>
+<li>Simple and fast</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>One section at a time</li>
+<li>Limited accuracy for complex documents</li>
+</ul>
+<p><strong>When to use:</strong> Mac users, quick text extraction.</p>
+<hr>
+<h2>Method Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Privacy</th>
+<th>Accuracy</th>
+<th>Speed</th>
+<th>Cost</th>
+<th>Best Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AIPDFLY</strong></td>
+<td>High (local)</td>
+<td>High</td>
+<td>Fast</td>
+<td>Free/Paid</td>
+<td>Most OCR needs</td>
+</tr>
+<tr>
+<td><strong>Adobe Acrobat</strong></td>
+<td>High (local)</td>
+<td>Excellent</td>
+<td>Fast</td>
+<td>Expensive</td>
+<td>Professional use</td>
+</tr>
+<tr>
+<td><strong>Google Drive</strong></td>
+<td>Cloud</td>
+<td>Good</td>
+<td>Slow</td>
+<td>Free</td>
+<td>Quick, non-sensitive</td>
+</tr>
+<tr>
+<td><strong>PowerToys</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Fast</td>
+<td>Free</td>
+<td>Quick sections</td>
+</tr>
+<tr>
+<td><strong>Live Text (Mac)</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Fast</td>
+<td>Free</td>
+<td>Mac users</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Languages Supported</h2>
+<p>Most OCR tools support multiple languages. Here are the most common:</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>English</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Spanish</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>French</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>German</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Chinese</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Japanese</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Korean</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Arabic</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Russian</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Hindi</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Portuguese</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Italian</td>
+<td>✅ Full</td>
+</tr>
+</tbody></table>
+<p><strong>Pro tip:</strong> Always select the correct language for your document. It improves accuracy by up to 30%.</p>
+<hr>
+<h2>Pro Tips for Best OCR Results</h2>
+<table>
+<thead>
+<tr>
+<th>Tip</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Scan at 300 DPI minimum</strong></td>
+<td>Higher DPI = better recognition</td>
+</tr>
+<tr>
+<td><strong>Keep pages straight</strong></td>
+<td>Skewed pages reduce accuracy</td>
+</tr>
+<tr>
+<td><strong>Use clean, clear text</strong></td>
+<td>No handwriting or unusual fonts</td>
+</tr>
+<tr>
+<td><strong>Select the right language</strong></td>
+<td>Improves accuracy significantly</td>
+</tr>
+<tr>
+<td><strong>Review the output</strong></td>
+<td>Check for misrecognized characters</td>
+</tr>
+<tr>
+<td><strong>Edit if needed</strong></td>
+<td>Manually correct any errors</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Issues and Solutions</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Low accuracy</strong></td>
+<td>Scan at higher DPI; select correct language</td>
+</tr>
+<tr>
+<td><strong>Special characters wrong</strong></td>
+<td>Use a tool with better character recognition</td>
+</tr>
+<tr>
+<td><strong>Formatting lost</strong></td>
+<td>Use &quot;Export to Word&quot; instead of plain text</td>
+</tr>
+<tr>
+<td><strong>Page not recognized</strong></td>
+<td>Check if the page is straight and clear</td>
+</tr>
+<tr>
+<td><strong>Slow processing</strong></td>
+<td>Use smaller files or better internet</td>
+</tr>
+<tr>
+<td><strong>Scanned at low DPI</strong></td>
+<td>Rescan at 300 DPI or higher</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Privacy and Security</h2>
+<p><strong>Never upload sensitive documents to unknown online tools.</strong> When OCRing contracts, financial records, or personal documents, choose a solution that processes files locally.</p>
+<p><strong>AIPDFLY</strong> processes files locally in your browser. Your documents never leave your device.</p>
+<p><strong>Extra protection for sensitive documents:</strong></p>
+<ul>
+<li>Use local tools for sensitive files</li>
+<li>Use private/incognito mode on public computers</li>
+<li>Delete processed files immediately</li>
+<li>Use encryption for highly sensitive documents</li>
+</ul>
+<hr>
+<h2>Frequently Asked Questions</h2>
+<h3>Is OCR really free?</h3>
+<p>Yes! AIPDFLY free users get 5 OCR conversions per day. Pro users get unlimited processing.</p>
+<h3>How accurate is OCR?</h3>
+<p>Up to 99% for clear, standard-font documents. Accuracy decreases with poor quality or unusual fonts.</p>
+<h3>Can I OCR handwritten text?</h3>
+<p>Handwriting recognition is available but less accurate (60-80%). Printed text works best.</p>
+<h3>Do you store my PDF files?</h3>
+<p>AIPDFLY processes everything locally. Your files never leave your device.</p>
+<h3>What languages are supported?</h3>
+<p>Over 50 languages including English, Chinese, Arabic, Russian, and more.</p>
+<h3>Can I OCR a PDF with multiple languages?</h3>
+<p>Yes. Select &quot;Multi-language&quot; mode if available, or process sections separately.</p>
+<hr>
+<h2>OCR Accuracy Guide</h2>
+<table>
+<thead>
+<tr>
+<th>Document Type</th>
+<th>Expected Accuracy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Clean printed text</td>
+<td>99%+</td>
+</tr>
+<tr>
+<td>High-quality scan</td>
+<td>98-99%</td>
+</tr>
+<tr>
+<td>Low-quality scan</td>
+<td>85-95%</td>
+</tr>
+<tr>
+<td>Handwritten text</td>
+<td>60-80%</td>
+</tr>
+<tr>
+<td>Old or damaged pages</td>
+<td>50-70%</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Try It Now</h2>
+<p>Ready to extract text from your scanned PDF? Visit <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR Tool</a> and convert your scan to editable text in seconds — no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="https://aipdfly.com/ocr.html">OCR Tool</a> | <a href="https://aipdfly.com/pdf-to-word.html">PDF to Word Converter</a> | <a href="https://aipdfly.com/compress-pdf.html">PDF Compressor</a> | <a href="https://aipdfly.com/merge-pdf.html">Merge PDF</a> | <a href="https://aipdfly.com/split-pdf.html">Split PDF</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // 暗黑模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>
