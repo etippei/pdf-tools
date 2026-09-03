@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR vs Manual Typing: Which Is Better? — Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="Compare OCR technology with manual typing for extracting text from scanned PDFs. Learn which method saves time, money, and effort.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">OCR vs Manual Typing: Which Is Better? — Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>September 3, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>OCR vs Manual Typing: Which Is Better? — Complete Guide</h1>
+<p>You have a scanned PDF—a contract, an invoice, or a book page. You need the text. You have two choices: type it all out manually, or use OCR to extract it automatically.</p>
+<p>Which is better? This guide compares both methods in depth, covering time, accuracy, cost, and practical considerations.</p>
+<hr>
+<h2>The Quick Answer</h2>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>OCR</th>
+<th>Manual Typing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Speed</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐ (if careful)</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Effort</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td><strong>Formatting</strong></td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<p><strong>Winner:</strong> OCR wins on speed, effort, and scalability. Manual typing wins only when accuracy is absolutely critical or the text is very short.</p>
+<hr>
+<h2>What is OCR?</h2>
+<p>OCR stands for <strong>Optical Character Recognition</strong>. It&#39;s a technology that &quot;reads&quot; text in images and converts it into machine-readable text.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>The software analyzes the image</li>
+<li>It identifies shapes that look like letters and numbers</li>
+<li>It converts those shapes into actual text characters</li>
+<li>You get editable, searchable text</li>
+</ol>
+<p><strong>Think of it like this:</strong> A scanned PDF is like a photograph. OCR is like having someone read that photograph and type out everything they see — but in seconds, not hours.</p>
+<hr>
+<h2>Method 1: OCR (Recommended)</h2>
+<h3>How It Works</h3>
+<p>Using OCR is simple:</p>
+<ol>
+<li>Upload your scanned PDF to an OCR tool like <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR</a></li>
+<li>Click &quot;Extract Text&quot; or &quot;Export to Word&quot;</li>
+<li>Download your extracted text</li>
+</ol>
+<h3>Pros</h3>
+<table>
+<thead>
+<tr>
+<th>Advantage</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Fast</strong></td>
+<td>Seconds to process a 10-page document</td>
+</tr>
+<tr>
+<td><strong>Batch processing</strong></td>
+<td>Process multiple documents at once</td>
+</tr>
+<tr>
+<td><strong>Low effort</strong></td>
+<td>One click does all the work</td>
+</tr>
+<tr>
+<td><strong>Searchable</strong></td>
+<td>Text becomes searchable and selectable</td>
+</tr>
+<tr>
+<td><strong>Export options</strong></td>
+<td>Plain text, Word, or formatted DOCX</td>
+</tr>
+<tr>
+<td><strong>Consistent</strong></td>
+<td>No typos from manual errors</td>
+</tr>
+</tbody></table>
+<h3>Cons</h3>
+<table>
+<thead>
+<tr>
+<th>Disadvantage</th>
+<th>When It Matters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Accuracy varies</strong></td>
+<td>Poor quality scans may have errors</td>
+</tr>
+<tr>
+<td><strong>Formatting issues</strong></td>
+<td>May not preserve exact layout</td>
+</tr>
+<tr>
+<td><strong>Language limits</strong></td>
+<td>Some languages have lower accuracy</td>
+</tr>
+<tr>
+<td><strong>Scanned quality matters</strong></td>
+<td>Low DPI scans produce poor results</td>
+</tr>
+</tbody></table>
+<h3>Best For</h3>
+<ul>
+<li>Large documents (5+ pages)</li>
+<li>Repetitive text extraction</li>
+<li>Urgent deadlines</li>
+<li>Documents in standard fonts</li>
+<li>High-quality scans (300 DPI+)</li>
+</ul>
+<h3>Cost</h3>
+<ul>
+<li><strong>Free:</strong> Up to 5 documents per day with AIPDFLY</li>
+<li><strong>Paid:</strong> Unlimited OCR with Pro</li>
+</ul>
+<p><strong>Try:</strong> <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR Tool</a></p>
+<hr>
+<h2>Method 2: Manual Typing</h2>
+<h3>How It Works</h3>
+<p>Manual typing is straightforward:</p>
+<ol>
+<li>Open the scanned PDF in a viewer</li>
+<li>Place the PDF and your word processor side by side</li>
+<li>Read the text and type it into your document</li>
+<li>Check for typos and formatting issues</li>
+</ol>
+<h3>Pros</h3>
+<table>
+<thead>
+<tr>
+<th>Advantage</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>100% accuracy</strong></td>
+<td>If you type carefully, no errors</td>
+</tr>
+<tr>
+<td><strong>Full control</strong></td>
+<td>Format as you type</td>
+</tr>
+<tr>
+<td><strong>No software needed</strong></td>
+<td>Any computer works</td>
+</tr>
+<tr>
+<td><strong>Works for any text</strong></td>
+<td>Even poor quality scans</td>
+</tr>
+<tr>
+<td><strong>Handwriting works</strong></td>
+<td>Can type handwritten text</td>
+</tr>
+<tr>
+<td><strong>Understands context</strong></td>
+<td>Can correct obvious OCR errors</td>
+</tr>
+</tbody></table>
+<h3>Cons</h3>
+<table>
+<thead>
+<tr>
+<th>Disadvantage</th>
+<th>When It Matters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Extremely slow</strong></td>
+<td>Hours for a single page</td>
+</tr>
+<tr>
+<td><strong>Prone to fatigue</strong></td>
+<td>More errors as you get tired</td>
+</tr>
+<tr>
+<td><strong>No batch processing</strong></td>
+<td>One document at a time</td>
+</tr>
+<tr>
+<td><strong>High effort</strong></td>
+<td>Physically and mentally tiring</td>
+</tr>
+<tr>
+<td><strong>Not scalable</strong></td>
+<td>Impossible for large projects</td>
+</tr>
+</tbody></table>
+<h3>Best For</h3>
+<ul>
+<li>Very short text (1-2 paragraphs)</li>
+<li>Poor quality scans</li>
+<li>Handwritten documents</li>
+<li>Text with unusual characters</li>
+<li>When 100% accuracy is critical</li>
+<li>No internet or OCR tools available</li>
+</ul>
+<h3>Cost</h3>
+<ul>
+<li><strong>Free:</strong> No software needed</li>
+</ul>
+<hr>
+<h2>Time Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Document Size</th>
+<th>OCR Time</th>
+<th>Manual Typing Time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 page</td>
+<td>5 seconds</td>
+<td>5-10 minutes</td>
+</tr>
+<tr>
+<td>5 pages</td>
+<td>10 seconds</td>
+<td>25-50 minutes</td>
+</tr>
+<tr>
+<td>10 pages</td>
+<td>20 seconds</td>
+<td>50-100 minutes</td>
+</tr>
+<tr>
+<td>50 pages</td>
+<td>1 minute</td>
+<td>4-8 hours</td>
+</tr>
+<tr>
+<td>100 pages</td>
+<td>2 minutes</td>
+<td>8-16 hours</td>
+</tr>
+<tr>
+<td>500 pages</td>
+<td>10 minutes</td>
+<td>40-80 hours</td>
+</tr>
+</tbody></table>
+<p><strong>The math:</strong> OCR is up to <strong>1,000x faster</strong> than manual typing.</p>
+<hr>
+<h2>Accuracy Comparison</h2>
+<h3>OCR Accuracy</h3>
+<table>
+<thead>
+<tr>
+<th>Document Type</th>
+<th>Expected Accuracy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Clean printed text (300 DPI)</td>
+<td>99%+</td>
+</tr>
+<tr>
+<td>High-quality scan</td>
+<td>98-99%</td>
+</tr>
+<tr>
+<td>Low-quality scan</td>
+<td>85-95%</td>
+</tr>
+<tr>
+<td>Unusual fonts</td>
+<td>70-85%</td>
+</tr>
+<tr>
+<td>Handwritten text</td>
+<td>60-80%</td>
+</tr>
+</tbody></table>
+<h3>Manual Typing Accuracy</h3>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>With proofreading</td>
+<td>99.9%+</td>
+</tr>
+<tr>
+<td>Without proofreading</td>
+<td>95-98%</td>
+</tr>
+<tr>
+<td>Under fatigue</td>
+<td>90-95%</td>
+</tr>
+<tr>
+<td>For long documents</td>
+<td>Declines over time</td>
+</tr>
+</tbody></table>
+<p><strong>The verdict:</strong> Manual typing can be more accurate, but OCR + proofreading is faster and nearly as accurate.</p>
+<hr>
+<h2>Cost Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Cost Factor</th>
+<th>OCR</th>
+<th>Manual Typing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Software</td>
+<td>Free (AIPDFLY)</td>
+<td>Free (no software)</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Minutes</td>
+<td>Hours</td>
+</tr>
+<tr>
+<td>Labor</td>
+<td>None (automated)</td>
+<td>Your time</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td>Minor (easily fixed)</td>
+<td>Typos (need proofreading)</td>
+</tr>
+</tbody></table>
+<p><strong>The verdict:</strong> OCR is more cost-effective for any document over 1 page.</p>
+<hr>
+<h2>Real-World Scenarios</h2>
+<h3>Scenario 1: One-Page Contract with Unusual Fonts</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Time</th>
+<th>Accuracy</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OCR</td>
+<td>5 seconds</td>
+<td>80-90%</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Manual</td>
+<td>10 minutes</td>
+<td>99%+</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<p><strong>Winner:</strong> Manual typing for 100% accuracy.</p>
+<h3>Scenario 2: 20-Page Report, Standard Font</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Time</th>
+<th>Accuracy</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OCR</td>
+<td>20 seconds</td>
+<td>98-99%</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Manual</td>
+<td>2-3 hours</td>
+<td>98-99%</td>
+<td>⭐⭐</td>
+</tr>
+</tbody></table>
+<p><strong>Winner:</strong> OCR by a wide margin.</p>
+<h3>Scenario 3: 100-Page Book, High-Quality Scan</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Time</th>
+<th>Accuracy</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OCR</td>
+<td>2 minutes</td>
+<td>99%</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Manual</td>
+<td>8-16 hours</td>
+<td>98-99%</td>
+<td>⭐</td>
+</tr>
+</tbody></table>
+<p><strong>Winner:</strong> OCR (manual typing is unrealistic).</p>
+<h3>Scenario 4: Handwritten Notes</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Time</th>
+<th>Accuracy</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OCR</td>
+<td>5-10 seconds</td>
+<td>60-70%</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>Manual</td>
+<td>5-10 minutes</td>
+<td>99%+</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<p><strong>Winner:</strong> Manual typing for handwritten text.</p>
+<hr>
+<h2>Hybrid Approach: The Best of Both Worlds</h2>
+<p>The most practical approach combines both methods:</p>
+<ol>
+<li><strong>Run OCR</strong> on your scanned document</li>
+<li><strong>Review the output</strong> for errors</li>
+<li><strong>Manually correct</strong> misrecognized characters</li>
+<li><strong>Proofread</strong> the final text</li>
+</ol>
+<p><strong>This approach gives you:</strong></p>
+<ul>
+<li>The speed of OCR (95% of the work)</li>
+<li>The accuracy of manual review (100% of the result)</li>
+</ul>
+<hr>
+<h2>OCR vs Manual: Quick Decision Guide</h2>
+<table>
+<thead>
+<tr>
+<th>Your Situation</th>
+<th>Recommended Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Long document (&gt;5 pages)</td>
+<td>✅ OCR</td>
+</tr>
+<tr>
+<td>Short text (&lt;1 page)</td>
+<td>✅ Manual typing</td>
+</tr>
+<tr>
+<td>Standard fonts, clear scan</td>
+<td>✅ OCR</td>
+</tr>
+<tr>
+<td>Unusual fonts or handwriting</td>
+<td>✅ Manual typing</td>
+</tr>
+<tr>
+<td>Urgent deadline</td>
+<td>✅ OCR</td>
+</tr>
+<tr>
+<td>100% accuracy critical</td>
+<td>OCR + manual review</td>
+</tr>
+<tr>
+<td>Poor quality scan</td>
+<td>Manual typing</td>
+</tr>
+<tr>
+<td>Handwritten text</td>
+<td>Manual typing</td>
+</tr>
+<tr>
+<td>Large project (50+ pages)</td>
+<td>OCR + proofreading</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Frequently Asked Questions</h2>
+<h3>Is OCR free?</h3>
+<p>Yes! AIPDFLY free users get 5 OCR conversions per day. Pro users get unlimited processing.</p>
+<h3>How accurate is OCR?</h3>
+<p>Up to 99% for clear, standard-font documents. Accuracy decreases with poor quality or unusual fonts.</p>
+<h3>Can OCR handle handwriting?</h3>
+<p>Handwriting recognition is available but less accurate (60-80%). Printed text works best.</p>
+<h3>Is manual typing ever better than OCR?</h3>
+<p>Yes. For very short text (1-2 paragraphs), poor quality scans, or handwritten documents, manual typing is often better.</p>
+<h3>How much time does OCR save?</h3>
+<p>OCR is up to 1,000x faster than manual typing. A 10-page document takes 20 seconds with OCR vs 1-2 hours manually.</p>
+<h3>Can I use OCR for free?</h3>
+<p>Yes! <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR</a> offers 5 free OCR conversions per day.</p>
+<hr>
+<h2>Try It Now</h2>
+<p>Ready to save hours of manual typing? Visit <a href="https://aipdfly.com/ocr.html">AIPDFLY OCR Tool</a> and extract text from your scanned documents in seconds — no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="https://aipdfly.com/ocr.html">OCR Tool</a> | <a href="https://aipdfly.com/pdf-to-word.html">PDF to Word Converter</a> | <a href="https://aipdfly.com/compress-pdf.html">PDF Compressor</a> | <a href="https://aipdfly.com/merge-pdf.html">Merge PDF</a> | <a href="https://aipdfly.com/split-pdf.html">Split PDF</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // 暗黑模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>
