@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 61,
+      "title": "How to Use AI to Summarize PDF Documents: The Complete Guide",
+      "slug": "how-to-use-ai-to-summarize-pdf-documents-the-complete-guide",
+      "date": "September 5, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to using AI to summarize PDF documents. Learn how to extract key insights from long reports, contracts, and research papers in seconds.",
+      "file": "061-how-to-use-ai-to-summarize-pdf-documents-the-complete-guide.html",
+      "url": "/posts/061-how-to-use-ai-to-summarize-pdf-documents-the-complete-guide.html",
+      "created_at": "2026-09-05T12:23:36Z"
+    },
+    {
       "id": 60,
       "title": "OCR vs Manual Typing: Which Is Better? — Complete Guide",
       "slug": "ocr-vs-manual-typing-which-is-better-complete-guide",
@@ -538,17 +549,6 @@
       "file": "012-how-to-convert-pdf-to-jpg-quick-guide.html",
       "url": "/posts/012-how-to-convert-pdf-to-jpg-quick-guide.html",
       "created_at": "2026-06-27T16:06:03Z"
-    },
-    {
-      "id": 11,
-      "title": "How to Sign PDF Documents - Digital Signature Guide",
-      "slug": "how-to-sign-pdf-documents-digital-signature-guide",
-      "date": "June 27, 2026",
-      "category": "Guide",
-      "excerpt": "Learn how to sign PDF documents digitally without printing or scanning. Add electronic signatures quickly and securely. No signup required.",
-      "file": "011-how-to-sign-pdf-documents-digital-signature-guide.html",
-      "url": "/posts/011-how-to-sign-pdf-documents-digital-signature-guide.html",
-      "created_at": "2026-06-27T16:04:12Z"
     }
   ],
   "categories": [
