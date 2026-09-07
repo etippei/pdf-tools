@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 62,
+      "title": "AI Summary vs AI Chat with PDF: Which One Do You Need? — Complete Guide",
+      "slug": "ai-summary-vs-ai-chat-with-pdf-which-one-do-you-need-complet",
+      "date": "September 7, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare AI summary tools and AI chat with PDF. Learn which approach works best for your document needs — overview or deep questioning.",
+      "file": "062-ai-summary-vs-ai-chat-with-pdf-which-one-do-you-need-complet.html",
+      "url": "/posts/062-ai-summary-vs-ai-chat-with-pdf-which-one-do-you-need-complet.html",
+      "created_at": "2026-09-07T15:11:36Z"
+    },
+    {
       "id": 61,
       "title": "How to Use AI to Summarize PDF Documents: The Complete Guide",
       "slug": "how-to-use-ai-to-summarize-pdf-documents-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "013-how-to-add-image-to-pdf-complete-guide.html",
       "url": "/posts/013-how-to-add-image-to-pdf-complete-guide.html",
       "created_at": "2026-06-28T13:59:33Z"
-    },
-    {
-      "id": 12,
-      "title": "How to Convert PDF to JPG - Quick Guide",
-      "slug": "how-to-convert-pdf-to-jpg-quick-guide",
-      "date": "June 27, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to convert PDF to JPG images quickly. Turn each page into a high-quality image for sharing or presentations. No signup required.",
-      "file": "012-how-to-convert-pdf-to-jpg-quick-guide.html",
-      "url": "/posts/012-how-to-convert-pdf-to-jpg-quick-guide.html",
-      "created_at": "2026-06-27T16:06:03Z"
     }
   ],
   "categories": [
