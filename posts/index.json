@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 67,
+      "title": "How to Compress PDF Files: The Complete Guide",
+      "slug": "how-to-compress-pdf-files-the-complete-guide",
+      "date": "September 19, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to compressing PDF files. Learn how to reduce file size for email, uploads, and storage without losing quality.",
+      "file": "067-how-to-compress-pdf-files-the-complete-guide.html",
+      "url": "/posts/067-how-to-compress-pdf-files-the-complete-guide.html",
+      "created_at": "2026-09-19T11:35:11Z"
+    },
+    {
       "id": 66,
       "title": "How to Merge PDF Files: The Complete Guide",
       "slug": "how-to-merge-pdf-files-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "018-5-signs-you-need-a-pdf-tool-and-dont-know-it-yet-quick-tips.html",
       "url": "/posts/018-5-signs-you-need-a-pdf-tool-and-dont-know-it-yet-quick-tips.html",
       "created_at": "2026-06-30T11:29:47Z"
-    },
-    {
-      "id": 17,
-      "title": "How to OCR a PDF - Complete Guide",
-      "slug": "how-to-ocr-a-pdf-complete-guide",
-      "date": "June 29, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to OCR a PDF and make scanned documents searchable and editable. Turn image-based PDFs into text you can copy and search. No signup required.",
-      "file": "017-how-to-ocr-a-pdf-complete-guide.html",
-      "url": "/posts/017-how-to-ocr-a-pdf-complete-guide.html",
-      "created_at": "2026-06-29T16:09:30Z"
     }
   ],
   "categories": [
