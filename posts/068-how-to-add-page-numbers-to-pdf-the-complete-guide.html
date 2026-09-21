@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Add Page Numbers to PDF: The Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="The complete guide to adding page numbers to PDF documents. Learn how to number pages professionally for reports, ebooks, and legal documents.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How to Add Page Numbers to PDF: The Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>September 21, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>How to Add Page Numbers to PDF: The Complete Guide</h1>
+<p>Page numbers make long PDF documents easier to navigate. Whether you&#39;re preparing a business report, formatting an ebook, or organizing a legal document, adding page numbers is essential for professionalism.</p>
+<p>This complete guide covers everything: why add page numbers, step-by-step methods, numbering options, quality tips, troubleshooting, and privacy considerations.</p>
+<hr>
+<h2>Why Add Page Numbers to PDF?</h2>
+<p>Adding page numbers is one of the most common PDF tasks. Here&#39;s why people do it:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Why Add Page Numbers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Professional reports</strong></td>
+<td>Easy reference during meetings</td>
+</tr>
+<tr>
+<td><strong>Ebooks</strong></td>
+<td>Readers can track their place</td>
+</tr>
+<tr>
+<td><strong>Legal documents</strong></td>
+<td>Required for court filings</td>
+</tr>
+<tr>
+<td><strong>Academic papers</strong></td>
+<td>Standard formatting requirement</td>
+</tr>
+<tr>
+<td><strong>Manuals</strong></td>
+<td>Easy navigation to specific sections</td>
+</tr>
+<tr>
+<td><strong>Presentations</strong></td>
+<td>Reference specific slides</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Page Numbering Options</h2>
+<p>Most tools offer several options for numbering:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Position</strong></td>
+<td>Bottom center, bottom right, top right, top center</td>
+<td>Different document types</td>
+</tr>
+<tr>
+<td><strong>Start page</strong></td>
+<td>Which page to start numbering</td>
+<td>Skipping cover pages</td>
+</tr>
+<tr>
+<td><strong>Starting number</strong></td>
+<td>Begin at 1, i, or any number</td>
+<td>Continuing from another document</td>
+</tr>
+<tr>
+<td><strong>Format</strong></td>
+<td>1,2,3 or i,ii,iii or 001,002,003</td>
+<td>Different document types</td>
+</tr>
+<tr>
+<td><strong>Skip first page</strong></td>
+<td>Don&#39;t number the cover page</td>
+<td>Reports, books</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Method 1: Online PDF Page Number Tool (Recommended)</h2>
+<p>Online tools like AIPDFLY require no installation and work on any device with a browser. The best ones process files locally, keeping your data private.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Visit <a href="https://aipdfly.com/add-page-numbers.html">AIPDFLY Add Page Numbers Tool</a></li>
+<li>Upload your PDF</li>
+<li>Choose numbering position:<ul>
+<li>Bottom Center (most common)</li>
+<li>Bottom Right (business documents)</li>
+<li>Top Right (academic papers)</li>
+<li>Top Center (presentations)</li>
+</ul>
+</li>
+<li>Customize options:<ul>
+<li>Start page (skip cover pages)</li>
+<li>Starting number</li>
+<li>Format (1,2,3 or i,ii,iii)</li>
+</ul>
+</li>
+<li>Click &quot;Add Page Numbers&quot;</li>
+<li>Download your numbered PDF</li>
+</ol>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>Supports files up to 10MB (free) or 20MB (Pro)</li>
+<li>Multiple position options</li>
+<li>Custom starting number</li>
+<li>100% private — local processing, no server uploads</li>
+</ul>
+<p><strong>When to use:</strong> Most page numbering needs, quick results, all devices.</p>
+<p><strong>Try:</strong> <a href="https://aipdfly.com/add-page-numbers.html">AIPDFLY Add Page Numbers Tool</a></p>
+<hr>
+<h2>Method 2: Adobe Acrobat Pro (Desktop)</h2>
+<p>Adobe Acrobat Pro offers the highest quality page numbering with full control over settings.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in Acrobat Pro</li>
+<li>Click <strong>Tools &gt; Edit PDF &gt; Header &amp; Footer &gt; Add</strong></li>
+<li>Click <strong>Add Header &amp; Footer</strong></li>
+<li>Set page number position, format, and starting number</li>
+<li>Click <strong>OK</strong> and save the PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Highest quality output</li>
+<li>Full control over formatting</li>
+<li>Batch processing</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Expensive (subscription required)</li>
+<li>Installation required</li>
+</ul>
+<p><strong>When to use:</strong> Professional use, complex documents, sensitive files.</p>
+<hr>
+<h2>Method 3: Preview (Mac) — Built-in Tool</h2>
+<p>Mac users can use Preview for quick page numbering.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open your PDF in Preview</li>
+<li>Click <strong>Tools &gt; Annotate &gt; Text</strong></li>
+<li>Manually add page numbers</li>
+<li>Save the file</li>
+</ol>
+<p><strong>Note:</strong> Preview doesn&#39;t have a dedicated page numbering tool. This method requires manual placement.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Mac</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Manual process</li>
+<li>Not suitable for long documents</li>
+<li>No automation</li>
+</ul>
+<p><strong>When to use:</strong> Mac users, short documents only.</p>
+<hr>
+<h2>Method 4: Windows (Microsoft Word)</h2>
+<p>Windows users can use Microsoft Word to add page numbers.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in Word (converts to editable document)</li>
+<li>Go to <strong>Insert &gt; Page Number</strong></li>
+<li>Choose position and format</li>
+<li>Save as PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Word</li>
+<li>Full control over formatting</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>PDF conversion may change formatting</li>
+<li>Not ideal for complex PDFs</li>
+<li>Manual cleanup may be needed</li>
+</ul>
+<p><strong>When to use:</strong> Windows users, simple documents.</p>
+<hr>
+<h2>Method 5: Google Docs (Free Cloud-Based)</h2>
+<p>Google Docs offers a free way to add page numbers.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Upload your PDF to Google Drive</li>
+<li>Open with Google Docs</li>
+<li>Go to <strong>Insert &gt; Page Number</strong></li>
+<li>Choose position and format</li>
+<li>Download as PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Completely free</li>
+<li>Works on any device with a browser</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Privacy concerns (files uploaded to Google servers)</li>
+<li>Formatting may change</li>
+<li>Limited control over PDF-specific options</li>
+</ul>
+<p><strong>When to use:</strong> Quick numbering, non-sensitive documents.</p>
+<hr>
+<h2>Method Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Privacy</th>
+<th>Quality</th>
+<th>Speed</th>
+<th>Cost</th>
+<th>Best Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AIPDFLY</strong></td>
+<td>High (local)</td>
+<td>High</td>
+<td>Fast</td>
+<td>Free/Paid</td>
+<td>Most numbering</td>
+</tr>
+<tr>
+<td><strong>Adobe Acrobat</strong></td>
+<td>High (local)</td>
+<td>Excellent</td>
+<td>Fast</td>
+<td>Expensive</td>
+<td>Professional use</td>
+</tr>
+<tr>
+<td><strong>Preview (Mac)</strong></td>
+<td>High (local)</td>
+<td>Manual</td>
+<td>Slow</td>
+<td>Free</td>
+<td>Mac users, short docs</td>
+</tr>
+<tr>
+<td><strong>Microsoft Word</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Moderate</td>
+<td>Free (with Office)</td>
+<td>Windows users</td>
+</tr>
+<tr>
+<td><strong>Google Docs</strong></td>
+<td>Cloud</td>
+<td>Good</td>
+<td>Slow</td>
+<td>Free</td>
+<td>Quick, non-sensitive</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Choosing the Right Page Number Position</h2>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Best For</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Bottom Center</strong></td>
+<td>Books, reports</td>
+<td>Most traditional placement</td>
+</tr>
+<tr>
+<td><strong>Bottom Right</strong></td>
+<td>Business documents</td>
+<td>Common for reports</td>
+</tr>
+<tr>
+<td><strong>Top Right</strong></td>
+<td>Academic papers</td>
+<td>Standard for academic writing</td>
+</tr>
+<tr>
+<td><strong>Top Center</strong></td>
+<td>Presentations</td>
+<td>Common for slide decks</td>
+</tr>
+<tr>
+<td><strong>Bottom Left</strong></td>
+<td>Some legal documents</td>
+<td>Less common</td>
+</tr>
+</tbody></table>
+<p><strong>Recommendation:</strong> Bottom Center for most documents. Bottom Right for business.</p>
+<hr>
+<h2>Numbering Formats</h2>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Example</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Numeric</strong></td>
+<td>1, 2, 3</td>
+<td>Most documents</td>
+</tr>
+<tr>
+<td><strong>Roman</strong></td>
+<td>i, ii, iii</td>
+<td>Prefaces, introductions</td>
+</tr>
+<tr>
+<td><strong>Leading zeros</strong></td>
+<td>001, 002, 003</td>
+<td>Documents with 100+ pages</td>
+</tr>
+<tr>
+<td><strong>Page X of Y</strong></td>
+<td>Page 1 of 10</td>
+<td>Reports, contracts</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Pro Tips for Best Results</h2>
+<table>
+<thead>
+<tr>
+<th>Tip</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Skip cover pages</strong></td>
+<td>Start numbering on page 2 or 3</td>
+</tr>
+<tr>
+<td><strong>Use Roman numerals</strong></td>
+<td>Perfect for prefaces and appendices</td>
+</tr>
+<tr>
+<td><strong>Preview before applying</strong></td>
+<td>Check one page before processing all</td>
+</tr>
+<tr>
+<td><strong>Keep it simple</strong></td>
+<td>Bottom center is most universally accepted</td>
+</tr>
+<tr>
+<td><strong>Check page count</strong></td>
+<td>Ensure numbering matches total pages</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Scenarios</h2>
+<p><strong>Scenario 1: Business report</strong></p>
+<blockquote>
+<p>Add page numbers to a 50-page report. Use bottom right position, numeric format, skip cover page.</p>
+</blockquote>
+<p><strong>Scenario 2: Ebook formatting</strong></p>
+<blockquote>
+<p>Add page numbers to a 200-page ebook. Use bottom center position, numeric format, start on page 3.</p>
+</blockquote>
+<p><strong>Scenario 3: Legal document</strong></p>
+<blockquote>
+<p>Add page numbers to a contract. Use bottom center position, &quot;Page X of Y&quot; format.</p>
+</blockquote>
+<p><strong>Scenario 4: Academic paper</strong></p>
+<blockquote>
+<p>Add page numbers to a thesis. Use top right position, roman numerals for preface, numeric for main content.</p>
+</blockquote>
+<p><strong>Scenario 5: Presentation handout</strong></p>
+<blockquote>
+<p>Add page numbers to a PDF handout. Use top right position, numeric format.</p>
+</blockquote>
+<hr>
+<h2>Common Issues and Solutions</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Numbers don&#39;t appear</strong></td>
+<td>Check if page numbers are enabled</td>
+</tr>
+<tr>
+<td><strong>Wrong starting number</strong></td>
+<td>Adjust starting number in settings</td>
+</tr>
+<tr>
+<td><strong>Cover page numbered</strong></td>
+<td>Use &quot;Skip first page&quot; option</td>
+</tr>
+<tr>
+<td><strong>Format is wrong</strong></td>
+<td>Change format to numeric or Roman</td>
+</tr>
+<tr>
+<td><strong>Position is wrong</strong></td>
+<td>Adjust position setting</td>
+</tr>
+<tr>
+<td><strong>Numbers overlap content</strong></td>
+<td>Adjust margin or position</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Frequently Asked Questions</h2>
+<h3>Is adding page numbers really free?</h3>
+<p>Yes! AIPDFLY free users get 5 documents per day. Pro users get unlimited processing.</p>
+<h3>Will page numbers affect my original formatting?</h3>
+<p>No. Page numbers are added without altering your existing text, images, or layout.</p>
+<h3>Can I add page numbers to scanned PDFs?</h3>
+<p>Yes. The tool works with both digital and scanned PDF documents.</p>
+<h3>Do you store my PDF files?</h3>
+<p>AIPDFLY processes everything locally in your browser. Your files never leave your device.</p>
+<h3>Can I remove page numbers later?</h3>
+<p>Yes. You can upload the numbered PDF and use a PDF editor to remove them, or keep your original unnumbered version.</p>
+<h3>What page number formats are supported?</h3>
+<p>Numeric (1,2,3), Roman (i,ii,iii), and leading zeros (001,002,003).</p>
+<h3>Can I start numbering at a specific page?</h3>
+<p>Yes. You can choose which page to start numbering from.</p>
+<hr>
+<h2>Try It Now</h2>
+<p>Ready to add page numbers to your PDF? Visit <a href="https://aipdfly.com/add-page-numbers.html">AIPDFLY Add Page Numbers Tool</a> and enhance your document in seconds — no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="https://aipdfly.com/add-page-numbers.html">Add Page Numbers Tool</a> | <a href="https://aipdfly.com/merge-pdf.html">Merge PDF</a> | <a href="https://aipdfly.com/split-pdf.html">Split PDF</a> | <a href="https://aipdfly.com/compress-pdf.html">Compress PDF</a> | <a href="https://aipdfly.com/rotate.html">Rotate PDF</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // 暗黑模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>

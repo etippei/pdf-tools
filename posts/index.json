@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 68,
+      "title": "How to Add Page Numbers to PDF: The Complete Guide",
+      "slug": "how-to-add-page-numbers-to-pdf-the-complete-guide",
+      "date": "September 21, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to adding page numbers to PDF documents. Learn how to number pages professionally for reports, ebooks, and legal documents.",
+      "file": "068-how-to-add-page-numbers-to-pdf-the-complete-guide.html",
+      "url": "/posts/068-how-to-add-page-numbers-to-pdf-the-complete-guide.html",
+      "created_at": "2026-09-21T12:28:56Z"
+    },
+    {
       "id": 67,
       "title": "How to Compress PDF Files: The Complete Guide",
       "slug": "how-to-compress-pdf-files-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "019-how-to-repair-corrupted-pdf-complete-guide.html",
       "url": "/posts/019-how-to-repair-corrupted-pdf-complete-guide.html",
       "created_at": "2026-06-30T14:44:38Z"
-    },
-    {
-      "id": 18,
-      "title": "5 Signs You Need a PDF Tool (And Don't Know It Yet) - Quick Tips",
-      "slug": "5-signs-you-need-a-pdf-tool-and-dont-know-it-yet-quick-tips",
-      "date": "June 30, 2026",
-      "category": "Tip",
-      "excerpt": "Discover 5 signs that you need a PDF tool but don't realize it yet. Stop wasting time with manual workarounds. No signup required.",
-      "file": "018-5-signs-you-need-a-pdf-tool-and-dont-know-it-yet-quick-tips.html",
-      "url": "/posts/018-5-signs-you-need-a-pdf-tool-and-dont-know-it-yet-quick-tips.html",
-      "created_at": "2026-06-30T11:29:47Z"
     }
   ],
   "categories": [
