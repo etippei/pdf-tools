@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 69,
+      "title": "How to Rotate PDF Pages: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-rotate-pdf-pages-which-method-works-best-complete-gui",
+      "date": "September 24, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, and built-in methods for rotating PDF pages. Find the best approach for fixing orientation permanently.",
+      "file": "069-how-to-rotate-pdf-pages-which-method-works-best-complete-gui.html",
+      "url": "/posts/069-how-to-rotate-pdf-pages-which-method-works-best-complete-gui.html",
+      "created_at": "2026-09-24T12:20:36Z"
+    },
+    {
       "id": 68,
       "title": "How to Add Page Numbers to PDF: The Complete Guide",
       "slug": "how-to-add-page-numbers-to-pdf-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "020-how-to-compare-two-pdfs-complete-guide.html",
       "url": "/posts/020-how-to-compare-two-pdfs-complete-guide.html",
       "created_at": "2026-06-30T15:17:23Z"
-    },
-    {
-      "id": 19,
-      "title": "How to Repair Corrupted PDF - Complete Guide",
-      "slug": "how-to-repair-corrupted-pdf-complete-guide",
-      "date": "June 30, 2026",
-      "category": "Guide",
-      "excerpt": "Learn how to repair corrupted PDF files and recover your data. Fix damaged, unopenable, or error-prone PDFs. No signup required.",
-      "file": "019-how-to-repair-corrupted-pdf-complete-guide.html",
-      "url": "/posts/019-how-to-repair-corrupted-pdf-complete-guide.html",
-      "created_at": "2026-06-30T14:44:38Z"
     }
   ],
   "categories": [
