@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 71,
+      "title": "How to Merge PDF Files: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-merge-pdf-files-which-method-works-best-complete-guid",
+      "date": "September 28, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, and built-in methods for merging PDF files. Find the best approach for combining documents quickly and securely.",
+      "file": "071-how-to-merge-pdf-files-which-method-works-best-complete-guid.html",
+      "url": "/posts/071-how-to-merge-pdf-files-which-method-works-best-complete-guid.html",
+      "created_at": "2026-09-28T12:34:46Z"
+    },
+    {
       "id": 70,
       "title": "How to Split PDF Pages: Which Method Works Best? — Complete Guide",
       "slug": "how-to-split-pdf-pages-which-method-works-best-complete-guid",
@@ -538,17 +549,6 @@
       "file": "022-how-to-convert-word-to-pdf-complete-guide.html",
       "url": "/posts/022-how-to-convert-word-to-pdf-complete-guide.html",
       "created_at": "2026-07-01T14:06:28Z"
-    },
-    {
-      "id": 21,
-      "title": "5 Reasons to Use Online PDF Tools Instead of Desktop Software - Quick Tips",
-      "slug": "5-reasons-to-use-online-pdf-tools-instead-of-desktop-softwar",
-      "date": "July 1, 2026",
-      "category": "Tip",
-      "excerpt": "Discover 5 reasons why online PDF tools are better than desktop software. Save time, money, and hassle with browser-based solutions. No signup required.",
-      "file": "021-5-reasons-to-use-online-pdf-tools-instead-of-desktop-softwar.html",
-      "url": "/posts/021-5-reasons-to-use-online-pdf-tools-instead-of-desktop-softwar.html",
-      "created_at": "2026-07-01T13:36:39Z"
     }
   ],
   "categories": [
