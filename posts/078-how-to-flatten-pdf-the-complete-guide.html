@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Flatten PDF: The Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="The complete guide to flattening PDF files. Learn how to merge layers, lock form fields, and prevent editing in any PDF document.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How to Flatten PDF: The Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>October 15, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>How to Flatten PDF: The Complete Guide</h1>
+<p>You have a PDF that needs to be finalized. Maybe you&#39;ve filled out a form and don&#39;t want anyone to change it. Maybe you&#39;ve added annotations and want to lock them in place. Maybe you just want to ensure your document looks the same on every device.</p>
+<p>Flattening a PDF solves these problems. This complete guide covers everything: what flattening means, why do it, step-by-step methods, troubleshooting, and privacy considerations.</p>
+<hr>
+<h2>What Does &quot;Flatten PDF&quot; Mean?</h2>
+<p>Flattening a PDF means merging all layers, form fields, annotations, and interactive elements into a single, uneditable layer. Think of it like &quot;baking a cake&quot; — once baked, you can&#39;t separate the ingredients anymore.</p>
+<p><strong>Before flattening:</strong></p>
+<ul>
+<li>Editable text fields</li>
+<li>Movable images and annotations</li>
+<li>Interactive form elements</li>
+<li>Multiple layers</li>
+</ul>
+<p><strong>After flattening:</strong></p>
+<ul>
+<li>Everything becomes a single image layer</li>
+<li>Text becomes uneditable</li>
+<li>No interactive elements remain</li>
+<li>Consistent display on every device</li>
+</ul>
+<hr>
+<h2>Why Flatten a PDF?</h2>
+<p>Flattening is one of the most important PDF finalization tasks. Here&#39;s why people do it:</p>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Prevent editing</strong></td>
+<td>Stop others from modifying your content</td>
+</tr>
+<tr>
+<td><strong>Ensure consistency</strong></td>
+<td>Display the same way on every device</td>
+</tr>
+<tr>
+<td><strong>Reduce file size</strong></td>
+<td>Eliminate hidden layers and metadata</td>
+</tr>
+<tr>
+<td><strong>Finalize documents</strong></td>
+<td>Lock down contracts, reports, and official documents</td>
+</tr>
+<tr>
+<td><strong>Simplify sharing</strong></td>
+<td>Remove interactive elements that may not work everywhere</td>
+</tr>
+<tr>
+<td><strong>Protect signatures</strong></td>
+<td>Lock signatures in place after signing</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Flatten vs. Other Actions</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>What It Does</th>
+<th>Reversible?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Flatten</strong></td>
+<td>Merges all layers into one</td>
+<td>❌ Permanent</td>
+</tr>
+<tr>
+<td><strong>Compress</strong></td>
+<td>Reduces file size</td>
+<td>✅ Can be undone with original</td>
+</tr>
+<tr>
+<td><strong>Lock</strong></td>
+<td>Adds password protection</td>
+<td>✅ With password</td>
+</tr>
+<tr>
+<td><strong>Convert</strong></td>
+<td>Changes file format</td>
+<td>✅ Keep original</td>
+</tr>
+</tbody></table>
+<p><strong>Important:</strong> Flattening is permanent. Always keep a backup of your original PDF.</p>
+<hr>
+<h2>Method 1: Online PDF Flattener (Recommended)</h2>
+<p>Online tools like AIPDFLY require no installation and work on any device with a browser. The best ones process files locally, keeping your data private.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Visit <a href="https://aipdfly.com/flatten-pdf.html">AIPDFLY Flatten PDF Tool</a></li>
+<li>Upload your PDF</li>
+<li>Choose flattening options:<ul>
+<li><strong>Flatten All</strong> – Merge everything into one layer</li>
+<li><strong>Flatten Forms Only</strong> – Lock form fields but keep other annotations</li>
+<li><strong>Flatten Annotations Only</strong> – Merge comments and notes</li>
+</ul>
+</li>
+<li>Choose quality settings:<ul>
+<li><strong>High Quality</strong> – Preserve image and text quality</li>
+<li><strong>Small Size</strong> – Optimize for smaller file size</li>
+</ul>
+</li>
+<li>Click &quot;Flatten PDF&quot;</li>
+<li>Download your flattened PDF</li>
+</ol>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>Supports files up to 10MB (free) or 20MB (Pro)</li>
+<li>Multiple flattening modes</li>
+<li>100% private — local processing, no server uploads</li>
+<li>Preserves text quality</li>
+</ul>
+<p><strong>When to use:</strong> Most flattening needs, quick results, all devices.</p>
+<p><strong>Try:</strong> <a href="https://aipdfly.com/flatten-pdf.html">AIPDFLY Flatten PDF Tool</a></p>
+<hr>
+<h2>Method 2: Adobe Acrobat Pro (Desktop)</h2>
+<p>Adobe Acrobat Pro offers the highest quality flattening with full control over settings.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in Acrobat Pro</li>
+<li>Click <strong>Tools &gt; Print Production &gt; Flattener Preview</strong></li>
+<li>Adjust flattening settings:<ul>
+<li><strong>Raster/Vector Balance</strong> – Control how much is rasterized</li>
+<li><strong>Line Art and Text Resolution</strong> – Set quality</li>
+<li><strong>Gradient and Mesh Resolution</strong> – Set quality</li>
+</ul>
+</li>
+<li>Click <strong>Apply</strong></li>
+<li>Save the PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Highest quality output</li>
+<li>Full control over settings</li>
+<li>Works offline</li>
+<li>Batch processing</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Expensive (subscription required)</li>
+<li>Installation required</li>
+</ul>
+<p><strong>When to use:</strong> Professional use, complex documents, sensitive files.</p>
+<hr>
+<h2>Method 3: Preview (Mac) — Built-in Tool</h2>
+<p>Mac users can use Preview for basic PDF flattening.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open your PDF in Preview</li>
+<li>Click <strong>File &gt; Export</strong></li>
+<li>Choose <strong>Quartz Filter</strong> and select <strong>Flatten PDF</strong></li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Mac</li>
+<li>Simple and fast</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Limited control over settings</li>
+<li>May reduce quality</li>
+<li>No batch processing</li>
+</ul>
+<p><strong>When to use:</strong> Mac users, quick flattening.</p>
+<hr>
+<h2>Method 4: Microsoft Print to PDF (Windows)</h2>
+<p>Windows users can use the built-in &quot;Microsoft Print to PDF&quot; feature.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in any viewer</li>
+<li>Click <strong>File &gt; Print</strong></li>
+<li>Select <strong>Microsoft Print to PDF</strong> as the printer</li>
+<li>Click <strong>Print</strong> and save the PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Windows</li>
+<li>No additional software needed</li>
+<li>Flattens everything</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>One page at a time</li>
+<li>Limited control</li>
+<li>Quality may drop</li>
+</ul>
+<p><strong>When to use:</strong> Emergency situations, no other tools available.</p>
+<hr>
+<h2>Method 5: Google Drive (Free Cloud-Based)</h2>
+<p>Google Drive offers a free way to flatten PDFs.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Upload your PDF to Google Drive</li>
+<li>Open the PDF with Google Docs</li>
+<li>Google Docs flattens the PDF automatically</li>
+<li>Download as PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Completely free</li>
+<li>Works on any device with a browser</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Privacy concerns (files uploaded to Google servers)</li>
+<li>Formatting may change</li>
+<li>Limited control</li>
+</ul>
+<p><strong>When to use:</strong> Quick flattening, non-sensitive documents.</p>
+<hr>
+<h2>Method Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Privacy</th>
+<th>Quality</th>
+<th>Speed</th>
+<th>Cost</th>
+<th>Best Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AIPDFLY</strong></td>
+<td>High (local)</td>
+<td>High</td>
+<td>Fast</td>
+<td>Free/Paid</td>
+<td>Most flattening</td>
+</tr>
+<tr>
+<td><strong>Adobe Acrobat</strong></td>
+<td>High (local)</td>
+<td>Excellent</td>
+<td>Fast</td>
+<td>Expensive</td>
+<td>Professional use</td>
+</tr>
+<tr>
+<td><strong>Preview (Mac)</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Fast</td>
+<td>Free</td>
+<td>Mac users</td>
+</tr>
+<tr>
+<td><strong>Print to PDF</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Slow</td>
+<td>Free</td>
+<td>Emergency only</td>
+</tr>
+<tr>
+<td><strong>Google Drive</strong></td>
+<td>Cloud</td>
+<td>Good</td>
+<td>Slow</td>
+<td>Free</td>
+<td>Quick, non-sensitive</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>What Gets Flattened?</h2>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Before</th>
+<th>After Flatten</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Form Fields</strong></td>
+<td>✅ Fillable</td>
+<td>❌ Fixed text</td>
+</tr>
+<tr>
+<td><strong>Text Boxes</strong></td>
+<td>✅ Editable</td>
+<td>❌ Fixed image</td>
+</tr>
+<tr>
+<td><strong>Annotations</strong></td>
+<td>✅ Movable</td>
+<td>❌ Fixed overlay</td>
+</tr>
+<tr>
+<td><strong>Layers</strong></td>
+<td>✅ Separate</td>
+<td>❌ Merged</td>
+</tr>
+<tr>
+<td><strong>Hyperlinks</strong></td>
+<td>✅ Clickable</td>
+<td>❌ Fixed text</td>
+</tr>
+<tr>
+<td><strong>Images</strong></td>
+<td>✅ Selectable</td>
+<td>❌ Fixed image</td>
+</tr>
+<tr>
+<td><strong>Digital Signatures</strong></td>
+<td>✅ Valid</td>
+<td>❌ May become invalid</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>When Should You Flatten a PDF?</h2>
+<p><strong>✅ Good Times to Flatten:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Final contracts</strong></td>
+<td>Prevent unauthorized changes</td>
+</tr>
+<tr>
+<td><strong>Reports to clients</strong></td>
+<td>Ensure consistent display</td>
+</tr>
+<tr>
+<td><strong>Resumes and applications</strong></td>
+<td>Lock formatting</td>
+</tr>
+<tr>
+<td><strong>Tax returns</strong></td>
+<td>Protect sensitive information</td>
+</tr>
+<tr>
+<td><strong>Signed documents</strong></td>
+<td>Lock signatures in place</td>
+</tr>
+<tr>
+<td><strong>Documents for external sharing</strong></td>
+<td>Prevent editing</td>
+</tr>
+</tbody></table>
+<p><strong>❌ When to Avoid Flattening:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Documents still under review</strong></td>
+<td>You may need to edit</td>
+</tr>
+<tr>
+<td><strong>Forms that need to be filled</strong></td>
+<td>Flattening makes them uneditable</td>
+</tr>
+<tr>
+<td><strong>Documents requiring digital signatures</strong></td>
+<td>Flattening may invalidate signatures</td>
+</tr>
+<tr>
+<td><strong>Working drafts</strong></td>
+<td>You&#39;ll need to make changes</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Pro Tips for Best Results</h2>
+<table>
+<thead>
+<tr>
+<th>Tip</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Always keep a backup</strong></td>
+<td>Flattening is permanent</td>
+</tr>
+<tr>
+<td><strong>Choose the right quality</strong></td>
+<td>High Quality preserves details</td>
+</tr>
+<tr>
+<td><strong>Check flattened document</strong></td>
+<td>Open it to ensure everything looks correct</td>
+</tr>
+<tr>
+<td><strong>Flatten after signing</strong></td>
+<td>Locks signatures and prevents tampering</td>
+</tr>
+<tr>
+<td><strong>Use high quality for images</strong></td>
+<td>Prevents pixelation of graphics</td>
+</tr>
+<tr>
+<td><strong>Test on one page first</strong></td>
+<td>Preview before processing the whole document</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Scenarios</h2>
+<p><strong>Scenario 1: Legal Documents</strong></p>
+<blockquote>
+<p>Contracts, NDAs, and agreements should be flattened to prevent unauthorized changes.</p>
+</blockquote>
+<p><strong>Scenario 2: Financial Reports</strong></p>
+<blockquote>
+<p>Quarterly and annual reports need to display consistently across all devices.</p>
+</blockquote>
+<p><strong>Scenario 3: Resumes</strong></p>
+<blockquote>
+<p>Keep your resume looking exactly as designed when shared with employers.</p>
+</blockquote>
+<p><strong>Scenario 4: Final Presentations</strong></p>
+<blockquote>
+<p>Ensure slides look perfect when opened on any computer.</p>
+</blockquote>
+<p><strong>Scenario 5: Tax Documents</strong></p>
+<blockquote>
+<p>Protect sensitive financial information from accidental edits.</p>
+</blockquote>
+<hr>
+<h2>Common Issues and Solutions</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>File size increased</strong></td>
+<td>Use compression after flattening</td>
+</tr>
+<tr>
+<td><strong>Quality reduced</strong></td>
+<td>Use High Quality mode</td>
+</tr>
+<tr>
+<td><strong>Digital signatures invalid</strong></td>
+<td>Sign after flattening if signatures are needed</td>
+</tr>
+<tr>
+<td><strong>Text not selectable</strong></td>
+<td>This is expected — flattening makes text uneditable</td>
+</tr>
+<tr>
+<td><strong>Form fields locked</strong></td>
+<td>This is the purpose of flattening</td>
+</tr>
+<tr>
+<td><strong>Cannot undo</strong></td>
+<td>Always keep a backup of the original</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Frequently Asked Questions</h2>
+<h3>Is flattening PDFs really free?</h3>
+<p>Yes! AIPDFLY free users get 5 flatten operations per day. Pro users get unlimited processing.</p>
+<h3>Can I unflatten a PDF later?</h3>
+<p>No. Flattening is permanent. Always keep an original copy.</p>
+<h3>Does flattening reduce quality?</h3>
+<p>Only if you choose &quot;Small Size&quot; mode. Use &quot;High Quality&quot; mode to preserve all details.</p>
+<h3>Do you store my PDF files?</h3>
+<p>AIPDFLY processes everything locally in your browser. Your files never leave your device.</p>
+<h3>What&#39;s the difference between flattening and compressing?</h3>
+<p>Flattening merges layers; compressing reduces file size. They serve different purposes.</p>
+<h3>Will flattening remove digital signatures?</h3>
+<p>Yes, digital signatures may become invalid after flattening. Sign after flattening if signatures are needed.</p>
+<h3>Can I flatten multiple PDFs at once?</h3>
+<p>Pro users get batch processing for up to 10 files simultaneously.</p>
+<hr>
+<h2>Try It Now</h2>
+<p>Ready to flatten your PDF and finalize your document? Visit <a href="https://aipdfly.com/flatten-pdf.html">AIPDFLY Flatten PDF Tool</a> and lock your content in seconds — no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="https://aipdfly.com/flatten-pdf.html">Flatten PDF Tool</a> | <a href="https://aipdfly.com/protect-pdf.html">Protect PDF</a> | <a href="https://aipdfly.com/compress-pdf.html">Compress PDF</a> | <a href="https://aipdfly.com/merge-pdf.html">Merge PDF</a> | <a href="https://aipdfly.com/ocr.html">OCR Tool</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // 暗黑模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>
