@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 80,
+      "title": "How to Compare Two PDFs: The Complete Guide",
+      "slug": "how-to-compare-two-pdfs-the-complete-guide",
+      "date": "October 19, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to comparing two PDF files. Learn how to spot differences instantly and track changes between document versions.",
+      "file": "080-how-to-compare-two-pdfs-the-complete-guide.html",
+      "url": "/posts/080-how-to-compare-two-pdfs-the-complete-guide.html",
+      "created_at": "2026-10-19T10:00:03Z"
+    },
+    {
       "id": 79,
       "title": "How to Repair Corrupted PDF: The Complete Guide",
       "slug": "how-to-repair-corrupted-pdf-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "031-5-ways-to-reduce-pdf-file-size-without-losing-quality-quick-.html",
       "url": "/posts/031-5-ways-to-reduce-pdf-file-size-without-losing-quality-quick-.html",
       "created_at": "2026-07-05T09:20:43Z"
-    },
-    {
-      "id": 30,
-      "title": "5 Ways to Make Your PDFs More Accessible - Quick Tips",
-      "slug": "5-ways-to-make-your-pdfs-more-accessible-quick-tips",
-      "date": "July 4, 2026",
-      "category": "Tip",
-      "excerpt": "Learn 5 simple ways to make your PDFs more accessible for everyone. Create documents that work for people with disabilities. No signup required.",
-      "file": "030-5-ways-to-make-your-pdfs-more-accessible-quick-tips.html",
-      "url": "/posts/030-5-ways-to-make-your-pdfs-more-accessible-quick-tips.html",
-      "created_at": "2026-07-04T10:26:18Z"
     }
   ],
   "categories": [
