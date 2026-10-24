@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Add Image to PDF: The Complete Guide | AIPDFLY Blog</title>
+    <meta name="description" content="The complete guide to adding images to PDF files. Learn how to insert logos, photos, and graphics into any page with full control.">
+    <meta name="keywords" content="Tutorial, pdf tips, pdf tutorial">
+    <link rel="canonical" href="https://aipdfly.com/posts/">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/dark-mode.css">
+    <script src="/darkmode.js"></script>
+    
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+        .markdown-body { line-height: 1.8; font-size: 16px; }
+        .markdown-body h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.5em; margin: 1em 0 0.5em; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.25em; margin: 0.8em 0 0.4em; font-weight: bold; }
+        .markdown-body p { margin: 1em 0; }
+        .markdown-body pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+        .markdown-body code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 8px; }
+        .markdown-body ul, .markdown-body ol { margin: 0.5em 0 0.5em 1.5em; }
+        .markdown-body blockquote { border-left: 4px solid #8b5cf6; margin: 1em 0; padding-left: 1em; color: #666; }
+        .markdown-body a { color: #8b5cf6; text-decoration: underline; }
+        .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .markdown-body th { background: #f3f4f6; }
+        .dark-mode .markdown-body th { background: #374151; }
+        .dark-mode .markdown-body pre { background: #1e293b; }
+        .dark-mode .markdown-body code { background: #1e293b; color: #e2e8f0; }
+        .dark-mode .markdown-body blockquote { color: #9ca3af; }
+        .dark-mode .markdown-body td { border-color: #374151; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .dark-mode ::-webkit-scrollbar-track { background: #1f2937; }
+        #darkModeToggle { transition: all 0.2s ease; }
+        #darkModeToggle:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AIPDFLY</a>
+            <div class="flex items-center gap-2 bg-gray-100 rounded-full p-1">
+                <a href="/" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-wrench mr-2"></i> Tools</a>
+                <a href="/blog.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all bg-purple-600 text-white shadow-sm"><i class="fas fa-newspaper mr-2"></i> Blog</a>
+                <a href="/pricing.html" class="tab-btn px-6 py-2.5 rounded-full text-base font-semibold transition-all text-gray-700 hover:text-purple-600 hover:bg-gray-200"><i class="fas fa-tag mr-2"></i> Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/help.html" class="text-gray-600 hover:text-purple-600 transition flex items-center gap-1"><i class="fas fa-question-circle"></i> Help</a>
+                <button id="darkModeToggle" class="text-gray-600 hover:text-purple-600 transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"><i class="fas fa-moon"></i></button>
+                <div id="userSection"><a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How to Add Image to PDF: The Complete Guide</h1>
+            <div class="flex items-center gap-4 text-gray-500 mb-8 pb-4 border-b">
+                <span><i class="far fa-calendar-alt mr-2"></i>October 24, 2026</span>
+                <span><i class="fas fa-tag mr-2"></i>Tutorial</span>
+            </div>
+            <div class="markdown-body prose max-w-none">
+                <h1>How to Add Image to PDF: The Complete Guide</h1>
+<p>You need to add a logo to a business document. Or insert a photo into a report. Or place a diagram in a presentation. Adding images to PDFs is a common need, but not all tools make it easy.</p>
+<p>This complete guide covers everything: why add images, supported formats, step-by-step methods, placement tips, troubleshooting, and privacy considerations.</p>
+<hr>
+<h2>Why Add Images to PDF?</h2>
+<p>Adding images is one of the most common PDF tasks. Here&#39;s why people do it:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Why Add Images</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Branding</strong></td>
+<td>Add company logos to business documents</td>
+</tr>
+<tr>
+<td><strong>Visual support</strong></td>
+<td>Include photos and diagrams to explain concepts</td>
+</tr>
+<tr>
+<td><strong>Professional reports</strong></td>
+<td>Enhance presentations with charts and graphics</td>
+</tr>
+<tr>
+<td><strong>Personal documents</strong></td>
+<td>Add photos to resumes, portfolios, or invitations</td>
+</tr>
+<tr>
+<td><strong>Signatures</strong></td>
+<td>Insert signature images into contracts</td>
+</tr>
+<tr>
+<td><strong>Certificates</strong></td>
+<td>Add seals, stamps, or official markings</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Supported Image Formats</h2>
+<p>Most PDF tools support these common image formats:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PNG</strong></td>
+<td>Logos, graphics with transparent backgrounds</td>
+</tr>
+<tr>
+<td><strong>JPG/JPEG</strong></td>
+<td>Photos, general purpose images</td>
+</tr>
+<tr>
+<td><strong>GIF</strong></td>
+<td>Simple graphics</td>
+</tr>
+<tr>
+<td><strong>WebP</strong></td>
+<td>Modern format, smaller file size</td>
+</tr>
+<tr>
+<td><strong>BMP</strong></td>
+<td>Windows images</td>
+</tr>
+</tbody></table>
+<p><strong>Recommendation:</strong> Use PNG for logos (supports transparency). Use JPG for photos.</p>
+<hr>
+<h2>Method 1: Online PDF Image Tool (Recommended)</h2>
+<p>Online tools like AIPDFLY require no installation and work on any device with a browser. The best ones process files locally, keeping your data private.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Visit <a href="https://aipdfly.com/add-image-to-pdf.html">AIPDFLY Add Image to PDF Tool</a></li>
+<li>Upload your PDF</li>
+<li>Upload your image (PNG, JPG, GIF, etc.)</li>
+<li>Position your image:<ul>
+<li>Drag and drop to move</li>
+<li>Resize using corner handles</li>
+<li>Rotate 90°, 180°, or custom angles</li>
+</ul>
+</li>
+<li>Choose page placement:<ul>
+<li><strong>Current Page</strong> – Add to the page you&#39;re viewing</li>
+<li><strong>All Pages</strong> – Add the same image to every page</li>
+<li><strong>Page Range</strong> – Add to specific pages (e.g., 1-5)</li>
+<li><strong>First Page Only</strong> – Common for cover pages</li>
+</ul>
+</li>
+<li>Click &quot;Add Image&quot;</li>
+<li>Download your updated PDF</li>
+</ol>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>Supports files up to 10MB (free) or 20MB (Pro)</li>
+<li>Multiple image formats supported</li>
+<li>Drag and drop positioning</li>
+<li>100% private — local processing, no server uploads</li>
+</ul>
+<p><strong>When to use:</strong> Most image insertion needs, quick results, all devices.</p>
+<p><strong>Try:</strong> <a href="https://aipdfly.com/add-image-to-pdf.html">AIPDFLY Add Image to PDF Tool</a></p>
+<hr>
+<h2>Method 2: Adobe Acrobat Pro (Desktop)</h2>
+<p>Adobe Acrobat Pro offers the highest quality image insertion with full control over placement.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in Acrobat Pro</li>
+<li>Click <strong>Tools &gt; Edit PDF</strong></li>
+<li>Click <strong>Add Image</strong></li>
+<li>Select your image file</li>
+<li>Click on the page where you want to place the image</li>
+<li>Resize and reposition as needed</li>
+<li>Save the PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Highest quality output</li>
+<li>Full control over placement</li>
+<li>Works offline</li>
+<li>Batch processing</li>
+<li>Advanced image editing</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Expensive (subscription required)</li>
+<li>Installation required</li>
+</ul>
+<p><strong>When to use:</strong> Professional use, complex documents, sensitive files.</p>
+<hr>
+<h2>Method 3: Preview (Mac) — Built-in Tool</h2>
+<p>Mac users can use Preview for basic PDF image insertion.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open your PDF in Preview</li>
+<li>Open your image in Preview</li>
+<li>Copy the image (Cmd+C)</li>
+<li>Paste it into the PDF (Cmd+V)</li>
+<li>Resize and reposition as needed</li>
+<li>Save the file</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Mac</li>
+<li>Simple and fast</li>
+<li>Works offline</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Limited control over placement</li>
+<li>No batch processing</li>
+<li>Basic image editing only</li>
+</ul>
+<p><strong>When to use:</strong> Mac users, quick image insertion.</p>
+<hr>
+<h2>Method 4: Microsoft Word (Windows)</h2>
+<p>Windows users can use Microsoft Word to add images to PDFs.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Open the PDF in Word (converts to editable document)</li>
+<li>Go to <strong>Insert &gt; Pictures</strong></li>
+<li>Select your image</li>
+<li>Position and resize it</li>
+<li>Save as PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Free with Word</li>
+<li>Works offline</li>
+<li>Full image editing</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>PDF conversion may change formatting</li>
+<li>Not ideal for complex PDFs</li>
+<li>Manual cleanup may be needed</li>
+</ul>
+<p><strong>When to use:</strong> Windows users, simple documents.</p>
+<hr>
+<h2>Method 5: Google Drive (Free Cloud-Based)</h2>
+<p>Google Drive offers a free way to add images to PDFs.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Upload your PDF to Google Drive</li>
+<li>Open the PDF with Google Docs</li>
+<li>Go to <strong>Insert &gt; Image</strong></li>
+<li>Upload and place your image</li>
+<li>Download as PDF</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Completely free</li>
+<li>Works on any device with a browser</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Privacy concerns (files uploaded to Google servers)</li>
+<li>Formatting may change</li>
+<li>Limited control over placement</li>
+</ul>
+<p><strong>When to use:</strong> Quick image insertion, non-sensitive documents.</p>
+<hr>
+<h2>Method Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Privacy</th>
+<th>Quality</th>
+<th>Speed</th>
+<th>Cost</th>
+<th>Best Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AIPDFLY</strong></td>
+<td>High (local)</td>
+<td>High</td>
+<td>Fast</td>
+<td>Free/Paid</td>
+<td>Most insertions</td>
+</tr>
+<tr>
+<td><strong>Adobe Acrobat</strong></td>
+<td>High (local)</td>
+<td>Excellent</td>
+<td>Fast</td>
+<td>Expensive</td>
+<td>Professional use</td>
+</tr>
+<tr>
+<td><strong>Preview (Mac)</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Fast</td>
+<td>Free</td>
+<td>Mac users</td>
+</tr>
+<tr>
+<td><strong>Microsoft Word</strong></td>
+<td>High (local)</td>
+<td>Good</td>
+<td>Moderate</td>
+<td>Free (with Office)</td>
+<td>Windows users</td>
+</tr>
+<tr>
+<td><strong>Google Drive</strong></td>
+<td>Cloud</td>
+<td>Good</td>
+<td>Slow</td>
+<td>Free</td>
+<td>Quick, non-sensitive</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Page Placement Options</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Current Page</strong></td>
+<td>Add image to the page you&#39;re viewing</td>
+<td>Adding one image</td>
+</tr>
+<tr>
+<td><strong>All Pages</strong></td>
+<td>Add the same image to every page</td>
+<td>Logos, watermarks</td>
+</tr>
+<tr>
+<td><strong>Page Range</strong></td>
+<td>Add image to specific pages (e.g., 1-5)</td>
+<td>Multiple specific pages</td>
+</tr>
+<tr>
+<td><strong>First Page Only</strong></td>
+<td>Common for cover pages and title pages</td>
+<td>Cover images</td>
+</tr>
+<tr>
+<td><strong>Odd/Even Pages</strong></td>
+<td>Add to only odd or even pages</td>
+<td>Specific formatting needs</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Use Cases</h2>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>How to Place</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Adding a Logo</strong></td>
+<td>Upload PNG with transparent background, place in top-right corner, apply to all pages</td>
+</tr>
+<tr>
+<td><strong>Inserting Photos</strong></td>
+<td>Upload JPG, place on relevant pages, resize to fit</td>
+</tr>
+<tr>
+<td><strong>Cover Page</strong></td>
+<td>Upload background image, place on first page, resize to full page</td>
+</tr>
+<tr>
+<td><strong>Diagrams and Charts</strong></td>
+<td>Upload PNG, place in relevant sections</td>
+</tr>
+<tr>
+<td><strong>Signature Image</strong></td>
+<td>Upload signature image, place at signature line</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Pro Tips for Best Results</h2>
+<table>
+<thead>
+<tr>
+<th>Tip</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Use high-quality images</strong></td>
+<td>Low resolution images look pixelated</td>
+</tr>
+<tr>
+<td><strong>Check file size</strong></td>
+<td>Large images increase PDF file size significantly</td>
+</tr>
+<tr>
+<td><strong>Maintain aspect ratio</strong></td>
+<td>Hold Shift while resizing to keep proportions</td>
+</tr>
+<tr>
+<td><strong>Use transparent PNGs</strong></td>
+<td>Perfect for logos and overlays that don&#39;t block text</td>
+</tr>
+<tr>
+<td><strong>Test placement</strong></td>
+<td>Add the image to one page first before applying to all pages</td>
+</tr>
+<tr>
+<td><strong>Compress after adding</strong></td>
+<td>Use PDF compressor for smaller files</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Common Scenarios</h2>
+<p><strong>Scenario 1: Adding a Logo to Business Documents</strong></p>
+<blockquote>
+<p>Upload your company logo (PNG with transparent background) and place it in the top-right corner of every page.</p>
+</blockquote>
+<p><strong>Scenario 2: Inserting Photos into Reports</strong></p>
+<blockquote>
+<p>Add product photos or team pictures to relevant pages of your presentation.</p>
+</blockquote>
+<p><strong>Scenario 3: Creating a Cover Page</strong></p>
+<blockquote>
+<p>Add a background image to the first page for a professional title page.</p>
+</blockquote>
+<p><strong>Scenario 4: Adding Diagrams and Charts</strong></p>
+<blockquote>
+<p>Insert charts and graphs to support your data in reports.</p>
+</blockquote>
+<p><strong>Scenario 5: Personalizing Documents</strong></p>
+<blockquote>
+<p>Add photos to resumes, invites, or greeting cards.</p>
+</blockquote>
+<hr>
+<h2>Common Issues and Solutions</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Image is blurry</strong></td>
+<td>Use higher resolution image</td>
+</tr>
+<tr>
+<td><strong>File size increased too much</strong></td>
+<td>Compress image before adding, or compress PDF after</td>
+</tr>
+<tr>
+<td><strong>Image won&#39;t place</strong></td>
+<td>Check image format (PNG, JPG, GIF supported)</td>
+</tr>
+<tr>
+<td><strong>Image covers text</strong></td>
+<td>Resize or reposition the image</td>
+</tr>
+<tr>
+<td><strong>Wrong page placement</strong></td>
+<td>Check &quot;All Pages&quot; or &quot;Page Range&quot; setting</td>
+</tr>
+<tr>
+<td><strong>Image is rotated</strong></td>
+<td>Rotate the image before adding</td>
+</tr>
+<tr>
+<td><strong>PDF is password-protected</strong></td>
+<td>Remove password first (if you have permission)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Frequently Asked Questions</h2>
+<h3>Is adding images to PDF really free?</h3>
+<p>Yes! AIPDFLY free users get 5 inserts per day. Pro users get unlimited inserts and advanced positioning.</p>
+<h3>Will my image quality be reduced?</h3>
+<p>No. The original image quality is preserved. Choose High Quality mode for best results.</p>
+<h3>Can I add multiple images to one PDF?</h3>
+<p>Yes. You can insert multiple images one at a time, or in bulk with Pro.</p>
+<h3>Do you store my PDF files?</h3>
+<p>AIPDFLY processes everything locally in your browser. Your files and images never leave your device.</p>
+<h3>What&#39;s the maximum image size?</h3>
+<p>Images up to 10MB are supported. For larger images, compress them first.</p>
+<h3>Can I insert images into scanned PDFs?</h3>
+<p>Yes. The tool works with both digital and scanned PDF documents.</p>
+<h3>Can I remove an image after adding it?</h3>
+<p>Yes. Use a PDF editor to remove the image, or keep the original version as backup.</p>
+<hr>
+<h2>Try It Now</h2>
+<p>Ready to add images to your PDF? Visit <a href="https://aipdfly.com/add-image-to-pdf.html">AIPDFLY Add Image to PDF Tool</a> and enhance your document in seconds — no registration required.</p>
+<hr>
+<p><strong>Related Tools:</strong> <a href="https://aipdfly.com/add-image-to-pdf.html">Add Image to PDF Tool</a> | <a href="https://aipdfly.com/image-to-pdf.html">Image to PDF</a> | <a href="https://aipdfly.com/pdf-to-image.html">PDF to Image</a> | <a href="https://aipdfly.com/compress-pdf.html">Compress PDF</a> | <a href="https://aipdfly.com/merge-pdf.html">Merge PDF</a> | <a href="https://aipdfly.com/ocr.html">OCR Tool</a></p>
+
+            </div>
+            <div class="mt-8 pt-6 border-t text-center">
+                <a href="/blog.html" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-10 mt-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center text-sm">
+            <p>&copy; 2026 AIPDFLY. All rights reserved.</p>
+            <p class="mt-2">
+                <a href="/privacy-policy.html" class="hover:text-white mx-2 transition">Privacy Policy</a> |
+                <a href="/terms-of-service.html" class="hover:text-white mx-2 transition">Terms of Service</a> |
+                <a href="/cookie-policy.html" class="hover:text-white mx-2 transition">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 用户菜单
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
+        const isPro = localStorage.getItem('isPro') === 'true';
+        const userSection = document.getElementById('userSection');
+        function initUserMenu() {
+            if (!userSection) return;
+            if (userEmail && authToken) {
+                userSection.innerHTML = `<div class="relative" id="userMenuContainer"><button id="userMenuBtn" class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user-circle"></i><span>${userEmail.split('@')[0]}</span><i class="fas fa-chevron-down text-xs ml-1"></i></button><div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20 hidden">${isPro ? '<p class="px-4 py-2 text-green-600 text-sm border-b"><i class="fas fa-crown mr-1"></i> Pro Member</p>' : ''}<a href="/account.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a><a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a></div></div>`;
+                setTimeout(() => {
+                    const container = document.getElementById('userMenuContainer');
+                    const btn = document.getElementById('userMenuBtn');
+                    const dropdown = document.getElementById('userDropdown');
+                    if (btn && dropdown) {
+                        btn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+                        document.addEventListener('click', (e) => { if (container && !container.contains(e.target)) dropdown.classList.add('hidden'); });
+                    }
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) logout.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('userEmail'); localStorage.removeItem('authToken'); localStorage.removeItem('isPro'); window.location.reload(); });
+                }, 100);
+            } else {
+                userSection.innerHTML = `<a href="/login.html" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition flex items-center gap-1"><i class="fas fa-user"></i> Login</a>`;
+            }
+        }
+        initUserMenu();
+        // 暗黑模式
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+        // 高亮当前标签
+        const currentPage = window.location.pathname.split('/').pop() || 'blog.html';
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const href = btn.getAttribute('href').replace('/', '');
+            if (href === currentPage || (currentPage.startsWith('posts/') && href === 'blog.html')) {
+                btn.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-gray-700');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-700');
+            }
+        });
+    </script>
+</body>
+</html>
