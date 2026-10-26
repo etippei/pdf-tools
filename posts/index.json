@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 83,
+      "title": "How to Add Watermark to PDF: The Complete Guide",
+      "slug": "how-to-add-watermark-to-pdf-the-complete-guide",
+      "date": "October 26, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to adding watermarks to PDF files. Learn how to protect documents, add branding, and mark files as confidential or draft.",
+      "file": "083-how-to-add-watermark-to-pdf-the-complete-guide.html",
+      "url": "/posts/083-how-to-add-watermark-to-pdf-the-complete-guide.html",
+      "created_at": "2026-10-26T13:04:35Z"
+    },
+    {
       "id": 82,
       "title": "How to Add Image to PDF: The Complete Guide",
       "slug": "how-to-add-image-to-pdf-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "034-5-reasons-why-you-should-use-online-pdf-tools-instead-of-des.html",
       "url": "/posts/034-5-reasons-why-you-should-use-online-pdf-tools-instead-of-des.html",
       "created_at": "2026-07-08T12:37:41Z"
-    },
-    {
-      "id": 33,
-      "title": "5 Common PDF Workflows Made Easy with Online Tools - Quick Tips",
-      "slug": "5-common-pdf-workflows-made-easy-with-online-tools-quick-tip",
-      "date": "July 7, 2026",
-      "category": "Tip",
-      "excerpt": "Discover 5 common PDF workflows that used to be complicated. Learn how online tools can simplify document management. No signup required.",
-      "file": "033-5-common-pdf-workflows-made-easy-with-online-tools-quick-tip.html",
-      "url": "/posts/033-5-common-pdf-workflows-made-easy-with-online-tools-quick-tip.html",
-      "created_at": "2026-07-07T15:33:28Z"
     }
   ],
   "categories": [
