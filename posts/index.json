@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 85,
+      "title": "How to OCR a PDF: The Complete Guide",
+      "slug": "how-to-ocr-a-pdf-the-complete-guide",
+      "date": "October 29, 2026",
+      "category": "Tutorial",
+      "excerpt": "The complete guide to OCR PDF files. Learn how to convert scanned documents into editable, searchable text with optical character recognition.",
+      "file": "085-how-to-ocr-a-pdf-the-complete-guide.html",
+      "url": "/posts/085-how-to-ocr-a-pdf-the-complete-guide.html",
+      "created_at": "2026-10-29T09:54:14Z"
+    },
+    {
       "id": 84,
       "title": "How to OCR a PDF: The Complete Guide",
       "slug": "how-to-ocr-a-pdf-the-complete-guide",
@@ -538,17 +549,6 @@
       "file": "036-5-common-pdf-myths-debunked-quick-tips.html",
       "url": "/posts/036-5-common-pdf-myths-debunked-quick-tips.html",
       "created_at": "2026-07-09T13:23:36Z"
-    },
-    {
-      "id": 35,
-      "title": "5 Tips for Faster PDF Processing - Quick Tips",
-      "slug": "5-tips-for-faster-pdf-processing-quick-tips",
-      "date": "July 8, 2026",
-      "category": "Tip",
-      "excerpt": "Discover 5 tips to speed up your PDF processing. Save time and work more efficiently with these simple tricks. No signup required.",
-      "file": "035-5-tips-for-faster-pdf-processing-quick-tips.html",
-      "url": "/posts/035-5-tips-for-faster-pdf-processing-quick-tips.html",
-      "created_at": "2026-07-08T14:17:59Z"
     }
   ],
   "categories": [
