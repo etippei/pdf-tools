@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 87,
+      "title": "How to Convert Word to PDF: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-word-to-pdf-which-method-works-best-complete-",
+      "date": "November 2, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, desktop software, Google Docs, and built-in methods for converting Word to PDF. Find the best approach for sharing documents professionally.",
+      "file": "087-how-to-convert-word-to-pdf-which-method-works-best-complete-.html",
+      "url": "/posts/087-how-to-convert-word-to-pdf-which-method-works-best-complete-.html",
+      "created_at": "2026-11-02T10:13:09Z"
+    },
+    {
       "id": 86,
       "title": "How to Convert PDF to Word: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-pdf-to-word-which-method-works-best-complete-",
@@ -538,17 +549,6 @@
       "file": "038-how-to-convert-pdf-to-word-the-complete-guide-2026.html",
       "url": "/posts/038-how-to-convert-pdf-to-word-the-complete-guide-2026.html",
       "created_at": "2026-07-13T12:44:30Z"
-    },
-    {
-      "id": 37,
-      "title": "How to Convert PDF to Word - Complete Guide",
-      "slug": "how-to-convert-pdf-to-word-complete-guide",
-      "date": "July 9, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to convert PDF to Word while preserving formatting, fonts, and layout. Perfect for editing documents. No signup required.",
-      "file": "037-how-to-convert-pdf-to-word-complete-guide.html",
-      "url": "/posts/037-how-to-convert-pdf-to-word-complete-guide.html",
-      "created_at": "2026-07-09T14:17:21Z"
     }
   ],
   "categories": [
