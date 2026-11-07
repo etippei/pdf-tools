@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 89,
+      "title": "How to Convert PDF to PowerPoint: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-pdf-to-powerpoint-which-method-works-best-com",
+      "date": "November 7, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, PowerPoint built-in import, Google Slides, and desktop software for converting PDF to PowerPoint. Find the best approach for your slides.",
+      "file": "089-how-to-convert-pdf-to-powerpoint-which-method-works-best-com.html",
+      "url": "/posts/089-how-to-convert-pdf-to-powerpoint-which-method-works-best-com.html",
+      "created_at": "2026-11-07T14:53:26Z"
+    },
+    {
       "id": 88,
       "title": "How to Convert PDF to Excel: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-pdf-to-excel-which-method-works-best-complete",
@@ -538,17 +549,6 @@
       "file": "040-pdf-to-word-conversion-which-method-works-best-complete-guid.html",
       "url": "/posts/040-pdf-to-word-conversion-which-method-works-best-complete-guid.html",
       "created_at": "2026-07-18T13:56:57Z"
-    },
-    {
-      "id": 39,
-      "title": "How to Convert PDF to Word – The Complete Guide (2026)",
-      "slug": "how-to-convert-pdf-to-word-the-complete-guide-2026",
-      "date": "July 16, 2026",
-      "category": "Tutorial",
-      "excerpt": "The complete guide to converting PDF to Word while preserving formatting, fonts, and layout. Covers digital PDFs, scanned documents, common problems, and solutions.",
-      "file": "039-how-to-convert-pdf-to-word-the-complete-guide-2026.html",
-      "url": "/posts/039-how-to-convert-pdf-to-word-the-complete-guide-2026.html",
-      "created_at": "2026-07-16T13:57:54Z"
     }
   ],
   "categories": [
