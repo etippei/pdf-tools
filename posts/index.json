@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 90,
+      "title": "How to Convert PDF to JPG: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-pdf-to-jpg-which-method-works-best-complete-g",
+      "date": "November 9, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, Adobe Acrobat, Preview, and built-in methods for converting PDF to JPG. Find the best approach for image quality and privacy.",
+      "file": "090-how-to-convert-pdf-to-jpg-which-method-works-best-complete-g.html",
+      "url": "/posts/090-how-to-convert-pdf-to-jpg-which-method-works-best-complete-g.html",
+      "created_at": "2026-11-09T09:55:44Z"
+    },
+    {
       "id": 89,
       "title": "How to Convert PDF to PowerPoint: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-pdf-to-powerpoint-which-method-works-best-com",
@@ -538,17 +549,6 @@
       "file": "041-how-to-convert-pdf-to-word-with-wps-office-the-complete-loca.html",
       "url": "/posts/041-how-to-convert-pdf-to-word-with-wps-office-the-complete-loca.html",
       "created_at": "2026-07-20T15:07:40Z"
-    },
-    {
-      "id": 40,
-      "title": "PDF to Word Conversion: Which Method Works Best? — Complete Guide (2026)",
-      "slug": "pdf-to-word-conversion-which-method-works-best-complete-guid",
-      "date": "July 18, 2026",
-      "category": "Tutorial",
-      "excerpt": "A comprehensive comparison of PDF to Word methods: Microsoft Word, online tools, desktop software, WPS Office, and more. Includes scanning-specific solutions, format preservation tips, and privacy considerations.",
-      "file": "040-pdf-to-word-conversion-which-method-works-best-complete-guid.html",
-      "url": "/posts/040-pdf-to-word-conversion-which-method-works-best-complete-guid.html",
-      "created_at": "2026-07-18T13:56:57Z"
     }
   ],
   "categories": [
