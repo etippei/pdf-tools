@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 92,
+      "title": "How to Convert JPG to PDF: Which Method Works Best? — Complete Guide",
+      "slug": "how-to-convert-jpg-to-pdf-which-method-works-best-complete-g",
+      "date": "November 14, 2026",
+      "category": "Tutorial",
+      "excerpt": "Compare online tools, Adobe Acrobat, Preview, and built-in methods for converting JPG to PDF. Find the best approach for photos, scans, and graphics.",
+      "file": "092-how-to-convert-jpg-to-pdf-which-method-works-best-complete-g.html",
+      "url": "/posts/092-how-to-convert-jpg-to-pdf-which-method-works-best-complete-g.html",
+      "created_at": "2026-11-14T12:41:31Z"
+    },
+    {
       "id": 91,
       "title": "How to Convert Image to PDF: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-image-to-pdf-which-method-works-best-complete",
@@ -538,17 +549,6 @@
       "file": "043-how-to-convert-pdf-to-excel-the-complete-guide.html",
       "url": "/posts/043-how-to-convert-pdf-to-excel-the-complete-guide.html",
       "created_at": "2026-07-24T14:32:59Z"
-    },
-    {
-      "id": 42,
-      "title": "How to Convert PDF to Word with WPS Office: The Complete Local Conversion Guide",
-      "slug": "how-to-convert-pdf-to-word-with-wps-office-the-complete-loca",
-      "date": "July 23, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to convert PDF to Word using Google Docs for free. Includes cloud-based conversion steps, OCR for scanned PDFs, and privacy considerations.",
-      "file": "042-how-to-convert-pdf-to-word-with-wps-office-the-complete-loca.html",
-      "url": "/posts/042-how-to-convert-pdf-to-word-with-wps-office-the-complete-loca.html",
-      "created_at": "2026-07-23T13:19:39Z"
     }
   ],
   "categories": [
