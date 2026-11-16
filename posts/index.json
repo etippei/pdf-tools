@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 93,
+      "title": "5 Common PDF Problems and How to Fix Them — Quick Guide",
+      "slug": "5-common-pdf-problems-and-how-to-fix-them-quick-guide",
+      "date": "November 16, 2026",
+      "category": "Tip",
+      "excerpt": "Discover 5 common PDF problems and how to fix them. Learn practical solutions for file size, formatting, security, and conversion issues.",
+      "file": "093-5-common-pdf-problems-and-how-to-fix-them-quick-guide.html",
+      "url": "/posts/093-5-common-pdf-problems-and-how-to-fix-them-quick-guide.html",
+      "created_at": "2026-11-16T13:36:30Z"
+    },
+    {
       "id": 92,
       "title": "How to Convert JPG to PDF: Which Method Works Best? — Complete Guide",
       "slug": "how-to-convert-jpg-to-pdf-which-method-works-best-complete-g",
@@ -538,20 +549,10 @@
       "file": "044-pdf-to-excel-conversion-which-method-works-best-complete-gui.html",
       "url": "/posts/044-pdf-to-excel-conversion-which-method-works-best-complete-gui.html",
       "created_at": "2026-07-27T15:28:25Z"
-    },
-    {
-      "id": 43,
-      "title": "How to Convert PDF to Excel: The Complete Guide",
-      "slug": "how-to-convert-pdf-to-excel-the-complete-guide",
-      "date": "July 24, 2026",
-      "category": "Tutorial",
-      "excerpt": "Learn how to convert PDF to Excel and extract tables, numbers, and data for analysis. Complete guide with methods, tips, and troubleshooting.",
-      "file": "043-how-to-convert-pdf-to-excel-the-complete-guide.html",
-      "url": "/posts/043-how-to-convert-pdf-to-excel-the-complete-guide.html",
-      "created_at": "2026-07-24T14:32:59Z"
     }
   ],
   "categories": [
+    "Tip",
     "Tutorial"
   ]
 }
