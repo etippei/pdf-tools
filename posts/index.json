@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 94,
+      "title": "5 Signs Your PDF Needs Repair (And What to Do) — Quick Guide",
+      "slug": "5-signs-your-pdf-needs-repair-and-what-to-do-quick-guide",
+      "date": "November 19, 2026",
+      "category": "Tip",
+      "excerpt": "Discover 5 warning signs that your PDF file is corrupted or damaged. Learn how to spot problems early and fix them before data loss.",
+      "file": "094-5-signs-your-pdf-needs-repair-and-what-to-do-quick-guide.html",
+      "url": "/posts/094-5-signs-your-pdf-needs-repair-and-what-to-do-quick-guide.html",
+      "created_at": "2026-11-19T10:02:57Z"
+    },
+    {
       "id": 93,
       "title": "5 Common PDF Problems and How to Fix Them — Quick Guide",
       "slug": "5-common-pdf-problems-and-how-to-fix-them-quick-guide",
@@ -538,17 +549,6 @@
       "file": "045-how-to-convert-pdf-to-powerpoint-the-complete-guide.html",
       "url": "/posts/045-how-to-convert-pdf-to-powerpoint-the-complete-guide.html",
       "created_at": "2026-07-30T14:25:11Z"
-    },
-    {
-      "id": 44,
-      "title": "PDF to Excel Conversion: Which Method Works Best? — Complete Guide (2026)",
-      "slug": "pdf-to-excel-conversion-which-method-works-best-complete-gui",
-      "date": "July 27, 2026",
-      "category": "Tutorial",
-      "excerpt": "A comprehensive comparison of PDF to Excel methods: Microsoft Excel, online tools, desktop software, Google Sheets, and more. Find the best approach for your data.",
-      "file": "044-pdf-to-excel-conversion-which-method-works-best-complete-gui.html",
-      "url": "/posts/044-pdf-to-excel-conversion-which-method-works-best-complete-gui.html",
-      "created_at": "2026-07-27T15:28:25Z"
     }
   ],
   "categories": [
